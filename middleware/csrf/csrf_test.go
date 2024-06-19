@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/middleware/session"
 	"github.com/gofiber/utils/v2"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/middleware/session"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
 )

@@ -15,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gofiber/fiber/v3/log"
+	"github.com/jialequ/sdk/log"
 
 	"github.com/gofiber/utils/v2"
 

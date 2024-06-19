@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gofiber/fiber/v3/middleware/idempotency"
+	"github.com/jialequ/sdk/middleware/idempotency"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

@@ -21,8 +21,8 @@ package main
 import (
 	"crypto/sha256"
 	"crypto/subtle"
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/middleware/keyauth"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/middleware/keyauth"
 )
 
 var (
@@ -83,8 +83,8 @@ package main
 import (
 	"crypto/sha256"
 	"crypto/subtle"
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/middleware/keyauth"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/middleware/keyauth"
 	"regexp"
 	"strings"
 )
@@ -165,8 +165,8 @@ package main
 import (
 	"crypto/sha256"
 	"crypto/subtle"
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/middleware/keyauth"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/middleware/keyauth"
 )
 
 const (

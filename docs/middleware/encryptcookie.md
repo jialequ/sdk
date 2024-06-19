@@ -26,8 +26,8 @@ To use the Encrypt Cookie middleware, first, import the middleware package as pa
 
 ```go
 import (
-  "github.com/gofiber/fiber/v3"
-  "github.com/gofiber/fiber/v3/middleware/encryptcookie"
+  "github.com/jialequ/sdk"
+  "github.com/jialequ/sdk/middleware/encryptcookie"
 )
 ```
 

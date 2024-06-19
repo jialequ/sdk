@@ -59,7 +59,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 func main() {
@@ -186,7 +186,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 func main() {

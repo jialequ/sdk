@@ -10,7 +10,7 @@ Converter for net/http handlers to/from Fiber request handlers, special thanks t
 
 ### Install
 ```
-go get -u github.com/gofiber/fiber/v3
+go get -u github.com/jialequ/sdk
 go get -u github.com/gofiber/adaptor/v2
 ```
 
@@ -33,7 +33,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/adaptor/v2"
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 func main() {
@@ -68,7 +68,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/adaptor/v2"
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 func main() {
@@ -98,7 +98,7 @@ import (
 	"net/http"
 
 	"github.com/gofiber/adaptor/v2"
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 func main() {
@@ -123,7 +123,7 @@ package main
 
 import (
 	"github.com/gofiber/adaptor/v2"
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 	"net/http"
 )
 func main() {

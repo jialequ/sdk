@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 	"github.com/stretchr/testify/require"
 )
 

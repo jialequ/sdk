@@ -1,7 +1,7 @@
 package skip
 
 import (
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 // New creates a middleware handler which skips the wrapped handler

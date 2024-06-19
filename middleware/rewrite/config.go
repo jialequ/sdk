@@ -3,7 +3,7 @@ package rewrite
 import (
 	"regexp"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 // Config defines the config for middleware.

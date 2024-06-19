@@ -1,8 +1,8 @@
 package fiber
 
 import (
-	"github.com/gofiber/fiber/v3/binder"
 	"github.com/gofiber/utils/v2"
+	"github.com/jialequ/sdk/binder"
 )
 
 // CustomBinder An interface to register custom binders.

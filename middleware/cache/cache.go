@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/utils/v2"
+	"github.com/jialequ/sdk"
 )
 
 // timestampUpdatePeriod is the period which is used to check the cache expiration.

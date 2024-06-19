@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/utils/v2"
+	"github.com/jialequ/sdk"
 )
 
 type FixedWindow struct{}

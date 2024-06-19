@@ -1,7 +1,7 @@
 package healthcheck
 
 import (
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 // HealthChecker defines a function to check liveness or readiness of the application

@@ -10,11 +10,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gofiber/fiber/v3"
-	clientpkg "github.com/gofiber/fiber/v3/client"
+	"github.com/jialequ/sdk"
+	clientpkg "github.com/jialequ/sdk/client"
 	"github.com/stretchr/testify/require"
 
-	"github.com/gofiber/fiber/v3/internal/tlstest"
+	"github.com/jialequ/sdk/internal/tlstest"
 	"github.com/valyala/fasthttp"
 )
 

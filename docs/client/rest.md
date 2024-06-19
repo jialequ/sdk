@@ -25,7 +25,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/gofiber/fiber/v3/client"
+	"github.com/jialequ/sdk/client"
 )
 
 func main() {

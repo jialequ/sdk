@@ -1,7 +1,7 @@
 package recover //nolint:predeclared // TODO: Rename to some non-builtin
 
 import (
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 // Config defines the config for middleware.

@@ -19,7 +19,7 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/gofiber/fiber/v3/log"
+	"github.com/jialequ/sdk/log"
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
 )
@@ -422,8 +422,8 @@ func (app *App) startupMessage(addr string, isTLS bool, pids string, cfg ListenC
 // printRoutesMessage print all routes with method, path, name and handlers
 // in a format of table, like this:
 // method | path | name      | handlers
-// GET    | /    | routeName | github.com/gofiber/fiber/v3.emptyHandler
-// HEAD   | /    |           | github.com/gofiber/fiber/v3.emptyHandler
+// GET    | /    | routeName | github.com/jialequ/sdk.emptyHandler
+// HEAD   | /    |           | github.com/jialequ/sdk.emptyHandler
 func (app *App) printRoutesMessage() {
 	// ignore child processes
 	if IsChild() {

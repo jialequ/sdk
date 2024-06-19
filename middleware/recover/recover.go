@@ -5,7 +5,7 @@ import (
 	"os"
 	"runtime/debug"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 func defaultStackTraceHandler(_ fiber.Ctx, e any) {

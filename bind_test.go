@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gofiber/fiber/v3/binder"
+	"github.com/jialequ/sdk/binder"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
 )

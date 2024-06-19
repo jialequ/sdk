@@ -1,4 +1,4 @@
-module github.com/gofiber/fiber/v3
+module github.com/jialequ/sdk
 
 go 1.21
 

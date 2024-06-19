@@ -5,8 +5,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/gofiber/fiber/v3/internal/schema"
 	"github.com/gofiber/utils/v2"
+	"github.com/jialequ/sdk/internal/schema"
 	"github.com/valyala/bytebufferpool"
 )
 

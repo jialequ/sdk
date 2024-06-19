@@ -3,9 +3,9 @@ package csrf
 import (
 	"time"
 
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/log"
-	"github.com/gofiber/fiber/v3/middleware/session"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/log"
+	"github.com/jialequ/sdk/middleware/session"
 )
 
 type sessionManager struct {

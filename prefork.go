@@ -15,7 +15,7 @@ import (
 
 	"github.com/valyala/fasthttp/reuseport"
 
-	"github.com/gofiber/fiber/v3/log"
+	"github.com/jialequ/sdk/log"
 )
 
 const (

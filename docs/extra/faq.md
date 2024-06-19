@@ -107,8 +107,8 @@ package main
 import (
 	"log"
 
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/middleware/logger"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/middleware/logger"
 )
 
 type Host struct {

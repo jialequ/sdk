@@ -68,7 +68,7 @@ package main
 
 import (
     "log"
-    "github.com/gofiber/fiber/v3"
+    "github.com/jialequ/sdk"
     "github.com/gofiber/template/html/v2"
 )
 

@@ -8,7 +8,7 @@
 
 ### Install
 ```
-go get -u github.com/gofiber/fiber/v3
+go get -u github.com/jialequ/sdk
 go get -u github.com/gofiber/helmet/v2
 ```
 ### Example
@@ -16,7 +16,7 @@ go get -u github.com/gofiber/helmet/v2
 package main
 
 import (
-  "github.com/gofiber/fiber/v3"
+  "github.com/jialequ/sdk"
   "github.com/gofiber/helmet/v2"
 )
 

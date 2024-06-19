@@ -4,7 +4,7 @@ import (
 	"net/http/pprof"
 	"strings"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp/fasthttpadaptor"
 )
 

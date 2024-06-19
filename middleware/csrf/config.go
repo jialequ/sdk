@@ -5,10 +5,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/log"
-	"github.com/gofiber/fiber/v3/middleware/session"
 	"github.com/gofiber/utils/v2"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/log"
+	"github.com/jialequ/sdk/middleware/session"
 )
 
 // Config defines the config for middleware.

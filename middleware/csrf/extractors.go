@@ -3,7 +3,7 @@ package csrf
 import (
 	"errors"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 var (

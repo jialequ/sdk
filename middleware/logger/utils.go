@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 func methodColor(method string, colors fiber.Colors) string {

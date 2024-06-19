@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 // New creates a new middleware handler

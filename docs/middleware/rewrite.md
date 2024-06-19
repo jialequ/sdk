@@ -24,8 +24,8 @@ func New(config ...Config) fiber.Handler
 package main
 
 import (
-  "github.com/gofiber/fiber/v3"
-  "github.com/gofiber/fiber/v3/middleware/rewrite"
+  "github.com/jialequ/sdk"
+  "github.com/jialequ/sdk/middleware/rewrite"
 )
 
 func main() {

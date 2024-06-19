@@ -13,10 +13,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/internal/storage/memory"
-	"github.com/gofiber/fiber/v3/middleware/etag"
 	"github.com/gofiber/utils/v2"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/internal/storage/memory"
+	"github.com/jialequ/sdk/middleware/etag"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
 )

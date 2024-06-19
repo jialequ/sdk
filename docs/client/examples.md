@@ -21,7 +21,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
-	"github.com/gofiber/fiber/v3/client"
+	"github.com/jialequ/sdk/client"
 )
 
 func main() {
@@ -47,8 +47,8 @@ func main() {
 package main
 
 import (
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/middleware/basicauth"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/middleware/basicauth"
 )
 
 func main() {
@@ -85,7 +85,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gofiber/fiber/v3/client"
+	"github.com/jialequ/sdk/client"
 )
 
 func main() {
@@ -121,7 +121,7 @@ func main() {
 package main
 
 import (
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 )
 
 func main() {

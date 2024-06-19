@@ -17,8 +17,8 @@ func New(config ...Config) fiber.Handler
 package main
 
 import (
-  "github.com/gofiber/fiber/v3"
-  "github.com/gofiber/fiber/v3/middleware/helmet"
+  "github.com/jialequ/sdk"
+  "github.com/jialequ/sdk/middleware/helmet"
 )
 
 func main() {

@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/utils/v2"
+	"github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp"
 )
 

@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/log"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/log"
 )
 
 // New creates a new middleware handler

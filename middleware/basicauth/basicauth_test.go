@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/jialequ/sdk"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
 )

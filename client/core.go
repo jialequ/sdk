@@ -9,8 +9,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/addon/retry"
+	"github.com/jialequ/sdk"
+	"github.com/jialequ/sdk/addon/retry"
 	"github.com/valyala/fasthttp"
 )
 
