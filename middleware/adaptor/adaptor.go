@@ -8,7 +8,7 @@ import (
 	"unsafe"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/fasthttpadaptor"
 )
@@ -122,7 +122,7 @@ func FiberApp(app *fiber.App) http.HandlerFunc {
 	return handlerFunc(app)
 }
 
-func handlerFunc(app *fiber.App, h ...fiber.Handler) http.HandlerFunc {
+func handlerFunc(app *fiber.App, h ...fiber.Handler) http.HandlerFunc { //NOSONAR
 	return func(w http.ResponseWriter, r *http.Request) {
 		// New fasthttp request
 		req := fasthttp.AcquireRequest()

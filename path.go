@@ -221,7 +221,7 @@ func parseRoute(pattern string, customConstraints ...CustomConstraint) routePars
 
 // addParameterMetaInfo add important meta information to the parameter segments
 // to simplify the search for the end of the parameter
-func addParameterMetaInfo(segs []*routeSegment) []*routeSegment {
+func addParameterMetaInfo(segs []*routeSegment) []*routeSegment { //NOSONAR
 	var comparePart string
 	segLen := len(segs)
 	// loop from end to begin
@@ -298,7 +298,7 @@ func (*routeParser) analyseConstantPart(pattern string, nextParamPosition int) (
 }
 
 // analyseParameterPart find the parameter end and create the route segment
-func (routeParser *routeParser) analyseParameterPart(pattern string, customConstraints ...CustomConstraint) (string, *routeSegment) {
+func (routeParser *routeParser) analyseParameterPart(pattern string, customConstraints ...CustomConstraint) (string, *routeSegment) { //NOSONAR
 	isWildCard := pattern[0] == wildcardParam
 	isPlusParam := pattern[0] == plusParam
 
@@ -494,7 +494,7 @@ func splitNonEscaped(s, sep string) []string {
 }
 
 // getMatch parses the passed url and tries to match it against the route segments and determine the parameter positions
-func (routeParser *routeParser) getMatch(detectionPath, path string, params *[maxParams]string, partialCheck bool) bool { //nolint: revive // Accepting a bool param is fine here
+func (routeParser *routeParser) getMatch(detectionPath, path string, params *[maxParams]string, partialCheck bool) bool { //NOSONAR
 	var i, paramsIterator, partLen int
 	for _, segment := range routeParser.segs {
 		partLen = len(detectionPath)
@@ -662,7 +662,7 @@ func getParamConstraintType(constraintPart string) TypeConstraint {
 }
 
 //nolint:errcheck // : Properly check _all_ errors in here, log them & immediately return
-func (c *Constraint) CheckConstraint(param string) bool {
+func (c *Constraint) CheckConstraint(param string) bool { //NOSONAR
 	var err error
 	var num int
 

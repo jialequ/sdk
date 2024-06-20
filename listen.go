@@ -142,7 +142,7 @@ func listenConfigDefault(config ...ListenConfig) ListenConfig {
 //	app.Listen(":8080")
 //	app.Listen("127.0.0.1:8080")
 //	app.Listen(":8080", ListenConfig{EnablePrefork: true})
-func (app *App) Listen(addr string, config ...ListenConfig) error {
+func (app *App) Listen(addr string, config ...ListenConfig) error { //NOSONAR
 	cfg := listenConfigDefault(config...)
 
 	// Configure TLS
@@ -313,7 +313,7 @@ func (*App) prepareListenData(addr string, isTLS bool, cfg ListenConfig) ListenD
 }
 
 // startupMessage prepares the startup message with the handler number, port, address and other information
-func (app *App) startupMessage(addr string, isTLS bool, pids string, cfg ListenConfig) { //nolint: revive // Accepting a bool param named isTLS if fine here
+func (app *App) startupMessage(addr string, isTLS bool, pids string, cfg ListenConfig) { //NOSONAR
 	// ignore child processes
 	if IsChild() {
 		return

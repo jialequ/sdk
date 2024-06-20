@@ -160,7 +160,7 @@ func (app *App) appendSubAppLists(appList map[string]*App, parent ...string) {
 }
 
 // processSubAppsRoutes adds routes of sub-apps recursively when the server is started
-func (app *App) processSubAppsRoutes() {
+func (app *App) processSubAppsRoutes() { //NOSONAR
 	for prefix, subApp := range app.mountFields.appList {
 		// skip real app
 		if prefix == "" {

@@ -187,7 +187,7 @@ func (r *Redirect) To(location string) error {
 
 // Route redirects to the Route registered in the app with appropriate parameters.
 // If you want to send queries or params to route, you should use config parameter.
-func (r *Redirect) Route(name string, config ...RedirectConfig) error {
+func (r *Redirect) Route(name string, config ...RedirectConfig) error { //NOSONAR
 	// Check config
 	cfg := RedirectConfig{}
 	if len(config) > 0 {

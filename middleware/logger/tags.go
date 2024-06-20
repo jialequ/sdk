@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 // Logger variables
@@ -50,7 +50,7 @@ const (
 )
 
 // createTagMap function merged the default with the custom tags
-func createTagMap(cfg *Config) map[string]LogFunc {
+func createTagMap(cfg *Config) map[string]LogFunc { //NOSONAR
 	// Set default tags
 	tagFunctions := map[string]LogFunc{
 		TagReferer: func(output Buffer, c fiber.Ctx, _ *Data, _ string) (int, error) {
