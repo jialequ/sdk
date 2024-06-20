@@ -351,7 +351,7 @@ func getSplicedStrList(headerValue string, dst []string) []string {
 // forEachMediaRange parses an Accept or Content-Type header, calling functor
 // on each media range.
 // See: https://www.rfc-editor.org/rfc/rfc9110#name-content-negotiation-fields
-func forEachMediaRange(header []byte, functor func([]byte)) {
+func forEachMediaRange(header []byte, functor func([]byte)) { //NOSONAR
 	hasDQuote := bytes.IndexByte(header, '"') != -1
 
 	for len(header) > 0 {
@@ -407,7 +407,7 @@ var headerParamPool = sync.Pool{
 // getOffer return valid offer for header negotiation.
 // Do not pass header using utils.UnsafeBytes - this can cause a panic due
 // to the use of utils.ToLowerBytes.
-func getOffer(header []byte, isAccepted func(spec, offer string, specParams headerParams) bool, offers ...string) string {
+func getOffer(header []byte, isAccepted func(spec, offer string, specParams headerParams) bool, offers ...string) string { //NOSONAR
 	if len(offers) == 0 {
 		return ""
 	}

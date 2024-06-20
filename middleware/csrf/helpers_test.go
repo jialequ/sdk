@@ -7,17 +7,17 @@ import (
 )
 
 // go test -run -v Test_normalizeOrigin
-func TestnormalizeOrigin(t *testing.T) {
+func TestNormalizeOrigin(t *testing.T) {
 	testCases := []struct {
 		origin         string
 		expectedValid  bool
 		expectedOrigin string
 	}{
-		{literal_4307, true, literal_4307},                       // Simple case should work.
-		{"HTTP://EXAMPLE.COM", true, literal_4307},                       // Case should be normalized.
-		{"http://example.com/", true, literal_4307},                      // Trailing slash should be removed.
-		{literal_4719, true, literal_4719},             // Port should be preserved.
-		{"http://example.com:3000/", true, literal_4719},            // Trailing slash should be removed.
+		{literal_4307, true, literal_4307},                                       // Simple case should work.
+		{"HTTP://EXAMPLE.COM", true, literal_4307},                               // Case should be normalized.
+		{"http://example.com/", true, literal_4307},                              // Trailing slash should be removed.
+		{literal_4719, true, literal_4719},                                       // Port should be preserved.
+		{"http://example.com:3000/", true, literal_4719},                         // Trailing slash should be removed.
 		{"http://", false, ""},                                                   // Invalid origin should not be accepted.
 		{"file:///etc/passwd", false, ""},                                        // File scheme should not be accepted.
 		{"https://*example.com", false, ""},                                      // Wildcard domain should not be accepted.
@@ -28,8 +28,8 @@ func TestnormalizeOrigin(t *testing.T) {
 		{"http://localhost", true, "http://localhost"},                           // Localhost should be accepted.
 		{"http://127.0.0.1", true, "http://127.0.0.1"},                           // IPv4 address should be accepted.
 		{"http://[::1]", true, "http://[::1]"},                                   // IPv6 address should be accepted.
-		{literal_6531, true, literal_6531},                         // IPv6 address with port should be accepted.
-		{"http://[::1]:8080/", true, literal_6531},                        // IPv6 address with port and trailing slash should be accepted.
+		{literal_6531, true, literal_6531},                                       // IPv6 address with port should be accepted.
+		{"http://[::1]:8080/", true, literal_6531},                               // IPv6 address with port and trailing slash should be accepted.
 		{"http://[::1]:8080/path", false, ""},                                    // IPv6 address with port and path should not be accepted.
 		{"http://[::1]:8080?query=123", false, ""},                               // IPv6 address with port and query should not be accepted.
 		{"http://[::1]:8080#fragment", false, ""},                                // IPv6 address with port and fragment should not be accepted.

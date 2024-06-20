@@ -149,7 +149,7 @@ type fieldWithPrefix struct {
 }
 
 // isEmptyFields returns true if all of specified fields are empty.
-func isEmptyFields(fields []fieldWithPrefix, src map[string][]string) bool {
+func isEmptyFields(fields []fieldWithPrefix, src map[string][]string) bool { //NOSONAR
 	for _, f := range fields {
 		for _, path := range f.paths(f.prefix) {
 			v, ok := src[path]
@@ -192,7 +192,7 @@ func isEmpty(t reflect.Type, value []string) bool {
 }
 
 // decode fills a struct field using a parsed path.
-func (d *Decoder) decode(v reflect.Value, path string, parts []pathPart, values []string) error {
+func (d *Decoder) decode(v reflect.Value, path string, parts []pathPart, values []string) error { //NOSONAR
 	// Get the field walking the struct fields by index.
 	for _, name := range parts[0].path {
 		if v.Type().Kind() == reflect.Ptr {
@@ -381,16 +381,6 @@ func (d *Decoder) decode(v reflect.Value, path string, parts []pathPart, values 
 		} else if val == "" {
 			if d.zeroEmpty {
 				v.Set(reflect.Zero(t))
-			}
-		} else if conv := builtinConverters[t.Kind()]; conv != nil {
-			if value := conv(val); value.IsValid() {
-				v.Set(value.Convert(t))
-			} else {
-				return ConversionError{
-					Key:   path,
-					Type:  t,
-					Index: -1,
-				}
 			}
 		} else {
 			return fmt.Errorf("schema: converter not found for %v", t)

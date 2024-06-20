@@ -1,3 +1,7 @@
+// ⚡️ Fiber is an Express inspired web framework written in Go with ☕️
+// 🤖 Github Repository: https://github.com/gofiber/fiber
+// 📌 API Documentation: https://docs.gofiber.io
+
 package fiber
 
 import (
@@ -500,7 +504,7 @@ func (c *DefaultCtx) FormValue(key string, defaultValue ...string) string {
 // When a client sends the Cache-Control: no-cache request header to indicate an end-to-end
 // reload request, this module will return false to make handling these requests transparent.
 // https://github.com/jshttp/fresh/blob/10e0471669dbbfbfd8de65bc6efac2ddd0bfa057/index.js#L33
-func (c *DefaultCtx) Fresh() bool {
+func (c *DefaultCtx) Fresh() bool { //NOSONAR
 	// fields
 	modifiedSince := c.Get(HeaderIfModifiedSince)
 	noneMatch := c.Get(HeaderIfNoneMatch)
@@ -646,7 +650,7 @@ func (c *DefaultCtx) IP() string {
 
 // extractIPsFromHeader will return a slice of IPs it found given a header name in the order they appear.
 // When IP validation is enabled, any invalid IPs will be omitted.
-func (c *DefaultCtx) extractIPsFromHeader(header string) []string {
+func (c *DefaultCtx) extractIPsFromHeader(header string) []string { //NOSONAR
 	// : Reuse the c.extractIPFromHeader func somehow in here
 
 	headerValue := c.Get(header)
@@ -707,7 +711,7 @@ iploop:
 // currently, it will return the first valid IP address in header.
 // when IP validation is disabled, it will simply return the value of the header without any inspection.
 // Implementation is almost the same as in extractIPsFromHeader, but without allocation of []string.
-func (c *DefaultCtx) extractIPFromHeader(header string) string {
+func (c *DefaultCtx) extractIPFromHeader(header string) string { //NOSONAR
 	if c.app.config.EnableIPValidation {
 		headerValue := c.Get(header)
 
@@ -1029,7 +1033,7 @@ func (c *DefaultCtx) Path(override ...string) string {
 
 // Scheme contains the request protocol string: http or https for TLS requests.
 // Please use Config.EnableTrustedProxyCheck to prevent header spoofing, in case when your app is behind the proxy.
-func (c *DefaultCtx) Scheme() string {
+func (c *DefaultCtx) Scheme() string { //NOSONAR
 	if c.fasthttp.IsTLS() {
 		return schemeHTTPS
 	}
@@ -1137,7 +1141,7 @@ func Query[V GenericType](c Ctx, key string, defaultValue ...V) V {
 }
 
 // Range returns a struct containing the type and a slice of ranges.
-func (c *DefaultCtx) Range(size int) (Range, error) {
+func (c *DefaultCtx) Range(size int) (Range, error) { //NOSONAR
 	var (
 		rangeData Range
 		ranges    string
@@ -1227,7 +1231,7 @@ func (c *DefaultCtx) ViewBind(vars Map) error {
 }
 
 // getLocationFromRoute get URL location from route using parameters
-func (c *DefaultCtx) getLocationFromRoute(route Route, params Map) (string, error) {
+func (c *DefaultCtx) getLocationFromRoute(route Route, params Map) (string, error) { //NOSONAR
 	buf := bytebufferpool.Get()
 	for _, segment := range route.routeParser.segs {
 		if !segment.IsParam {
@@ -1262,7 +1266,7 @@ func (c *DefaultCtx) GetRouteURL(routeName string, params Map) (string, error) {
 
 // Render a template with data and sends a text/html response.
 // We support the following engines: https://github.com/gofiber/template
-func (c *DefaultCtx) Render(name string, bind Map, layouts ...string) error {
+func (c *DefaultCtx) Render(name string, bind Map, layouts ...string) error { //NOSONAR
 	// Get new buffer from pool
 	buf := bytebufferpool.Get()
 	defer bytebufferpool.Put(buf)

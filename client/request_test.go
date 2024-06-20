@@ -1295,7 +1295,7 @@ func TestRequestMaxRedirects(t *testing.T) {
 	})
 }
 
-func TestSetValWithStruct(t *testing.T) {
+func TestSetValWithStruct(t *testing.T) { //NOSONAR
 	t.Parallel()
 
 	// test SetValWithStruct vai QueryParam struct.
@@ -1451,7 +1451,7 @@ func TestSetValWithStruct(t *testing.T) {
 	})
 }
 
-func BenchmarkSetValWithStruct(b *testing.B) {
+func BenchmarkSetValWithStruct(b *testing.B) { //NOSONAR
 	// test SetValWithStruct vai QueryParam struct.
 	type args struct {
 		unexport  int

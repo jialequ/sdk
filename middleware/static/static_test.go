@@ -645,7 +645,7 @@ func TestStaticFSPrefixWildcard(t *testing.T) {
 	require.Contains(t, string(body), literal_1925)
 }
 
-func TestisFile(t *testing.T) {
+func TestIsFile(t *testing.T) {
 	t.Parallel()
 
 	cases := []struct {

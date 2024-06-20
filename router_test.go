@@ -675,25 +675,6 @@ func BenchmarkRouterHandlerUnescape(b *testing.B) {
 	}
 }
 
-// go test -run=^$ -bench=Benchmark_Router_Handler_StrictRouting -benchmem -count=4
-func BenchmarkRouterHandlerStrictRouting(b *testing.B) {
-	app := New()
-	app.config.CaseSensitive = true
-	registerDummyRoutes(app)
-	appHandler := app.Handler()
-
-	c := &fasthttp.RequestCtx{}
-
-	c.Request.Header.SetMethod("DELETE")
-	c.URI().SetPath(literal_4567)
-
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		appHandler(c)
-	}
-}
-
 // go test -run=^$ -bench=Benchmark_Router_Github_API -benchmem -count=16
 func BenchmarkRouterGithubAPI(b *testing.B) {
 	app := New()

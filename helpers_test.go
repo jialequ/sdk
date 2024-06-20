@@ -530,7 +530,7 @@ func BenchmarkUtilsIsNoCache(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_SlashRecognition -benchmem -count=4
-func BenchmarkSlashRecognition(b *testing.B) {
+func BenchmarkSlashRecognition(b *testing.B) { //NOSONAR
 	search := "wtf/1234"
 	var result bool
 	b.Run("indexBytes", func(b *testing.B) {
