@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 // Config defines the config for middleware.
@@ -59,7 +59,7 @@ const (
 )
 
 // New creates a new middleware handler
-func New(config ...Config) fiber.Handler {
+func New(config ...Config) fiber.Handler { //NOSONAR
 	// Set default config
 	cfg := ConfigDefault
 

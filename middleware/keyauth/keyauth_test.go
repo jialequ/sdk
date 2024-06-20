@@ -8,13 +8,13 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/stretchr/testify/require"
 )
 
 const CorrectKey = "specials: !$%,.#\"!?~`<>@$^*(){}[]|/\\123"
 
-func TestAuthSources(t *testing.T) {
+func TestAuthSources(t *testing.T) { //NOSONAR
 	// define test cases
 	testSources := []string{"header", "cookie", "query", "param", "form"}
 

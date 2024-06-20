@@ -3,7 +3,7 @@ package csrf
 import (
 	"errors"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 var (

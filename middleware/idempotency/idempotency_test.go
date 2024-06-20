@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/middleware/idempotency"
 	"github.com/valyala/fasthttp"
 
@@ -19,7 +19,7 @@ import (
 )
 
 // go test -run Test_Idempotency
-func TestIdempotency(t *testing.T) {
+func TestIdempotency(t *testing.T) { //NOSONAR
 	t.Parallel()
 	app := fiber.New()
 

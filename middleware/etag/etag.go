@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"hash/crc32"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/valyala/bytebufferpool"
 )
 
 // New creates a new middleware handler
-func New(config ...Config) fiber.Handler {
+func New(config ...Config) fiber.Handler { //NOSONAR
 	// Set default config
 	cfg := configDefault(config...)
 

@@ -207,7 +207,7 @@ func BenchmarkUtilsRemoveEscapeChar(b *testing.B) {
 }
 
 // go test -race -run Test_Path_matchParams
-func BenchmarkPathmatchParams(t *testing.B) {
+func BenchmarkPathmatchParams(t *testing.B) { //NOSONAR
 	var ctxParams [maxParams]string
 	benchCaseFn := func(testCollection routeCaseCollection) {
 		parser := parseRoute(testCollection.pattern)
@@ -238,7 +238,7 @@ func BenchmarkPathmatchParams(t *testing.B) {
 }
 
 // go test -race -run Test_RoutePatternMatch
-func BenchmarkRoutePatternMatch(t *testing.B) {
+func BenchmarkRoutePatternMatch(t *testing.B) { //NOSONAR
 	benchCaseFn := func(testCollection routeCaseCollection) {
 		for _, c := range testCollection.testCases {
 			// skip all cases for partial checks

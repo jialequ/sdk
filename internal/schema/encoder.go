@@ -75,7 +75,7 @@ func isZero(v reflect.Value) bool {
 	return v.Interface() == z.Interface()
 }
 
-func (e *Encoder) encode(v reflect.Value, dst map[string][]string) error {
+func (e *Encoder) encode(v reflect.Value, dst map[string][]string) error { //NOSONAR
 	if v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}

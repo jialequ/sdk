@@ -114,7 +114,7 @@ func TestAppMountExpressBehavior(t *testing.T) {
 		subApp.Get(literal_4367, createTestHandler("subapp world!")) // <- wins
 
 		app.Get(literal_5192, createTestHandler("app hello!")) // <- wins
-		app.Use("/", subApp)                               // <- subApp registration
+		app.Use("/", subApp)                                   // <- subApp registration
 		app.Get(literal_4367, createTestHandler("app world!"))
 
 		app.Get("/bar", createTestHandler("app bar!"))

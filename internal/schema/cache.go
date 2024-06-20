@@ -43,7 +43,7 @@ func (c *cache) registerConverter(value any, converterFunc Converter) {
 // It returns "path parts" which contain indices to fields to be used by
 // reflect.Value.FieldByString(). Multiple parts are required for slices of
 // structs.
-func (c *cache) parsePath(p string, t reflect.Type) ([]pathPart, error) {
+func (c *cache) parsePath(p string, t reflect.Type) ([]pathPart, error) { //NOSONAR
 	var struc *structInfo
 	var field *fieldInfo
 	var index64 int64

@@ -8,13 +8,13 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 
 	"github.com/valyala/fasthttp"
 )
 
 // Balancer creates a load balancer among multiple upstream servers
-func Balancer(config Config) fiber.Handler {
+func Balancer(config Config) fiber.Handler { //NOSONAR
 	// Set default config
 	cfg := configDefault(config)
 

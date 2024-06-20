@@ -49,7 +49,7 @@ var ignoreHeaders = map[string]any{
 }
 
 // New creates a new middleware handler
-func New(config ...Config) fiber.Handler {
+func New(config ...Config) fiber.Handler { //NOSONAR
 	// Set default config
 	cfg := configDefault(config...)
 

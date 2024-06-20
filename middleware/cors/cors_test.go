@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
 )

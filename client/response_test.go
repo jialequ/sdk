@@ -9,9 +9,9 @@ import (
 	"os"
 	"testing"
 
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/internal/tlstest"
 
-	"github.com/jialequ/sdk"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

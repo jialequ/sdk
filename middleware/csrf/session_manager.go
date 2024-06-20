@@ -3,7 +3,7 @@ package csrf
 import (
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/log"
 	"github.com/jialequ/sdk/middleware/session"
 )

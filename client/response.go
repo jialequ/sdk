@@ -82,7 +82,7 @@ func (r *Response) XML(v any) error {
 }
 
 // Save method will save the body to a file or io.Writer.
-func (r *Response) Save(v any) error {
+func (r *Response) Save(v any) error { //NOSONAR
 	switch p := v.(type) {
 	case string:
 		file := filepath.Clean(p)

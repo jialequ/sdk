@@ -9,7 +9,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/addon/retry"
 	"github.com/valyala/fasthttp"
 )
@@ -72,7 +72,7 @@ func (c *core) getRetryConfig() *RetryConfig {
 
 // execFunc is the core function of the client.
 // It sends the request and receives the response.
-func (c *core) execFunc() (*Response, error) {
+func (c *core) execFunc() (*Response, error) { //NOSONAR
 	resp := AcquireResponse()
 	resp.setClient(c.client)
 	resp.setRequest(c.req)

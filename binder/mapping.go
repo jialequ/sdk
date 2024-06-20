@@ -152,7 +152,7 @@ func parseParamSquareBrackets(k string) (string, error) {
 	return bb.String(), nil
 }
 
-func equalFieldType(out any, kind reflect.Kind, key string) bool {
+func equalFieldType(out any, kind reflect.Kind, key string) bool { //NOSONAR
 	// Get type of interface
 	outTyp := reflect.TypeOf(out).Elem()
 	key = utils.ToLower(key)

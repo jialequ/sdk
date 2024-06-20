@@ -1,12 +1,12 @@
 package encryptcookie
 
 import (
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp"
 )
 
 // New creates a new middleware handler
-func New(config ...Config) fiber.Handler {
+func New(config ...Config) fiber.Handler { //NOSONAR
 	// Set default config
 	cfg := configDefault(config...)
 

@@ -4,7 +4,7 @@ import (
 	"io/fs"
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 // Config defines the config for middleware.

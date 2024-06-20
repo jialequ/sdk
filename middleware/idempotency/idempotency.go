@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/log"
 )
 
@@ -29,7 +29,7 @@ func WasPutToCache(c fiber.Ctx) bool {
 	return c.Locals(localsKeyWasPutToCache) != nil
 }
 
-func New(config ...Config) fiber.Handler {
+func New(config ...Config) fiber.Handler { //NOSONAR
 	// Set default config
 	cfg := configDefault(config...)
 

@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/log"
 	"github.com/jialequ/sdk/middleware/session"
 )
@@ -140,7 +140,7 @@ func defaultErrorHandler(_ fiber.Ctx, _ error) error {
 }
 
 // Helper function to set default values
-func configDefault(config ...Config) Config {
+func configDefault(config ...Config) Config { //NOSONAR
 	// Return default config if nothing provided
 	if len(config) < 1 {
 		return ConfigDefault

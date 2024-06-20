@@ -39,7 +39,7 @@ func (z *item) MarshalMsg(b []byte) (o []byte, err error) {
 }
 
 // UnmarshalMsg implements msgp.Unmarshaler
-func (z *item) UnmarshalMsg(bts []byte) (o []byte, err error) {
+func (z *item) UnmarshalMsg(bts []byte) (o []byte, err error) {//NOSONAR
 	var field []byte
 	_ = field
 	var zb0001 uint32

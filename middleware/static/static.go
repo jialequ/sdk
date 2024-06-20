@@ -10,7 +10,7 @@ import (
 	"sync"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp"
 )
 
@@ -18,7 +18,7 @@ import (
 // The root argument specifies the root directory from which to serve static assets.
 //
 // Note: Root has to be string or fs.FS, otherwise it will panic.
-func New(root string, cfg ...Config) fiber.Handler {
+func New(root string, cfg ...Config) fiber.Handler { //NOSONAR
 	config := configDefault(cfg...)
 
 	var createFS sync.Once

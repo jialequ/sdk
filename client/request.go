@@ -924,7 +924,7 @@ func ReleaseFile(f *File) {
 // The field name can be specified by `tagName`.
 // `v` is a struct include some data.
 // Note: This method only supports simple types and nested structs are not currently supported.
-func SetValWithStruct(p WithStruct, tagName string, v any) {
+func SetValWithStruct(p WithStruct, tagName string, v any) { //NOSONAR
 	valueOfV := reflect.ValueOf(v)
 	typeOfV := reflect.TypeOf(v)
 

@@ -737,8 +737,6 @@ const literal_4310 = "/api/joker"
 
 const literal_2059 = "/config/abc.json"
 
-const literal_7461 = "/config/efg.json"
-
 const literal_0843 = "/api/joker/batman"
 
 const literal_2901 = "/api/joker/batman/robin"

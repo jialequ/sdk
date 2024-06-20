@@ -1,8 +1,6 @@
 package compress
 
-import (
-	"github.com/jialequ/sdk"
-)
+import fiber "github.com/jialequ/sdk"
 
 // Config defines the config for middleware.
 type Config struct {

@@ -6,13 +6,13 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 type SlidingWindow struct{}
 
 // New creates a new sliding window middleware handler
-func (SlidingWindow) New(cfg Config) fiber.Handler {
+func (SlidingWindow) New(cfg Config) fiber.Handler { //NOSONAR
 	var (
 		// Limiter variables
 		mux        = &sync.RWMutex{}

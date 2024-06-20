@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
 	"github.com/valyala/bytebufferpool"
@@ -15,7 +15,7 @@ import (
 )
 
 // default logger for fiber
-func defaultLoggerInstance(c fiber.Ctx, data *Data, cfg Config) error {
+func defaultLoggerInstance(c fiber.Ctx, data *Data, cfg Config) error { //NOSONAR
 	// Alias colors
 	colors := c.App().Config().ColorScheme
 

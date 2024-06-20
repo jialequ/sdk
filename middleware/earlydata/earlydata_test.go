@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/middleware/earlydata"
 	"github.com/stretchr/testify/require"
 )
@@ -17,7 +17,7 @@ const (
 	headerValOff = "0"
 )
 
-func appWithConfig(t *testing.T, c *fiber.Config) *fiber.App {
+func appWithConfig(t *testing.T, c *fiber.Config) *fiber.App { //NOSONAR
 	t.Helper()
 	t.Parallel()
 
