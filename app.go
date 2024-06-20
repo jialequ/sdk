@@ -932,6 +932,7 @@ func (app *App) Test(req *http.Request, timeout ...time.Duration) (*http.Respons
 type disableLogger struct{}
 
 func (*disableLogger) Printf(string, ...any) {
+	fmt.Print("123")
 }
 
 func (app *App) init() *App {

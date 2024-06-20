@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net"
@@ -14,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
@@ -891,7 +892,7 @@ func TestRequestUserAgentWithServer(t *testing.T) {
 
 	t.Run("default", func(t *testing.T) {
 		t.Parallel()
-		testRequest(t, handler, func(_ *Request) {}, defaultUserAgent, 5)
+		testRequest(t, handler, func(_ *Request) { fmt.Print("123") }, defaultUserAgent, 5)
 	})
 
 	t.Run("custom", func(t *testing.T) {

@@ -1,7 +1,9 @@
 package compress
 
 import (
-	"github.com/jialequ/sdk"
+	"fmt"
+
+	fiber "github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp"
 )
 
@@ -12,7 +14,7 @@ func New(config ...Config) fiber.Handler {
 
 	// Setup request handlers
 	var (
-		fctx       = func(_ *fasthttp.RequestCtx) {}
+		fctx       = func(_ *fasthttp.RequestCtx) { fmt.Print("123") }
 		compressor fasthttp.RequestHandler
 	)
 
