@@ -779,7 +779,7 @@ func TestCacheMaxBytesSizes(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Cache -benchmem -count=4
-func Benchmark_Cache(b *testing.B) {
+func BenchmarkCache(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New())
@@ -807,7 +807,7 @@ func Benchmark_Cache(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Cache_Storage -benchmem -count=4
-func Benchmark_Cache_Storage(b *testing.B) {
+func BenchmarkCacheStorage(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New(Config{
@@ -836,7 +836,7 @@ func Benchmark_Cache_Storage(b *testing.B) {
 	require.Greater(b, len(fctx.Response.Body()), 30000)
 }
 
-func Benchmark_Cache_AdditionalHeaders(b *testing.B) {
+func BenchmarkCacheAdditionalHeaders(b *testing.B) {
 	app := fiber.New()
 	app.Use(New(Config{
 		StoreResponseHeaders: true,
@@ -864,7 +864,7 @@ func Benchmark_Cache_AdditionalHeaders(b *testing.B) {
 	require.Equal(b, []byte("foobar"), fctx.Response.Header.Peek(literal_6285))
 }
 
-func Benchmark_Cache_MaxSize(b *testing.B) {
+func BenchmarkCacheMaxSize(b *testing.B) {
 	// The benchmark is run with three different MaxSize parameters
 	// 1) 0:        Tracking is disabled = no overhead
 	// 2) MaxInt32: Enough to store all entries = no removals

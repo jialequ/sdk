@@ -31,7 +31,7 @@ func TestMarshalUnmarshalitem(t *testing.T) {
 	}
 }
 
-func Benchmark_MarshalMsgitem(b *testing.B) {
+func BenchmarkMarshalMsgitem(b *testing.B) {
 	v := item{}
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -40,7 +40,7 @@ func Benchmark_MarshalMsgitem(b *testing.B) {
 	}
 }
 
-func Benchmark_AppendMsgitem(b *testing.B) {
+func BenchmarkAppendMsgitem(b *testing.B) {
 	v := item{}
 	bts := make([]byte, 0, v.Msgsize())
 	bts, _ = v.MarshalMsg(bts[0:0])
@@ -52,7 +52,7 @@ func Benchmark_AppendMsgitem(b *testing.B) {
 	}
 }
 
-func Benchmark_Unmarshalitem(b *testing.B) {
+func BenchmarkUnmarshalitem(b *testing.B) {
 	v := item{}
 	bts, _ := v.MarshalMsg(nil)
 	b.ReportAllocs()

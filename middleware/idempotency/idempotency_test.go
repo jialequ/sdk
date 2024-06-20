@@ -127,7 +127,7 @@ func TestIdempotency(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Idempotency -benchmem -count=4
-func Benchmark_Idempotency(b *testing.B) {
+func BenchmarkIdempotency(b *testing.B) {
 	app := fiber.New()
 
 	// Needs to be at least a second as the memory storage doesn't support shorter durations.

@@ -333,7 +333,7 @@ func TestRedirectRequest(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_Route -benchmem -count=4
-func Benchmark_Redirect_Route(b *testing.B) {
+func BenchmarkRedirectRoute(b *testing.B) {
 	app := New()
 	app.Get(literal_0789, func(c Ctx) error {
 		return c.JSON(c.Params("name"))
@@ -360,7 +360,7 @@ func Benchmark_Redirect_Route(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_Route_WithQueries -benchmem -count=4
-func Benchmark_Redirect_Route_WithQueries(b *testing.B) {
+func BenchmarkRedirectRouteWithQueries(b *testing.B) {
 	app := New()
 	app.Get(literal_0789, func(c Ctx) error {
 		return c.JSON(c.Params("name"))
@@ -392,7 +392,7 @@ func Benchmark_Redirect_Route_WithQueries(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_Route_WithFlashMessages -benchmem -count=4
-func Benchmark_Redirect_Route_WithFlashMessages(b *testing.B) {
+func BenchmarkRedirectRouteWithFlashMessages(b *testing.B) {
 	app := New()
 	app.Get("/user", func(c Ctx) error {
 		return c.SendString("user")
@@ -421,7 +421,7 @@ func Benchmark_Redirect_Route_WithFlashMessages(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_setFlash -benchmem -count=4
-func Benchmark_Redirect_setFlash(b *testing.B) {
+func BenchmarkRedirectsetFlash(b *testing.B) {
 	app := New()
 	app.Get("/user", func(c Ctx) error {
 		return c.SendString("user")
@@ -450,7 +450,7 @@ func Benchmark_Redirect_setFlash(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_Messages -benchmem -count=4
-func Benchmark_Redirect_Messages(b *testing.B) {
+func BenchmarkRedirectMessages(b *testing.B) {
 	app := New()
 	app.Get("/user", func(c Ctx) error {
 		return c.SendString("user")
@@ -475,7 +475,7 @@ func Benchmark_Redirect_Messages(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_OldInputs -benchmem -count=4
-func Benchmark_Redirect_OldInputs(b *testing.B) {
+func BenchmarkRedirectOldInputs(b *testing.B) {
 	app := New()
 	app.Get("/user", func(c Ctx) error {
 		return c.SendString("user")
@@ -500,7 +500,7 @@ func Benchmark_Redirect_OldInputs(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_Message -benchmem -count=4
-func Benchmark_Redirect_Message(b *testing.B) {
+func BenchmarkRedirectMessage(b *testing.B) {
 	app := New()
 	app.Get("/user", func(c Ctx) error {
 		return c.SendString("user")
@@ -525,7 +525,7 @@ func Benchmark_Redirect_Message(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_OldInput -benchmem -count=4
-func Benchmark_Redirect_OldInput(b *testing.B) {
+func BenchmarkRedirectOldInput(b *testing.B) {
 	app := New()
 	app.Get("/user", func(c Ctx) error {
 		return c.SendString("user")

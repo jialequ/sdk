@@ -1598,7 +1598,7 @@ func TestClientSetRetryConfig(t *testing.T) {
 	require.Equal(t, retryConfig.MaxRetryCount, client.RetryConfig().MaxRetryCount)
 }
 
-func Benchmark_Client_Request(b *testing.B) {
+func BenchmarkClientRequest(b *testing.B) {
 	app, dial, start := createHelperServer(b)
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString(literal_5310)
@@ -1620,7 +1620,7 @@ func Benchmark_Client_Request(b *testing.B) {
 	require.NoError(b, err)
 }
 
-func Benchmark_Client_Request_Parallel(b *testing.B) {
+func BenchmarkClientRequestParallel(b *testing.B) {
 	app, dial, start := createHelperServer(b)
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString(literal_5310)

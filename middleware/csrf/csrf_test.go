@@ -1322,7 +1322,7 @@ func TestCSRFCookieInjectionExploit(t *testing.T) {
 // }
 
 // go test -v -run=^$ -bench=Benchmark_Middleware_CSRF_Check -benchmem -count=4
-func Benchmark_Middleware_CSRF_Check(b *testing.B) {
+func BenchmarkMiddlewareCSRFCheck(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New())
@@ -1367,7 +1367,7 @@ func Benchmark_Middleware_CSRF_Check(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Middleware_CSRF_GenerateToken -benchmem -count=4
-func Benchmark_Middleware_CSRF_GenerateToken(b *testing.B) {
+func BenchmarkMiddlewareCSRFGenerateToken(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New())

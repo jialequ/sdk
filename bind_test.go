@@ -628,7 +628,7 @@ func TestBindRespHeaderMap(t *testing.T) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_Query -benchmem -count=4
-func Benchmark_Bind_Query(b *testing.B) {
+func BenchmarkBindQuery(b *testing.B) {
 	var err error
 
 	app := New()
@@ -652,7 +652,7 @@ func Benchmark_Bind_Query(b *testing.B) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_Query_Map -benchmem -count=4
-func Benchmark_Bind_Query_Map(b *testing.B) {
+func BenchmarkBindQueryMap(b *testing.B) {
 	var err error
 
 	app := New()
@@ -671,7 +671,7 @@ func Benchmark_Bind_Query_Map(b *testing.B) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_Query_WithParseParam -benchmem -count=4
-func Benchmark_Bind_Query_WithParseParam(b *testing.B) {
+func BenchmarkBindQueryWithParseParam(b *testing.B) {
 	var err error
 
 	app := New()
@@ -701,7 +701,7 @@ func Benchmark_Bind_Query_WithParseParam(b *testing.B) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_Query_Comma -benchmem -count=4
-func Benchmark_Bind_Query_Comma(b *testing.B) {
+func BenchmarkBindQueryComma(b *testing.B) {
 	var err error
 
 	app := New()
@@ -725,7 +725,7 @@ func Benchmark_Bind_Query_Comma(b *testing.B) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_Header -benchmem -count=4
-func Benchmark_Bind_Header(b *testing.B) {
+func BenchmarkBindHeader(b *testing.B) {
 	var err error
 
 	app := New()
@@ -753,7 +753,7 @@ func Benchmark_Bind_Header(b *testing.B) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_Header_Map -benchmem -count=4
-func Benchmark_Bind_Header_Map(b *testing.B) {
+func BenchmarkBindHeaderMap(b *testing.B) {
 	var err error
 	app := New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
@@ -775,7 +775,7 @@ func Benchmark_Bind_Header_Map(b *testing.B) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_RespHeader -benchmem -count=4
-func Benchmark_Bind_RespHeader(b *testing.B) {
+func BenchmarkBindRespHeader(b *testing.B) {
 	var err error
 
 	app := New()
@@ -803,7 +803,7 @@ func Benchmark_Bind_RespHeader(b *testing.B) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_RespHeader_Map -benchmem -count=4
-func Benchmark_Bind_RespHeader_Map(b *testing.B) {
+func BenchmarkBindRespHeaderMap(b *testing.B) {
 	var err error
 	app := New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
@@ -953,7 +953,7 @@ func TestBindBodyWithSetParserDecoder(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Bind_Body_JSON -benchmem -count=4
-func Benchmark_Bind_Body_JSON(b *testing.B) {
+func BenchmarkBindBodyJSON(b *testing.B) {
 	var err error
 
 	app := New()
@@ -979,7 +979,7 @@ func Benchmark_Bind_Body_JSON(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Bind_Body_XML -benchmem -count=4
-func Benchmark_Bind_Body_XML(b *testing.B) {
+func BenchmarkBindBodyXML(b *testing.B) {
 	var err error
 
 	app := New()
@@ -1005,7 +1005,7 @@ func Benchmark_Bind_Body_XML(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Bind_Body_Form -benchmem -count=4
-func Benchmark_Bind_Body_Form(b *testing.B) {
+func BenchmarkBindBodyForm(b *testing.B) {
 	var err error
 
 	app := New()
@@ -1031,7 +1031,7 @@ func Benchmark_Bind_Body_Form(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Bind_Body_MultipartForm -benchmem -count=4
-func Benchmark_Bind_Body_MultipartForm(b *testing.B) {
+func BenchmarkBindBodyMultipartForm(b *testing.B) {
 	var err error
 
 	app := New()
@@ -1058,7 +1058,7 @@ func Benchmark_Bind_Body_MultipartForm(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Bind_Body_Form_Map -benchmem -count=4
-func Benchmark_Bind_Body_Form_Map(b *testing.B) {
+func BenchmarkBindBodyFormMap(b *testing.B) {
 	var err error
 
 	app := New()
@@ -1126,7 +1126,7 @@ func TestBindURIMap(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Bind_URI -benchmem -count=4
-func Benchmark_Bind_URI(b *testing.B) {
+func BenchmarkBindURI(b *testing.B) {
 	var err error
 
 	app := New()
@@ -1163,7 +1163,7 @@ func Benchmark_Bind_URI(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Bind_URI_Map -benchmem -count=4
-func Benchmark_Bind_URI_Map(b *testing.B) {
+func BenchmarkBindURIMap(b *testing.B) {
 	var err error
 
 	app := New()
@@ -1438,7 +1438,7 @@ func TestBindCookieSchema(t *testing.T) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_Cookie -benchmem -count=4
-func Benchmark_Bind_Cookie(b *testing.B) {
+func BenchmarkBindCookie(b *testing.B) {
 	var err error
 
 	app := New()
@@ -1467,7 +1467,7 @@ func Benchmark_Bind_Cookie(b *testing.B) {
 }
 
 // go test -v  -run=^$ -bench=Benchmark_Bind_Cookie_Map -benchmem -count=4
-func Benchmark_Bind_Cookie_Map(b *testing.B) {
+func BenchmarkBindCookieMap(b *testing.B) {
 	var err error
 
 	app := New()

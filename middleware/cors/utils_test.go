@@ -112,7 +112,7 @@ func TestNormalizeDomain(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_CORS_SubdomainMatch -benchmem -count=4
-func Benchmark_CORS_SubdomainMatch(b *testing.B) {
+func BenchmarkCORSSubdomainMatch(b *testing.B) {
 	s := subdomain{
 		prefix: "www",
 		suffix: literal_5187,

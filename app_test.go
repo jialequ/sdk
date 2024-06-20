@@ -1103,7 +1103,7 @@ func TestAppNextMethod(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_NewError -benchmem -count=4
-func Benchmark_NewError(b *testing.B) {
+func BenchmarkNewError(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		NewError(200, "test") //nolint:errcheck // not needed
 	}
@@ -1661,7 +1661,7 @@ func TestRouteNamingIssue26712685(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Communication_Flow -benchmem -count=4
-func Benchmark_Communication_Flow(b *testing.B) {
+func BenchmarkCommunicationFlow(b *testing.B) {
 	app := New()
 
 	app.Get("/", func(c Ctx) error {
@@ -1686,7 +1686,7 @@ func Benchmark_Communication_Flow(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Ctx_AcquireReleaseFlow -benchmem -count=4
-func Benchmark_Ctx_AcquireReleaseFlow(b *testing.B) {
+func BenchmarkCtxAcquireReleaseFlow(b *testing.B) {
 	app := New()
 
 	fctx := &fasthttp.RequestCtx{}

@@ -164,7 +164,7 @@ func TestHealthCheckNext(t *testing.T) {
 	shouldGiveNotFound(t, app, literal_4182)
 }
 
-func Benchmark_HealthCheck(b *testing.B) {
+func BenchmarkHealthCheck(b *testing.B) {
 	app := fiber.New()
 
 	app.Get(DefaultLivenessEndpoint, NewHealthChecker())
@@ -185,7 +185,7 @@ func Benchmark_HealthCheck(b *testing.B) {
 	require.Equal(b, fiber.StatusOK, fctx.Response.Header.StatusCode())
 }
 
-func Benchmark_HealthCheck_Parallel(b *testing.B) {
+func BenchmarkHealthCheckParallel(b *testing.B) {
 	app := fiber.New()
 
 	app.Get(DefaultLivenessEndpoint, NewHealthChecker())

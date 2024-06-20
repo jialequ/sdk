@@ -263,7 +263,7 @@ func TestETagCustomEtagPut(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Etag -benchmem -count=4
-func Benchmark_Etag(b *testing.B) {
+func BenchmarkEtag(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New())

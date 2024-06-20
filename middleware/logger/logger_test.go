@@ -439,7 +439,7 @@ func TestLoggerDataRace(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Logger -benchmem -count=4
-func Benchmark_Logger(b *testing.B) {
+func BenchmarkLogger(b *testing.B) {
 	benchSetup := func(b *testing.B, app *fiber.App) {
 		b.Helper()
 

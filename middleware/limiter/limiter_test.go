@@ -568,7 +568,7 @@ func TestLimiterSlidingWindowCustomStorageSkipSuccessfulRequests(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Limiter_Custom_Store -benchmem -count=4
-func Benchmark_Limiter_Custom_Store(b *testing.B) {
+func BenchmarkLimiterCustomStore(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New(Config{
@@ -638,7 +638,7 @@ func TestLimiterHeaders(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Limiter -benchmem -count=4
-func Benchmark_Limiter(b *testing.B) {
+func BenchmarkLimiter(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New(Config{

@@ -1450,7 +1450,7 @@ func TestSetValWithStruct(t *testing.T) {
 	})
 }
 
-func Benchmark_SetValWithStruct(b *testing.B) {
+func BenchmarkSetValWithStruct(b *testing.B) {
 	// test SetValWithStruct vai QueryParam struct.
 	type args struct {
 		unexport  int

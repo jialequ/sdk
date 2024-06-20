@@ -56,7 +56,7 @@ func TestMemory(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Memory -benchmem -count=4
-func Benchmark_Memory(b *testing.B) {
+func BenchmarkMemory(b *testing.B) {
 	keyLength := 1000
 	keys := make([]string, keyLength)
 	for i := 0; i < keyLength; i++ {

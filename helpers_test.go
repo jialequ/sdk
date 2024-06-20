@@ -63,7 +63,7 @@ func TestUtilsGetOffer(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Utils_GetOffer -benchmem -count=4
-func Benchmark_Utils_GetOffer(b *testing.B) {
+func BenchmarkUtilsGetOffer(b *testing.B) {
 	testCases := []struct {
 		description string
 		accept      string
@@ -198,7 +198,7 @@ func TestUtilsParamsMatch(t *testing.T) {
 	}
 }
 
-func Benchmark_Utils_ParamsMatch(b *testing.B) {
+func BenchmarkUtilsParamsMatch(b *testing.B) {
 	var match bool
 
 	specParams := headerParams{
@@ -313,7 +313,7 @@ func TestUtilsGetSplicedStrList(t *testing.T) {
 	}
 }
 
-func Benchmark_Utils_GetSplicedStrList(b *testing.B) {
+func BenchmarkUtilsGetSplicedStrList(b *testing.B) {
 	destination := make([]string, 5)
 	result := destination
 	const input = `deflate, gzip,br,brotli`
@@ -357,7 +357,7 @@ func TestUtilsSortAcceptedTypes(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Utils_SortAcceptedTypes_Sorted -benchmem -count=4
-func Benchmark_Utils_SortAcceptedTypes_Sorted(b *testing.B) {
+func BenchmarkUtilsSortAcceptedTypesSorted(b *testing.B) {
 	acceptedTypes := make([]acceptedType, 3)
 	for n := 0; n < b.N; n++ {
 		acceptedTypes[0] = acceptedType{spec: literal_3801, quality: 1, specificity: 1, order: 0}
@@ -371,7 +371,7 @@ func Benchmark_Utils_SortAcceptedTypes_Sorted(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Utils_SortAcceptedTypes_Unsorted -benchmem -count=4
-func Benchmark_Utils_SortAcceptedTypes_Unsorted(b *testing.B) {
+func BenchmarkUtilsSortAcceptedTypesUnsorted(b *testing.B) {
 	acceptedTypes := make([]acceptedType, 11)
 	for n := 0; n < b.N; n++ {
 		acceptedTypes[0] = acceptedType{spec: literal_3801, quality: 1, specificity: 3, order: 0}
@@ -453,7 +453,7 @@ func TestUtilsgetGroupPath(t *testing.T) {
 
 // go test -v -run=^$ -bench=Benchmark_Utils_ -benchmem -count=3
 
-func Benchmark_Utils_getGroupPath(b *testing.B) {
+func BenchmarkUtilsgetGroupPath(b *testing.B) {
 	var res string
 	for n := 0; n < b.N; n++ {
 		_ = getGroupPath("/v1/long/path/john/doe", "/why/this/name/is/so/awesome")
@@ -464,7 +464,7 @@ func Benchmark_Utils_getGroupPath(b *testing.B) {
 	require.Equal(b, "/v1/api/register/:project", res)
 }
 
-func Benchmark_Utils_Unescape(b *testing.B) {
+func BenchmarkUtilsUnescape(b *testing.B) {
 	unescaped := ""
 	dst := make([]byte, 0)
 
@@ -527,7 +527,7 @@ func TestUtilsIsNoCache(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Utils_IsNoCache -benchmem -count=4
-func Benchmark_Utils_IsNoCache(b *testing.B) {
+func BenchmarkUtilsIsNoCache(b *testing.B) {
 	var ok bool
 	for i := 0; i < b.N; i++ {
 		_ = isNoCache("public")
@@ -541,7 +541,7 @@ func Benchmark_Utils_IsNoCache(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_SlashRecognition -benchmem -count=4
-func Benchmark_SlashRecognition(b *testing.B) {
+func BenchmarkSlashRecognition(b *testing.B) {
 	search := "wtf/1234"
 	var result bool
 	b.Run("indexBytes", func(b *testing.B) {

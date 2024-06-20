@@ -634,7 +634,7 @@ func TestSessionRegenerate(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Session -benchmem -count=4
-func Benchmark_Session(b *testing.B) {
+func BenchmarkSession(b *testing.B) {
 	b.Run("default", func(b *testing.B) {
 		app, store := fiber.New(), New()
 		c := app.AcquireCtx(&fasthttp.RequestCtx{})
@@ -670,7 +670,7 @@ func Benchmark_Session(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Session_Parallel -benchmem -count=4
-func Benchmark_Session_Parallel(b *testing.B) {
+func BenchmarkSessionParallel(b *testing.B) {
 	b.Run("default", func(b *testing.B) {
 		app, store := fiber.New(), New()
 		b.ReportAllocs()
@@ -710,7 +710,7 @@ func Benchmark_Session_Parallel(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Session_Asserted -benchmem -count=4
-func Benchmark_Session_Asserted(b *testing.B) {
+func BenchmarkSessionAsserted(b *testing.B) {
 	b.Run("default", func(b *testing.B) {
 		app, store := fiber.New(), New()
 		c := app.AcquireCtx(&fasthttp.RequestCtx{})
@@ -750,7 +750,7 @@ func Benchmark_Session_Asserted(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Session_Asserted_Parallel -benchmem -count=4
-func Benchmark_Session_Asserted_Parallel(b *testing.B) {
+func BenchmarkSessionAssertedParallel(b *testing.B) {
 	b.Run("default", func(b *testing.B) {
 		app, store := fiber.New(), New()
 		b.ReportAllocs()

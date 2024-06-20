@@ -154,7 +154,7 @@ func TestMiddlewareFaviconCacheControl(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Middleware_Favicon -benchmem -count=4
-func Benchmark_Middleware_Favicon(b *testing.B) {
+func BenchmarkMiddlewareFavicon(b *testing.B) {
 	app := fiber.New()
 	app.Use(New())
 	app.Get("/", func(_ fiber.Ctx) error {

@@ -382,7 +382,7 @@ func registerDummyRoutes(app *App) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_App_MethodNotAllowed -benchmem -count=4
-func Benchmark_App_MethodNotAllowed(b *testing.B) {
+func BenchmarkAppMethodNotAllowed(b *testing.B) {
 	app := New()
 	h := func(c Ctx) error {
 		return c.SendString("Hello World!")
@@ -406,7 +406,7 @@ func Benchmark_App_MethodNotAllowed(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Router_NotFound -benchmem -count=4
-func Benchmark_Router_NotFound(b *testing.B) {
+func BenchmarkRouterNotFound(b *testing.B) {
 	app := New()
 	app.Use(func(c Ctx) error {
 		return c.Next()
@@ -427,7 +427,7 @@ func Benchmark_Router_NotFound(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Router_Handler -benchmem -count=4
-func Benchmark_Router_Handler(b *testing.B) {
+func BenchmarkRouterHandler(b *testing.B) {
 	app := New()
 	registerDummyRoutes(app)
 	appHandler := app.Handler()
@@ -444,7 +444,7 @@ func Benchmark_Router_Handler(b *testing.B) {
 	}
 }
 
-func Benchmark_Router_Handler_Strict_Case(b *testing.B) {
+func BenchmarkRouterHandlerStrictCase(b *testing.B) {
 	app := New(Config{
 		StrictRouting: true,
 		CaseSensitive: true,
@@ -465,7 +465,7 @@ func Benchmark_Router_Handler_Strict_Case(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Router_Chain -benchmem -count=4
-func Benchmark_Router_Chain(b *testing.B) {
+func BenchmarkRouterChain(b *testing.B) {
 	app := New()
 	handler := func(c Ctx) error {
 		return c.Next()
@@ -485,7 +485,7 @@ func Benchmark_Router_Chain(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Router_WithCompression -benchmem -count=4
-func Benchmark_Router_WithCompression(b *testing.B) {
+func BenchmarkRouterWithCompression(b *testing.B) {
 	app := New()
 	handler := func(c Ctx) error {
 		return c.Next()
@@ -509,7 +509,7 @@ func Benchmark_Router_WithCompression(b *testing.B) {
 }
 
 // go test -run=^$ -bench=Benchmark_Startup_Process -benchmem -count=9
-func Benchmark_Startup_Process(b *testing.B) {
+func BenchmarkStartupProcess(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		app := New()
 		registerDummyRoutes(app)
@@ -518,7 +518,7 @@ func Benchmark_Startup_Process(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Router_Next -benchmem -count=4
-func Benchmark_Router_Next(b *testing.B) {
+func BenchmarkRouterNext(b *testing.B) {
 	app := New()
 	registerDummyRoutes(app)
 	app.startupProcess()
@@ -543,7 +543,7 @@ func Benchmark_Router_Next(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Route_Match -benchmem -count=4
-func Benchmark_Route_Match(b *testing.B) {
+func BenchmarkRouteMatch(b *testing.B) {
 	var match bool
 	var params [maxParams]string
 
@@ -572,7 +572,7 @@ func Benchmark_Route_Match(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Route_Match_Star -benchmem -count=4
-func Benchmark_Route_Match_Star(b *testing.B) {
+func BenchmarkRouteMatchStar(b *testing.B) {
 	var match bool
 	var params [maxParams]string
 
@@ -602,7 +602,7 @@ func Benchmark_Route_Match_Star(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Route_Match_Root -benchmem -count=4
-func Benchmark_Route_Match_Root(b *testing.B) {
+func BenchmarkRouteMatchRoot(b *testing.B) {
 	var match bool
 	var params [maxParams]string
 
@@ -633,7 +633,7 @@ func Benchmark_Route_Match_Root(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Router_Handler_CaseSensitive -benchmem -count=4
-func Benchmark_Router_Handler_CaseSensitive(b *testing.B) {
+func BenchmarkRouterHandlerCaseSensitive(b *testing.B) {
 	app := New()
 	app.config.CaseSensitive = true
 	registerDummyRoutes(app)
@@ -652,7 +652,7 @@ func Benchmark_Router_Handler_CaseSensitive(b *testing.B) {
 }
 
 // go test -v ./... -run=^$ -bench=Benchmark_Router_Handler_Unescape -benchmem -count=4
-func Benchmark_Router_Handler_Unescape(b *testing.B) {
+func BenchmarkRouterHandlerUnescape(b *testing.B) {
 	app := New()
 	app.config.UnescapePath = true
 	registerDummyRoutes(app)
@@ -676,7 +676,7 @@ func Benchmark_Router_Handler_Unescape(b *testing.B) {
 }
 
 // go test -run=^$ -bench=Benchmark_Router_Handler_StrictRouting -benchmem -count=4
-func Benchmark_Router_Handler_StrictRouting(b *testing.B) {
+func BenchmarkRouterHandlerStrictRouting(b *testing.B) {
 	app := New()
 	app.config.CaseSensitive = true
 	registerDummyRoutes(app)
@@ -695,7 +695,7 @@ func Benchmark_Router_Handler_StrictRouting(b *testing.B) {
 }
 
 // go test -run=^$ -bench=Benchmark_Router_Github_API -benchmem -count=16
-func Benchmark_Router_Github_API(b *testing.B) {
+func BenchmarkRouterGithubAPI(b *testing.B) {
 	app := New()
 	registerDummyRoutes(app)
 	app.startupProcess()

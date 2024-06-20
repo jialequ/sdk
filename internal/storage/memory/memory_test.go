@@ -203,7 +203,7 @@ func TestStorageMemoryConn(t *testing.T) {
 }
 
 // Benchmarks for Set operation
-func Benchmark_Memory_Set(b *testing.B) {
+func BenchmarkMemorySet(b *testing.B) {
 	testStore := New()
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -213,7 +213,7 @@ func Benchmark_Memory_Set(b *testing.B) {
 	}
 }
 
-func Benchmark_Memory_Set_Parallel(b *testing.B) {
+func BenchmarkMemorySetParallel(b *testing.B) {
 	testStore := New()
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -225,7 +225,7 @@ func Benchmark_Memory_Set_Parallel(b *testing.B) {
 	})
 }
 
-func Benchmark_Memory_Set_Asserted(b *testing.B) {
+func BenchmarkMemorySetAsserted(b *testing.B) {
 	testStore := New()
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -236,7 +236,7 @@ func Benchmark_Memory_Set_Asserted(b *testing.B) {
 	}
 }
 
-func Benchmark_Memory_Set_Asserted_Parallel(b *testing.B) {
+func BenchmarkMemorySetAssertedParallel(b *testing.B) {
 	testStore := New()
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -250,7 +250,7 @@ func Benchmark_Memory_Set_Asserted_Parallel(b *testing.B) {
 }
 
 // Benchmarks for Get operation
-func Benchmark_Memory_Get(b *testing.B) {
+func BenchmarkMemoryGet(b *testing.B) {
 	testStore := New()
 	err := testStore.Set("john", []byte("doe"), 0)
 	require.NoError(b, err)
@@ -263,7 +263,7 @@ func Benchmark_Memory_Get(b *testing.B) {
 	}
 }
 
-func Benchmark_Memory_Get_Parallel(b *testing.B) {
+func BenchmarkMemoryGetParallel(b *testing.B) {
 	testStore := New()
 	err := testStore.Set("john", []byte("doe"), 0)
 	require.NoError(b, err)
@@ -278,7 +278,7 @@ func Benchmark_Memory_Get_Parallel(b *testing.B) {
 	})
 }
 
-func Benchmark_Memory_Get_Asserted(b *testing.B) {
+func BenchmarkMemoryGetAsserted(b *testing.B) {
 	testStore := New()
 	err := testStore.Set("john", []byte("doe"), 0)
 	require.NoError(b, err)
@@ -292,7 +292,7 @@ func Benchmark_Memory_Get_Asserted(b *testing.B) {
 	}
 }
 
-func Benchmark_Memory_Get_Asserted_Parallel(b *testing.B) {
+func BenchmarkMemoryGetAssertedParallel(b *testing.B) {
 	testStore := New()
 	err := testStore.Set("john", []byte("doe"), 0)
 	require.NoError(b, err)
@@ -309,7 +309,7 @@ func Benchmark_Memory_Get_Asserted_Parallel(b *testing.B) {
 }
 
 // Benchmarks for SetAndDelete operation
-func Benchmark_Memory_SetAndDelete(b *testing.B) {
+func BenchmarkMemorySetAndDelete(b *testing.B) {
 	testStore := New()
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -320,7 +320,7 @@ func Benchmark_Memory_SetAndDelete(b *testing.B) {
 	}
 }
 
-func Benchmark_Memory_SetAndDelete_Parallel(b *testing.B) {
+func BenchmarkMemorySetAndDeleteParallel(b *testing.B) {
 	testStore := New()
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -333,7 +333,7 @@ func Benchmark_Memory_SetAndDelete_Parallel(b *testing.B) {
 	})
 }
 
-func Benchmark_Memory_SetAndDelete_Asserted(b *testing.B) {
+func BenchmarkMemorySetAndDeleteAsserted(b *testing.B) {
 	testStore := New()
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -347,7 +347,7 @@ func Benchmark_Memory_SetAndDelete_Asserted(b *testing.B) {
 	}
 }
 
-func Benchmark_Memory_SetAndDelete_Asserted_Parallel(b *testing.B) {
+func BenchmarkMemorySetAndDeleteAssertedParallel(b *testing.B) {
 	testStore := New()
 	b.ReportAllocs()
 	b.ResetTimer()

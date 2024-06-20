@@ -92,7 +92,7 @@ func TestMiddlewareBasicAuth(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Middleware_BasicAuth -benchmem -count=4
-func Benchmark_Middleware_BasicAuth(b *testing.B) {
+func BenchmarkMiddlewareBasicAuth(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New(Config{
@@ -122,7 +122,7 @@ func Benchmark_Middleware_BasicAuth(b *testing.B) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_Middleware_BasicAuth -benchmem -count=4
-func Benchmark_Middleware_BasicAuth_Upper(b *testing.B) {
+func BenchmarkMiddlewareBasicAuthUpper(b *testing.B) {
 	app := fiber.New()
 
 	app.Use(New(Config{

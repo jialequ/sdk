@@ -121,7 +121,7 @@ func TestSubdomainMatch(t *testing.T) {
 }
 
 // go test -v -run=^$ -bench=Benchmark_CSRF_SubdomainMatch -benchmem -count=4
-func Benchmark_CSRF_SubdomainMatch(b *testing.B) {
+func BenchmarkCSRFSubdomainMatch(b *testing.B) {
 	s := subdomain{
 		prefix: "www",
 		suffix: literal_2651,

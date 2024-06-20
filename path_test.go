@@ -195,7 +195,7 @@ func TestUtilsRemoveEscapeChar(t *testing.T) {
 	require.Equal(t, "noEscapeChar", res)
 }
 
-func Benchmark_Utils_RemoveEscapeChar(b *testing.B) {
+func BenchmarkUtilsRemoveEscapeChar(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 	var res string
@@ -207,7 +207,7 @@ func Benchmark_Utils_RemoveEscapeChar(b *testing.B) {
 }
 
 // go test -race -run Test_Path_matchParams
-func Benchmark_Path_matchParams(t *testing.B) {
+func BenchmarkPathmatchParams(t *testing.B) {
 	var ctxParams [maxParams]string
 	benchCaseFn := func(testCollection routeCaseCollection) {
 		parser := parseRoute(testCollection.pattern)
@@ -238,7 +238,7 @@ func Benchmark_Path_matchParams(t *testing.B) {
 }
 
 // go test -race -run Test_RoutePatternMatch
-func Benchmark_RoutePatternMatch(t *testing.B) {
+func BenchmarkRoutePatternMatch(t *testing.B) {
 	benchCaseFn := func(testCollection routeCaseCollection) {
 		for _, c := range testCollection.testCases {
 			// skip all cases for partial checks

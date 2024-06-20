@@ -407,7 +407,7 @@ func TestConvertRequest(t *testing.T) {
 }
 
 // Benchmark for FiberHandlerFunc
-func Benchmark_FiberHandlerFunc(b *testing.B) {
+func BenchmarkFiberHandlerFunc(b *testing.B) {
 	benchmarks := []struct {
 		name        string
 		bodyContent []byte
@@ -471,7 +471,7 @@ func Benchmark_FiberHandlerFunc(b *testing.B) {
 	}
 }
 
-func Benchmark_FiberHandlerFunc_Parallel(b *testing.B) {
+func BenchmarkFiberHandlerFuncParallel(b *testing.B) {
 	benchmarks := []struct {
 		name        string
 		bodyContent []byte
