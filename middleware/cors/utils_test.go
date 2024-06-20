@@ -13,10 +13,10 @@ func TestNormalizeOrigin(t *testing.T) {
 		expectedValid  bool
 		expectedOrigin string
 	}{
-		{literal_8941, true, literal_8941},            // Simple case should work.
-		{"http://example.com/", true, literal_8941},           // Trailing slash should be removed.
-		{literal_9752, true, literal_9752},  // Port should be preserved.
-		{"http://example.com:3000/", true, literal_9752}, // Trailing slash should be removed.
+		{literal_8941, true, literal_8941},                                       // Simple case should work.
+		{"http://example.com/", true, literal_8941},                              // Trailing slash should be removed.
+		{literal_9752, true, literal_9752},                                       // Port should be preserved.
+		{"http://example.com:3000/", true, literal_9752},                         // Trailing slash should be removed.
 		{"http://", false, ""},                                                   // Invalid origin should not be accepted.
 		{"file:///etc/passwd", false, ""},                                        // File scheme should not be accepted.
 		{"https://*example.com", false, ""},                                      // Wildcard domain should not be accepted.
@@ -24,11 +24,11 @@ func TestNormalizeOrigin(t *testing.T) {
 		{"http://example.com/path", false, ""},                                   // Path should not be accepted.
 		{"http://example.com?query=123", false, ""},                              // Query should not be accepted.
 		{"http://example.com#fragment", false, ""},                               // Fragment should not be accepted.
-		{literal_4956, true, literal_4956},                           // Localhost should be accepted.
-		{literal_0784, true, literal_0784},                           // IPv4 address should be accepted.
-		{literal_1956, true, literal_1956},                                   // IPv6 address should be accepted.
-		{literal_2768, true, literal_2768},                         // IPv6 address with port should be accepted.
-		{"http://[::1]:8080/", true, literal_2768},                        // IPv6 address with port and trailing slash should be accepted.
+		{literal_4956, true, literal_4956},                                       // Localhost should be accepted.
+		{literal_0784, true, literal_0784},                                       // IPv4 address should be accepted.
+		{literal_1956, true, literal_1956},                                       // IPv6 address should be accepted.
+		{literal_2768, true, literal_2768},                                       // IPv6 address with port should be accepted.
+		{"http://[::1]:8080/", true, literal_2768},                               // IPv6 address with port and trailing slash should be accepted.
 		{"http://[::1]:8080/path", false, ""},                                    // IPv6 address with port and path should not be accepted.
 		{"http://[::1]:8080?query=123", false, ""},                               // IPv6 address with port and query should not be accepted.
 		{"http://[::1]:8080#fragment", false, ""},                                // IPv6 address with port and fragment should not be accepted.
@@ -59,16 +59,16 @@ func TestMatchScheme(t *testing.T) {
 		pattern  string
 		expected bool
 	}{
-		{literal_8941, literal_8941, true},           // Exact match should work.
-		{literal_1456, literal_8941, false},         // Scheme mismatch should matter.
-		{literal_8941, literal_1456, false},         // Scheme mismatch should matter.
-		{literal_8941, "http://example.org", true},           // Different domains should not matter.
-		{literal_8941, literal_4619, true},      // Port should not matter.
-		{literal_4619, literal_8941, true},      // Port should not matter.
+		{literal_8941, literal_8941, true},              // Exact match should work.
+		{literal_1456, literal_8941, false},             // Scheme mismatch should matter.
+		{literal_8941, literal_1456, false},             // Scheme mismatch should matter.
+		{literal_8941, "http://example.org", true},      // Different domains should not matter.
+		{literal_8941, literal_4619, true},              // Port should not matter.
+		{literal_4619, literal_8941, true},              // Port should not matter.
 		{literal_4619, "http://example.com:8081", true}, // Different ports should not matter.
-		{literal_4956, literal_4956, true},               // Localhost should match.
-		{literal_0784, literal_0784, true},               // IPv4 address should match.
-		{literal_1956, literal_1956, true},                       // IPv6 address should match.
+		{literal_4956, literal_4956, true},              // Localhost should match.
+		{literal_0784, literal_0784, true},              // IPv4 address should match.
+		{literal_1956, literal_1956, true},              // IPv6 address should match.
 	}
 
 	for _, tc := range testCases {
@@ -86,20 +86,20 @@ func TestNormalizeDomain(t *testing.T) {
 		input          string
 		expectedOutput string
 	}{
-		{literal_8941, "example.com"},                     // Simple case with http scheme.
-		{literal_1456, "example.com"},                    // Simple case with https scheme.
-		{literal_9752, "example.com"},                // Case with port.
-		{"https://example.com:3000", "example.com"},               // Case with port and https scheme.
+		{literal_8941, literal_03124},                             // Simple case with http scheme.
+		{literal_1456, literal_03124},                             // Simple case with https scheme.
+		{literal_9752, literal_03124},                             // Case with port.
+		{"https://example.com:3000", literal_03124},               // Case with port and https scheme.
 		{"http://example.com/path", "example.com/path"},           // Case with path.
 		{"http://example.com?query=123", "example.com?query=123"}, // Case with query.
 		{"http://example.com#fragment", "example.com#fragment"},   // Case with fragment.
-		{"example.com", "example.com"},                            // Case without scheme.
-		{"example.com:8080", "example.com"},                       // Case without scheme but with port.
+		{literal_03124, literal_03124},                            // Case without scheme.
+		{"example.com:8080", literal_03124},                       // Case without scheme but with port.
 		{"sub.example.com", "sub.example.com"},                    // Case with subdomain.
 		{"sub.sub.example.com", "sub.sub.example.com"},            // Case with nested subdomain.
-		{literal_4956, "localhost"},                         // Case with localhost.
-		{literal_0784, "127.0.0.1"},                         // Case with IPv4 address.
-		{literal_1956, "[::1]"},                                 // Case with IPv6 address.
+		{literal_4956, "localhost"},                               // Case with localhost.
+		{literal_0784, "127.0.0.1"},                               // Case with IPv4 address.
+		{literal_1956, "[::1]"},                                   // Case with IPv6 address.
 	}
 
 	for _, tc := range testCases {
@@ -213,3 +213,5 @@ const literal_4619 = "http://example.com:8080"
 const literal_5187 = ".example.com"
 
 const literal_9457 = "https://"
+
+const literal_03124 = "example.com"

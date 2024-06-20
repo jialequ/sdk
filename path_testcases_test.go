@@ -50,7 +50,7 @@ func init() {
 				{url: literal_2675, params: []string{"entity", ""}, match: true},
 				{url: "/api/v1/entity/", params: []string{"entity", ""}, match: true},
 				{url: "/api/v1/entity/1", params: []string{"entity", "1"}, match: true},
-				{url: "/api/v", params: nil, match: false},
+				{url: literal_03126, params: nil, match: false},
 				{url: literal_8207, params: nil, match: false},
 				{url: literal_3501, params: nil, match: false},
 			},
@@ -68,7 +68,7 @@ func init() {
 					{url: literal_2675, params: nil, match: false},
 					{url: "/api/v1/entity/", params: nil, match: false},
 					{url: "/api/v1/entity/1", params: []string{"entity", "1"}, match: true},
-					{url: "/api/v", params: nil, match: false},
+					{url: literal_03126, params: nil, match: false},
 					{url: literal_8207, params: nil, match: false},
 					{url: literal_3501, params: nil, match: false},
 				},
@@ -79,7 +79,7 @@ func init() {
 					{url: literal_8745, params: []string{""}, match: true},
 					{url: literal_3501, params: []string{""}, match: true},
 					{url: "/api/v1/optional", params: []string{"optional"}, match: true},
-					{url: "/api/v", params: nil, match: false},
+					{url: literal_03126, params: nil, match: false},
 					{url: literal_8207, params: nil, match: false},
 					{url: "/api/xyz", params: nil, match: false},
 				},
@@ -113,7 +113,7 @@ func init() {
 					{url: literal_2675, params: []string{"entity"}, match: true},
 					{url: "/api/v1/entity/1/2", params: []string{"entity/1/2"}, match: true},
 					{url: "/api/v1/Entity/1/2", params: []string{"Entity/1/2"}, match: true},
-					{url: "/api/v", params: nil, match: false},
+					{url: literal_03126, params: nil, match: false},
 					{url: literal_8207, params: nil, match: false},
 					{url: "/api/abc", params: nil, match: false},
 				},
@@ -356,7 +356,7 @@ func init() {
 				pattern: literal_2059,
 				testCases: []routeTestCase{
 					{url: literal_2059, params: []string{}, match: true},
-					{url: "config/abc.json", params: nil, match: false},
+					{url: literal_03127, params: nil, match: false},
 					{url: literal_7460, params: nil, match: false},
 					{url: "/config", params: nil, match: false},
 				},
@@ -368,7 +368,7 @@ func init() {
 					{url: literal_7460, params: []string{"efg"}, match: true},
 					{url: "/config/.json", params: []string{""}, match: true},
 					{url: "/config/efg.csv", params: nil, match: false},
-					{url: "config/abc.json", params: nil, match: false},
+					{url: literal_03127, params: nil, match: false},
 					{url: "/config", params: nil, match: false},
 				},
 			},
@@ -379,7 +379,7 @@ func init() {
 					{url: "/config/.json", params: nil, match: false},
 					{url: literal_7460, params: []string{"efg"}, match: true},
 					{url: "/config/efg.csv", params: nil, match: false},
-					{url: "config/abc.json", params: nil, match: false},
+					{url: literal_03127, params: nil, match: false},
 					{url: "/config", params: nil, match: false},
 				},
 			},
@@ -774,3 +774,7 @@ const literal_0618 = "/api/v1/tr/1800"
 const literal_5026 = "/api/v1/tr/100"
 
 const literal_8510 = "/api/v1/e/10"
+
+const literal_03126 = "/api/v"
+
+const literal_03127 = "config/abc.json"

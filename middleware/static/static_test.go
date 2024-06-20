@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/stretchr/testify/require"
 )
 
@@ -449,7 +449,7 @@ func TestRouteStaticHasPrefix(t *testing.T) {
 		Browse: true,
 	}))
 
-	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/static", nil))
+	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, literal_03125, nil))
 	require.NoError(t, err, literal_1679)
 	require.Equal(t, 200, resp.StatusCode, literal_1247)
 
@@ -470,7 +470,7 @@ func TestRouteStaticHasPrefix(t *testing.T) {
 		Browse: true,
 	}))
 
-	resp, err = app.Test(httptest.NewRequest(fiber.MethodGet, "/static", nil))
+	resp, err = app.Test(httptest.NewRequest(fiber.MethodGet, literal_03125, nil))
 	require.NoError(t, err, literal_1679)
 	require.Equal(t, 200, resp.StatusCode, literal_1247)
 
@@ -489,7 +489,7 @@ func TestRouteStaticHasPrefix(t *testing.T) {
 	app = fiber.New()
 	app.Get(literal_9034, New(dir))
 
-	resp, err = app.Test(httptest.NewRequest(fiber.MethodGet, "/static", nil))
+	resp, err = app.Test(httptest.NewRequest(fiber.MethodGet, literal_03125, nil))
 	require.NoError(t, err, literal_1679)
 	require.Equal(t, 404, resp.StatusCode, literal_1247)
 
@@ -508,7 +508,7 @@ func TestRouteStaticHasPrefix(t *testing.T) {
 	app = fiber.New()
 	app.Get(literal_9034, New(dir))
 
-	resp, err = app.Test(httptest.NewRequest(fiber.MethodGet, "/static", nil))
+	resp, err = app.Test(httptest.NewRequest(fiber.MethodGet, literal_03125, nil))
 	require.NoError(t, err, literal_1679)
 	require.Equal(t, 404, resp.StatusCode, literal_1247)
 
@@ -751,3 +751,5 @@ const literal_9034 = "/static*"
 const literal_4273 = "/static/"
 
 const literal_6243 = "/static/style.css"
+
+const literal_03125 = "/static"

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp/fasthttputil"
@@ -159,13 +159,13 @@ func TestExecute(t *testing.T) {
 		t.Parallel()
 		core, client, req := newCore(), New(), AcquireRequest()
 		client.AddRequestHook(func(_ *Client, _ *Request) error {
-			require.Equal(t, "http://example.com", req.URL())
+			require.Equal(t, literal_03122, req.URL())
 			return nil
 		})
 		client.SetDial(func(_ string) (net.Conn, error) {
 			return ln.Dial()
 		})
-		req.SetURL("http://example.com")
+		req.SetURL(literal_03122)
 
 		resp, err := core.execute(context.Background(), client, req)
 		require.NoError(t, err)
@@ -176,13 +176,13 @@ func TestExecute(t *testing.T) {
 		t.Parallel()
 		core, client, req := newCore(), New(), AcquireRequest()
 		client.AddResponseHook(func(_ *Client, _ *Response, req *Request) error {
-			require.Equal(t, "http://example.com", req.URL())
+			require.Equal(t, literal_03122, req.URL())
 			return nil
 		})
 		client.SetDial(func(_ string) (net.Conn, error) {
 			return ln.Dial()
 		})
-		req.SetURL("http://example.com")
+		req.SetURL(literal_03122)
 
 		resp, err := core.execute(context.Background(), client, req)
 		require.NoError(t, err)
@@ -252,3 +252,5 @@ const literal_8716 = "example.com"
 const literal_8076 = "the request is error"
 
 const literal_1593 = "http://example.com/hang-up"
+
+const literal_03122 = "http://example.com"

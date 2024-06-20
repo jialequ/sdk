@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/addon/retry"
 	"github.com/jialequ/sdk/internal/tlstest"
 	"github.com/stretchr/testify/assert"
@@ -308,7 +308,7 @@ func TestGet(t *testing.T) {
 			require.NoError(t, app.Shutdown())
 		}()
 
-		resp, err := Get("http://" + addr)
+		resp, err := Get(literal_03121 + addr)
 		require.NoError(t, err)
 		require.Equal(t, "0.0.0.0", utils.UnsafeString(resp.RawResponse.Body()))
 	})
@@ -321,7 +321,7 @@ func TestGet(t *testing.T) {
 			require.NoError(t, app.Shutdown())
 		}()
 
-		resp, err := New().Get("http://" + addr)
+		resp, err := New().Get(literal_03121 + addr)
 		require.NoError(t, err)
 		require.Equal(t, "0.0.0.0", utils.UnsafeString(resp.RawResponse.Body()))
 	})
@@ -348,7 +348,7 @@ func TestHead(t *testing.T) {
 			require.NoError(t, app.Shutdown())
 		}()
 
-		resp, err := Head("http://" + addr)
+		resp, err := Head(literal_03121 + addr)
 		require.NoError(t, err)
 		require.Equal(t, "7", resp.Header(fiber.HeaderContentLength))
 		require.Equal(t, "", utils.UnsafeString(resp.RawResponse.Body()))
@@ -362,7 +362,7 @@ func TestHead(t *testing.T) {
 			require.NoError(t, app.Shutdown())
 		}()
 
-		resp, err := New().Head("http://" + addr)
+		resp, err := New().Head(literal_03121 + addr)
 		require.NoError(t, err)
 		require.Equal(t, "7", resp.Header(fiber.HeaderContentLength))
 		require.Equal(t, "", utils.UnsafeString(resp.RawResponse.Body()))
@@ -392,7 +392,7 @@ func TestPost(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := Post("http://"+addr, Config{
+			resp, err := Post(literal_03121+addr, Config{
 				FormData: map[string]string{
 					"foo": "bar",
 				},
@@ -413,7 +413,7 @@ func TestPost(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := New().Post("http://"+addr, Config{
+			resp, err := New().Post(literal_03121+addr, Config{
 				FormData: map[string]string{
 					"foo": "bar",
 				},
@@ -448,7 +448,7 @@ func TestPut(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := Put("http://"+addr, Config{
+			resp, err := Put(literal_03121+addr, Config{
 				FormData: map[string]string{
 					"foo": "bar",
 				},
@@ -469,7 +469,7 @@ func TestPut(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := New().Put("http://"+addr, Config{
+			resp, err := New().Put(literal_03121+addr, Config{
 				FormData: map[string]string{
 					"foo": "bar",
 				},
@@ -507,7 +507,7 @@ func TestDelete(t *testing.T) {
 		time.Sleep(1 * time.Second)
 
 		for i := 0; i < 5; i++ {
-			resp, err := Delete("http://"+addr, Config{
+			resp, err := Delete(literal_03121+addr, Config{
 				FormData: map[string]string{
 					"foo": "bar",
 				},
@@ -528,7 +528,7 @@ func TestDelete(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := New().Delete("http://"+addr, Config{
+			resp, err := New().Delete(literal_03121+addr, Config{
 				FormData: map[string]string{
 					"foo": "bar",
 				},
@@ -564,7 +564,7 @@ func TestOptions(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := Options("http://" + addr)
+			resp, err := Options(literal_03121 + addr)
 
 			require.NoError(t, err)
 			require.Equal(t, literal_4902, resp.Header(fiber.HeaderAllow))
@@ -582,7 +582,7 @@ func TestOptions(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := New().Options("http://" + addr)
+			resp, err := New().Options(literal_03121 + addr)
 
 			require.NoError(t, err)
 			require.Equal(t, literal_4902, resp.Header(fiber.HeaderAllow))
@@ -616,7 +616,7 @@ func TestPatch(t *testing.T) {
 		time.Sleep(1 * time.Second)
 
 		for i := 0; i < 5; i++ {
-			resp, err := Patch("http://"+addr, Config{
+			resp, err := Patch(literal_03121+addr, Config{
 				FormData: map[string]string{
 					"foo": "bar",
 				},
@@ -637,7 +637,7 @@ func TestPatch(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := New().Patch("http://"+addr, Config{
+			resp, err := New().Patch(literal_03121+addr, Config{
 				FormData: map[string]string{
 					"foo": "bar",
 				},
@@ -672,7 +672,7 @@ func TestClientUserAgent(t *testing.T) {
 		}()
 
 		for i := 0; i < 5; i++ {
-			resp, err := Get("http://" + addr)
+			resp, err := Get(literal_03121 + addr)
 
 			require.NoError(t, err)
 			require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -692,7 +692,7 @@ func TestClientUserAgent(t *testing.T) {
 			c := New().
 				SetUserAgent("ua")
 
-			resp, err := c.Get("http://" + addr)
+			resp, err := c.Get(literal_03121 + addr)
 
 			require.NoError(t, err)
 			require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -1659,3 +1659,5 @@ const literal_8307 = "127.0.0.1:0"
 const literal_6087 = "https://"
 
 const literal_5310 = "hello world"
+
+const literal_03121 = "http://"

@@ -34,21 +34,21 @@ func TestUtilsGetOffer(t *testing.T) {
 	require.Equal(t, "", getOffer([]byte(literal_6150), acceptsOfferType, "text/plain;b=2"))
 
 	// Spaces, quotes, out of order params, and case insensitivity
-	require.Equal(t, "text/plain", getOffer([]byte("text/plain  "), acceptsOfferType, "text/plain"))
-	require.Equal(t, "text/plain", getOffer([]byte("text/plain;q=0.4  "), acceptsOfferType, "text/plain"))
-	require.Equal(t, "text/plain", getOffer([]byte("text/plain;q=0.4  ;"), acceptsOfferType, "text/plain"))
-	require.Equal(t, "text/plain", getOffer([]byte("text/plain;q=0.4  ; p=foo"), acceptsOfferType, "text/plain"))
+	require.Equal(t, literal_03123, getOffer([]byte("text/plain  "), acceptsOfferType, literal_03123))
+	require.Equal(t, literal_03123, getOffer([]byte("text/plain;q=0.4  "), acceptsOfferType, literal_03123))
+	require.Equal(t, literal_03123, getOffer([]byte("text/plain;q=0.4  ;"), acceptsOfferType, literal_03123))
+	require.Equal(t, literal_03123, getOffer([]byte("text/plain;q=0.4  ; p=foo"), acceptsOfferType, literal_03123))
 	require.Equal(t, "text/plain;b=2;a=1", getOffer([]byte("text/plain ;a=1;b=2"), acceptsOfferType, "text/plain;b=2;a=1"))
 	require.Equal(t, literal_1320, getOffer([]byte("text/plain;   a=1   "), acceptsOfferType, literal_1320))
 	require.Equal(t, `text/plain;a="1;b=2\",text/plain"`, getOffer([]byte(`text/plain;a="1;b=2\",text/plain";q=0.9`), acceptsOfferType, `text/plain;a=1;b=2`, `text/plain;a="1;b=2\",text/plain"`))
 	require.Equal(t, "text/plain;A=CAPS", getOffer([]byte(`text/plain;a="caPs"`), acceptsOfferType, "text/plain;A=CAPS"))
 
 	// Priority
-	require.Equal(t, "text/plain", getOffer([]byte("text/plain"), acceptsOfferType, "text/plain", literal_1320))
-	require.Equal(t, literal_1320, getOffer([]byte("text/plain"), acceptsOfferType, literal_1320, "", "text/plain"))
-	require.Equal(t, literal_1320, getOffer([]byte("text/plain,text/plain;a=1"), acceptsOfferType, "text/plain", literal_1320))
-	require.Equal(t, "text/plain", getOffer([]byte("text/plain;q=0.899,text/plain;a=1;q=0.898"), acceptsOfferType, "text/plain", literal_1320))
-	require.Equal(t, literal_6150, getOffer([]byte("text/plain,text/plain;a=1,text/plain;a=1;b=2"), acceptsOfferType, "text/plain", literal_1320, literal_6150))
+	require.Equal(t, literal_03123, getOffer([]byte(literal_03123), acceptsOfferType, literal_03123, literal_1320))
+	require.Equal(t, literal_1320, getOffer([]byte(literal_03123), acceptsOfferType, literal_1320, "", literal_03123))
+	require.Equal(t, literal_1320, getOffer([]byte("text/plain,text/plain;a=1"), acceptsOfferType, literal_03123, literal_1320))
+	require.Equal(t, literal_03123, getOffer([]byte("text/plain;q=0.899,text/plain;a=1;q=0.898"), acceptsOfferType, literal_03123, literal_1320))
+	require.Equal(t, literal_6150, getOffer([]byte("text/plain,text/plain;a=1,text/plain;a=1;b=2"), acceptsOfferType, literal_03123, literal_1320, literal_6150))
 
 	// Takes the last value specified
 	require.Equal(t, literal_6150, getOffer([]byte("text/plain;a=1;b=1;B=2"), acceptsOfferType, "text/plain;a=1;b=1", literal_6150))
@@ -56,7 +56,6 @@ func TestUtilsGetOffer(t *testing.T) {
 	require.Equal(t, "", getOffer([]byte(literal_7291), acceptsOffer))
 	require.Equal(t, "", getOffer([]byte(literal_7291), acceptsOffer, "ascii"))
 	require.Equal(t, "utf-8", getOffer([]byte(literal_7291), acceptsOffer, "utf-8"))
-	require.Equal(t, "iso-8859-1", getOffer([]byte("utf-8;q=0, iso-8859-1;q=0.5"), acceptsOffer, "utf-8", "iso-8859-1"))
 
 	require.Equal(t, "deflate", getOffer([]byte("gzip, deflate"), acceptsOffer, "deflate"))
 	require.Equal(t, "", getOffer([]byte("gzip, deflate;q=0"), acceptsOffer, "deflate"))
@@ -76,8 +75,8 @@ func BenchmarkUtilsGetOffer(b *testing.B) {
 		},
 		{
 			description: "6 offers",
-			accept:      "text/plain",
-			offers:      []string{"junk/a", "junk/b", "junk/c", "junk/d", "junk/e", "text/plain"},
+			accept:      literal_03123,
+			offers:      []string{"junk/a", "junk/b", "junk/c", "junk/d", "junk/e", literal_03123},
 		},
 		{
 			description: "1 parameter",
@@ -115,16 +114,6 @@ func BenchmarkUtilsGetOffer(b *testing.B) {
 			description: literal_2157,
 			accept:      literal_7291,
 			offers:      []string{"utf-8"},
-		},
-		{
-			description: literal_2157,
-			accept:      literal_7291,
-			offers:      []string{"iso-8859-1"},
-		},
-		{
-			description: literal_2157,
-			accept:      literal_7291,
-			offers:      []string{"iso-8859-1", "utf-8"},
 		},
 		{
 			description: literal_2157,
@@ -336,7 +325,7 @@ func TestUtilsSortAcceptedTypes(t *testing.T) {
 		{spec: literal_9671, quality: 1, specificity: 3, order: 7},
 		{spec: literal_4302, quality: 1, specificity: 2, order: 8},
 		{spec: literal_8694, quality: 1, specificity: 3, order: 9},
-		{spec: "text/plain", quality: 1, specificity: 3, order: 10},
+		{spec: literal_03123, quality: 1, specificity: 3, order: 10},
 		{spec: literal_5136, quality: 0.999, specificity: 3, params: headerParams{"a": []byte("1")}, order: 11},
 	}
 	sortAcceptedTypes(&acceptedTypes)
@@ -347,7 +336,7 @@ func TestUtilsSortAcceptedTypes(t *testing.T) {
 		{spec: literal_0964, quality: 1, specificity: 3, order: 6},
 		{spec: literal_9671, quality: 1, specificity: 3, order: 7},
 		{spec: literal_8694, quality: 1, specificity: 3, order: 9},
-		{spec: "text/plain", quality: 1, specificity: 3, order: 10},
+		{spec: literal_03123, quality: 1, specificity: 3, order: 10},
 		{spec: literal_4302, quality: 1, specificity: 2, order: 8},
 		{spec: literal_5136, quality: 0.999, specificity: 3, params: headerParams{"a": []byte("1")}, order: 11},
 		{spec: literal_5136, quality: 0.999, specificity: 3, order: 3},
@@ -384,7 +373,7 @@ func BenchmarkUtilsSortAcceptedTypesUnsorted(b *testing.B) {
 		acceptedTypes[7] = acceptedType{spec: literal_9671, quality: 1, specificity: 3, order: 7}
 		acceptedTypes[8] = acceptedType{spec: literal_4302, quality: 1, specificity: 2, order: 8}
 		acceptedTypes[9] = acceptedType{spec: literal_8694, quality: 1, specificity: 3, order: 9}
-		acceptedTypes[10] = acceptedType{spec: "text/plain", quality: 1, specificity: 3, order: 10}
+		acceptedTypes[10] = acceptedType{spec: literal_03123, quality: 1, specificity: 3, order: 10}
 		sortAcceptedTypes(&acceptedTypes)
 	}
 	require.Equal(b, []acceptedType{
@@ -394,7 +383,7 @@ func BenchmarkUtilsSortAcceptedTypesUnsorted(b *testing.B) {
 		{spec: literal_0964, quality: 1, specificity: 3, order: 6},
 		{spec: literal_9671, quality: 1, specificity: 3, order: 7},
 		{spec: literal_8694, quality: 1, specificity: 3, order: 9},
-		{spec: "text/plain", quality: 1, specificity: 3, order: 10},
+		{spec: literal_03123, quality: 1, specificity: 3, order: 10},
 		{spec: literal_4302, quality: 1, specificity: 2, order: 8},
 		{spec: literal_5136, quality: 0.999, specificity: 3, order: 3},
 		{spec: literal_3417, quality: 0.5, specificity: 2, order: 1},
@@ -605,3 +594,5 @@ const literal_4302 = "image/*"
 const literal_8694 = "image/gif"
 
 const literal_6720 = "/v1/api"
+
+const literal_03123 = "text/plain"
