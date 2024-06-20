@@ -358,7 +358,7 @@ func init() {
 					{url: literal_2059, params: []string{}, match: true},
 					{url: literal_03127, params: nil, match: false},
 					{url: literal_7460, params: nil, match: false},
-					{url: "/config", params: nil, match: false},
+					{url: literal_03128, params: nil, match: false},
 				},
 			},
 			{
@@ -369,7 +369,7 @@ func init() {
 					{url: "/config/.json", params: []string{""}, match: true},
 					{url: "/config/efg.csv", params: nil, match: false},
 					{url: literal_03127, params: nil, match: false},
-					{url: "/config", params: nil, match: false},
+					{url: literal_03128, params: nil, match: false},
 				},
 			},
 			{
@@ -380,7 +380,7 @@ func init() {
 					{url: literal_7460, params: []string{"efg"}, match: true},
 					{url: "/config/efg.csv", params: nil, match: false},
 					{url: literal_03127, params: nil, match: false},
-					{url: "/config", params: nil, match: false},
+					{url: literal_03128, params: nil, match: false},
 				},
 			},
 			{
@@ -397,8 +397,8 @@ func init() {
 					{url: literal_4310, params: []string{"joker", ""}, match: true},
 					{url: literal_0843, params: []string{"joker", "batman"}, match: true},
 					{url: "/api/joker//batman", params: []string{"joker/", "batman"}, match: true},
-					{url: literal_2901, params: []string{"joker/batman", "robin"}, match: true},
-					{url: literal_6713, params: []string{"joker/batman/robin", "1"}, match: true},
+					{url: literal_2901, params: []string{literal_03129, "robin"}, match: true},
+					{url: literal_6713, params: []string{literal_03130, "1"}, match: true},
 					{url: "/api/joker/batman/robin/1/", params: []string{"joker/batman/robin/1", ""}, match: true},
 					{url: "/api/joker-batman/robin/1", params: []string{"joker-batman/robin", "1"}, match: true},
 					{url: "/api/joker-batman-robin/1", params: []string{"joker-batman-robin", "1"}, match: true},
@@ -411,8 +411,8 @@ func init() {
 				testCases: []routeTestCase{
 					{url: literal_3024, params: []string{"test", "abc"}, match: true},
 					{url: literal_0843, params: []string{"joker", "batman"}, match: true},
-					{url: literal_2901, params: []string{"joker/batman", "robin"}, match: true},
-					{url: literal_6713, params: []string{"joker/batman/robin", "1"}, match: true},
+					{url: literal_2901, params: []string{literal_03129, "robin"}, match: true},
+					{url: literal_6713, params: []string{literal_03130, "1"}, match: true},
 					{url: "/api/joker/batman-robin/1", params: []string{"joker/batman-robin", "1"}, match: true},
 					{url: literal_2365, params: nil, match: false},
 					{url: "/api", params: nil, match: false},
@@ -422,7 +422,7 @@ func init() {
 				pattern: "/api/+/:param",
 				testCases: []routeTestCase{
 					{url: literal_3024, params: []string{"test", "abc"}, match: true},
-					{url: literal_6713, params: []string{"joker/batman/robin", "1"}, match: true},
+					{url: literal_6713, params: []string{literal_03130, "1"}, match: true},
 					{url: literal_4310, params: nil, match: false},
 					{url: "/api", params: nil, match: false},
 				},
@@ -436,8 +436,8 @@ func init() {
 					{url: literal_2365, params: nil, match: false},
 					{url: literal_3024, params: nil, match: false},
 					{url: literal_2901, params: []string{"joker", "batman", "robin"}, match: true},
-					{url: literal_6713, params: []string{"joker/batman", "robin", "1"}, match: true},
-					{url: "/api/joker/batman/robin/1/2", params: []string{"joker/batman/robin", "1", "2"}, match: true},
+					{url: literal_6713, params: []string{literal_03129, "robin", "1"}, match: true},
+					{url: "/api/joker/batman/robin/1/2", params: []string{literal_03130, "1", "2"}, match: true},
 					{url: "/api", params: nil, match: false},
 					{url: "/api/:test", params: nil, match: false},
 				},
@@ -778,3 +778,9 @@ const literal_8510 = "/api/v1/e/10"
 const literal_03126 = "/api/v"
 
 const literal_03127 = "config/abc.json"
+
+const literal_03128 = "/config"
+
+const literal_03129 = "joker/batman"
+
+const literal_03130 = "joker/batman/robin"
