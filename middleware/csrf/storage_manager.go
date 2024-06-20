@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/internal/memory"
 )
 
@@ -43,9 +43,9 @@ func newStorageManager(storage fiber.Storage) *storageManager {
 func (m *storageManager) getRaw(key string) []byte {
 	var raw []byte
 	if m.storage != nil {
-		raw, _ = m.storage.Get(key) //nolint:errcheck // TODO: Do not ignore error
+		raw, _ = m.storage.Get(key) //nolint:errcheck // : Do not ignore error
 	} else {
-		raw, _ = m.memory.Get(key).([]byte) //nolint:errcheck // TODO: Do not ignore error
+		raw, _ = m.memory.Get(key).([]byte) //nolint:errcheck // : Do not ignore error
 	}
 	return raw
 }
@@ -53,7 +53,7 @@ func (m *storageManager) getRaw(key string) []byte {
 // set data to storage or memory
 func (m *storageManager) setRaw(key string, raw []byte, exp time.Duration) {
 	if m.storage != nil {
-		_ = m.storage.Set(key, raw, exp) //nolint:errcheck // TODO: Do not ignore error
+		_ = m.storage.Set(key, raw, exp) //nolint:errcheck // : Do not ignore error
 	} else {
 		// the key is crucial in crsf and sometimes a reference to another value which can be reused later(pool/unsafe values concept), so a copy is made here
 		m.memory.Set(utils.CopyString(key), raw, exp)
@@ -63,7 +63,7 @@ func (m *storageManager) setRaw(key string, raw []byte, exp time.Duration) {
 // delete data from storage or memory
 func (m *storageManager) delRaw(key string) {
 	if m.storage != nil {
-		_ = m.storage.Delete(key) //nolint:errcheck // TODO: Do not ignore error
+		_ = m.storage.Delete(key) //nolint:errcheck // : Do not ignore error
 	} else {
 		m.memory.Delete(key)
 	}

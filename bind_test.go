@@ -32,12 +32,12 @@ func TestBindQuery(t *testing.T) {
 	}
 	c.Request().SetBody([]byte(``))
 	c.Request().Header.SetContentType("")
-	c.Request().URI().SetQueryString("id=1&name=tom&hobby=basketball&hobby=football")
+	c.Request().URI().SetQueryString(literal_7016)
 	q := new(Query)
 	require.NoError(t, c.Bind().Query(q))
 	require.Len(t, q.Hobby, 2)
 
-	c.Request().URI().SetQueryString("id=1&name=tom&hobby=basketball,football")
+	c.Request().URI().SetQueryString(literal_3476)
 	q = new(Query)
 	require.NoError(t, c.Bind().Query(q))
 	require.Len(t, q.Hobby, 2)
@@ -82,7 +82,7 @@ func TestBindQuery(t *testing.T) {
 	}
 	rq := new(RequiredQuery)
 	c.Request().URI().SetQueryString("")
-	require.Equal(t, "name is empty", c.Bind().Query(rq).Error())
+	require.Equal(t, literal_4602, c.Bind().Query(rq).Error())
 
 	type ArrayQuery struct {
 		Data []string
@@ -102,12 +102,12 @@ func TestBindQueryMap(t *testing.T) {
 
 	c.Request().SetBody([]byte(``))
 	c.Request().Header.SetContentType("")
-	c.Request().URI().SetQueryString("id=1&name=tom&hobby=basketball&hobby=football")
+	c.Request().URI().SetQueryString(literal_7016)
 	q := make(map[string][]string)
 	require.NoError(t, c.Bind().Query(&q))
 	require.Len(t, q["hobby"], 2)
 
-	c.Request().URI().SetQueryString("id=1&name=tom&hobby=basketball,football")
+	c.Request().URI().SetQueryString(literal_3476)
 	q = make(map[string][]string)
 	require.NoError(t, c.Bind().Query(&q))
 	require.Len(t, q["hobby"], 2)
@@ -137,7 +137,7 @@ func TestBindQueryWithSetParserDecoder(t *testing.T) {
 	type NonRFCTime time.Time
 
 	nonRFCConverter := func(value string) reflect.Value {
-		if v, err := time.Parse("2006-01-02", value); err == nil {
+		if v, err := time.Parse(literal_1423, value); err == nil {
 			return reflect.ValueOf(v)
 		}
 		return reflect.Value{}
@@ -172,13 +172,13 @@ func TestBindQueryWithSetParserDecoder(t *testing.T) {
 	require.NoError(t, c.Bind().Query(q))
 	require.Equal(t, "CustomDateTest", q.Title)
 	date := fmt.Sprintf("%v", q.Date)
-	require.Equal(t, "{0 63753609600 <nil>}", date)
+	require.Equal(t, literal_0285, date)
 	require.Equal(t, "October", q.Body)
 
 	c.Request().URI().SetQueryString("date=2021-04-10&title&Body=October")
 	q = &NonRFCTimeInput{
-		Title: "Existing title",
-		Body:  "Existing Body",
+		Title: literal_7460,
+		Body:  literal_8365,
 	}
 	require.NoError(t, c.Bind().Query(q))
 	require.Equal(t, "", q.Title)
@@ -204,7 +204,7 @@ func TestBindQuerySchema(t *testing.T) {
 
 	c.Request().URI().SetQueryString("namex=tom&nested.age=10")
 	q = new(Query1)
-	require.Equal(t, "name is empty", c.Bind().Query(q).Error())
+	require.Equal(t, literal_4602, c.Bind().Query(q).Error())
 
 	c.Request().URI().SetQueryString("name=tom&nested.agex=10")
 	q = new(Query1)
@@ -300,14 +300,14 @@ func TestBindHeader(t *testing.T) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.Add("id", "1")
-	c.Request().Header.Add("Name", "John Doe")
-	c.Request().Header.Add("Hobby", "golang,fiber")
+	c.Request().Header.Add("Name", literal_5627)
+	c.Request().Header.Add("Hobby", literal_5749)
 	q := new(Header)
 	require.NoError(t, c.Bind().Header(q))
 	require.Len(t, q.Hobby, 2)
 
 	c.Request().Header.Del("hobby")
-	c.Request().Header.Add("Hobby", "golang,fiber,go")
+	c.Request().Header.Add("Hobby", literal_8460)
 	q = new(Header)
 	require.NoError(t, c.Bind().Header(q))
 	require.Len(t, q.Hobby, 3)
@@ -329,10 +329,10 @@ func TestBindHeader(t *testing.T) {
 	}
 
 	c.Request().Header.Add("id", "2")
-	c.Request().Header.Add("Name", "Jane Doe")
+	c.Request().Header.Add("Name", literal_8712)
 	c.Request().Header.Del("hobby")
-	c.Request().Header.Add("Hobby", "go,fiber")
-	c.Request().Header.Add("favouriteDrinks", "milo,coke,pepsi")
+	c.Request().Header.Add("Hobby", literal_3506)
+	c.Request().Header.Add("favouriteDrinks", literal_2149)
 	c.Request().Header.Add("alloc", "")
 	c.Request().Header.Add("no", "1")
 
@@ -340,9 +340,9 @@ func TestBindHeader(t *testing.T) {
 	h2.Bool = true
 	h2.Name = helloWorld
 	require.NoError(t, c.Bind().Header(h2))
-	require.Equal(t, "go,fiber", h2.Hobby)
+	require.Equal(t, literal_3506, h2.Hobby)
 	require.True(t, h2.Bool)
-	require.Equal(t, "Jane Doe", h2.Name) // check value get overwritten
+	require.Equal(t, literal_8712, h2.Name) // check value get overwritten
 	require.Equal(t, []string{"milo", "coke", "pepsi"}, h2.FavouriteDrinks)
 	var nilSlice []string
 	require.Equal(t, nilSlice, h2.Empty)
@@ -354,7 +354,7 @@ func TestBindHeader(t *testing.T) {
 	}
 	rh := new(RequiredHeader)
 	c.Request().Header.Del("name")
-	require.Equal(t, "name is empty", c.Bind().Header(rh).Error())
+	require.Equal(t, literal_4602, c.Bind().Header(rh).Error())
 }
 
 // go test -run Test_Bind_Header_Map -v
@@ -368,14 +368,14 @@ func TestBindHeaderMap(t *testing.T) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.Add("id", "1")
-	c.Request().Header.Add("Name", "John Doe")
-	c.Request().Header.Add("Hobby", "golang,fiber")
+	c.Request().Header.Add("Name", literal_5627)
+	c.Request().Header.Add("Hobby", literal_5749)
 	q := make(map[string][]string, 0)
 	require.NoError(t, c.Bind().Header(&q))
 	require.Len(t, q["Hobby"], 2)
 
 	c.Request().Header.Del("hobby")
-	c.Request().Header.Add("Hobby", "golang,fiber,go")
+	c.Request().Header.Add("Hobby", literal_8460)
 	q = make(map[string][]string, 0)
 	require.NoError(t, c.Bind().Header(&q))
 	require.Len(t, q["Hobby"], 3)
@@ -391,7 +391,7 @@ func TestBindHeaderWithSetParserDecoder(t *testing.T) {
 	type NonRFCTime time.Time
 
 	nonRFCConverter := func(value string) reflect.Value {
-		if v, err := time.Parse("2006-01-02", value); err == nil {
+		if v, err := time.Parse(literal_1423, value); err == nil {
 			return reflect.ValueOf(v)
 		}
 		return reflect.Value{}
@@ -429,13 +429,13 @@ func TestBindHeaderWithSetParserDecoder(t *testing.T) {
 	require.NoError(t, c.Bind().Header(r))
 	require.Equal(t, "CustomDateTest", r.Title)
 	date := fmt.Sprintf("%v", r.Date)
-	require.Equal(t, "{0 63753609600 <nil>}", date)
+	require.Equal(t, literal_0285, date)
 	require.Equal(t, "October", r.Body)
 
 	c.Request().Header.Add("Title", "")
 	r = &NonRFCTimeInput{
-		Title: "Existing title",
-		Body:  "Existing Body",
+		Title: literal_7460,
+		Body:  literal_8365,
 	}
 	require.NoError(t, c.Bind().Header(r))
 	require.Equal(t, "", r.Title)
@@ -457,7 +457,7 @@ func TestBindHeaderSchema(t *testing.T) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.Add("Name", "tom")
-	c.Request().Header.Add("Nested.Age", "10")
+	c.Request().Header.Add(literal_9374, "10")
 	q := new(Header1)
 	require.NoError(t, c.Bind().Header(q))
 
@@ -466,16 +466,16 @@ func TestBindHeaderSchema(t *testing.T) {
 	require.Equal(t, "Name is empty", c.Bind().Header(q).Error())
 
 	c.Request().Header.Add("Name", "tom")
-	c.Request().Header.Del("Nested.Age")
-	c.Request().Header.Add("Nested.Agex", "10")
+	c.Request().Header.Del(literal_9374)
+	c.Request().Header.Add(literal_7506, "10")
 	q = new(Header1)
 	require.NoError(t, c.Bind().Header(q))
 
-	c.Request().Header.Del("Nested.Agex")
+	c.Request().Header.Del(literal_7506)
 	q = new(Header1)
 	require.Equal(t, "Nested is empty", c.Bind().Header(q).Error())
 
-	c.Request().Header.Del("Nested.Agex")
+	c.Request().Header.Del(literal_7506)
 	c.Request().Header.Del("Name")
 
 	type Header2 struct {
@@ -486,7 +486,7 @@ func TestBindHeaderSchema(t *testing.T) {
 	}
 
 	c.Request().Header.Add("Name", "tom")
-	c.Request().Header.Add("Nested.Age", "10")
+	c.Request().Header.Add(literal_9374, "10")
 
 	h2 := new(Header2)
 	require.NoError(t, c.Bind().Header(h2))
@@ -496,8 +496,8 @@ func TestBindHeaderSchema(t *testing.T) {
 	require.NoError(t, c.Bind().Header(h2))
 
 	c.Request().Header.Del("Name")
-	c.Request().Header.Del("Nested.Age")
-	c.Request().Header.Add("Nested.Agex", "10")
+	c.Request().Header.Del(literal_9374)
+	c.Request().Header.Add(literal_7506, "10")
 	h2 = new(Header2)
 	require.Equal(t, "Nested.age is empty", c.Bind().Header(h2).Error())
 
@@ -506,7 +506,7 @@ func TestBindHeaderSchema(t *testing.T) {
 		Next  *Node `header:"Next,required"`
 	}
 	c.Request().Header.Add("Val", "1")
-	c.Request().Header.Add("Next.Val", "3")
+	c.Request().Header.Add(literal_4179, "3")
 	n := new(Node)
 	require.NoError(t, c.Bind().Header(n))
 	require.Equal(t, 1, n.Value)
@@ -517,7 +517,7 @@ func TestBindHeaderSchema(t *testing.T) {
 	require.Equal(t, "Val is empty", c.Bind().Header(n).Error())
 
 	c.Request().Header.Add("Val", "3")
-	c.Request().Header.Del("Next.Val")
+	c.Request().Header.Del(literal_4179)
 	c.Request().Header.Add("Next.Value", "2")
 	n = new(Node)
 	n.Next = new(Node)
@@ -541,14 +541,14 @@ func TestBindRespHeader(t *testing.T) {
 	c.Request().Header.SetContentType("")
 
 	c.Response().Header.Add("id", "1")
-	c.Response().Header.Add("Name", "John Doe")
-	c.Response().Header.Add("Hobby", "golang,fiber")
+	c.Response().Header.Add("Name", literal_5627)
+	c.Response().Header.Add("Hobby", literal_5749)
 	q := new(Header)
 	require.NoError(t, c.Bind().RespHeader(q))
 	require.Len(t, q.Hobby, 2)
 
 	c.Response().Header.Del("hobby")
-	c.Response().Header.Add("Hobby", "golang,fiber,go")
+	c.Response().Header.Add("Hobby", literal_8460)
 	q = new(Header)
 	require.NoError(t, c.Bind().RespHeader(q))
 	require.Len(t, q.Hobby, 3)
@@ -570,10 +570,10 @@ func TestBindRespHeader(t *testing.T) {
 	}
 
 	c.Response().Header.Add("id", "2")
-	c.Response().Header.Add("Name", "Jane Doe")
+	c.Response().Header.Add("Name", literal_8712)
 	c.Response().Header.Del("hobby")
-	c.Response().Header.Add("Hobby", "go,fiber")
-	c.Response().Header.Add("favouriteDrinks", "milo,coke,pepsi")
+	c.Response().Header.Add("Hobby", literal_3506)
+	c.Response().Header.Add("favouriteDrinks", literal_2149)
 	c.Response().Header.Add("alloc", "")
 	c.Response().Header.Add("no", "1")
 
@@ -581,9 +581,9 @@ func TestBindRespHeader(t *testing.T) {
 	h2.Bool = true
 	h2.Name = helloWorld
 	require.NoError(t, c.Bind().RespHeader(h2))
-	require.Equal(t, "go,fiber", h2.Hobby)
+	require.Equal(t, literal_3506, h2.Hobby)
 	require.True(t, h2.Bool)
-	require.Equal(t, "Jane Doe", h2.Name) // check value get overwritten
+	require.Equal(t, literal_8712, h2.Name) // check value get overwritten
 	require.Equal(t, []string{"milo", "coke", "pepsi"}, h2.FavouriteDrinks)
 	var nilSlice []string
 	require.Equal(t, nilSlice, h2.Empty)
@@ -595,7 +595,7 @@ func TestBindRespHeader(t *testing.T) {
 	}
 	rh := new(RequiredHeader)
 	c.Response().Header.Del("name")
-	require.Equal(t, "name is empty", c.Bind().RespHeader(rh).Error())
+	require.Equal(t, literal_4602, c.Bind().RespHeader(rh).Error())
 }
 
 // go test -run Test_Bind_RespHeader_Map -v
@@ -609,14 +609,14 @@ func TestBindRespHeaderMap(t *testing.T) {
 	c.Request().Header.SetContentType("")
 
 	c.Response().Header.Add("id", "1")
-	c.Response().Header.Add("Name", "John Doe")
-	c.Response().Header.Add("Hobby", "golang,fiber")
+	c.Response().Header.Add("Name", literal_5627)
+	c.Response().Header.Add("Hobby", literal_5749)
 	q := make(map[string][]string, 0)
 	require.NoError(t, c.Bind().RespHeader(&q))
 	require.Len(t, q["Hobby"], 2)
 
 	c.Response().Header.Del("hobby")
-	c.Response().Header.Add("Hobby", "golang,fiber,go")
+	c.Response().Header.Add("Hobby", literal_8460)
 	q = make(map[string][]string, 0)
 	require.NoError(t, c.Bind().RespHeader(&q))
 	require.Len(t, q["Hobby"], 3)
@@ -641,7 +641,7 @@ func Benchmark_Bind_Query(b *testing.B) {
 	}
 	c.Request().SetBody([]byte(``))
 	c.Request().Header.SetContentType("")
-	c.Request().URI().SetQueryString("id=1&name=tom&hobby=basketball&hobby=football")
+	c.Request().URI().SetQueryString(literal_7016)
 	q := new(Query)
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -660,7 +660,7 @@ func Benchmark_Bind_Query_Map(b *testing.B) {
 
 	c.Request().SetBody([]byte(``))
 	c.Request().Header.SetContentType("")
-	c.Request().URI().SetQueryString("id=1&name=tom&hobby=basketball&hobby=football")
+	c.Request().URI().SetQueryString(literal_7016)
 	q := make(map[string][]string)
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -714,7 +714,7 @@ func Benchmark_Bind_Query_Comma(b *testing.B) {
 	}
 	c.Request().SetBody([]byte(``))
 	c.Request().Header.SetContentType("")
-	c.Request().URI().SetQueryString("id=1&name=tom&hobby=basketball,football")
+	c.Request().URI().SetQueryString(literal_3476)
 	q := new(Query)
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -740,8 +740,8 @@ func Benchmark_Bind_Header(b *testing.B) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.Add("id", "1")
-	c.Request().Header.Add("Name", "John Doe")
-	c.Request().Header.Add("Hobby", "golang,fiber")
+	c.Request().Header.Add("Name", literal_5627)
+	c.Request().Header.Add("Hobby", literal_5749)
 
 	q := new(ReqHeader)
 	b.ReportAllocs()
@@ -762,8 +762,8 @@ func Benchmark_Bind_Header_Map(b *testing.B) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.Add("id", "1")
-	c.Request().Header.Add("Name", "John Doe")
-	c.Request().Header.Add("Hobby", "golang,fiber")
+	c.Request().Header.Add("Name", literal_5627)
+	c.Request().Header.Add("Hobby", literal_5749)
 
 	q := make(map[string][]string)
 	b.ReportAllocs()
@@ -790,8 +790,8 @@ func Benchmark_Bind_RespHeader(b *testing.B) {
 	c.Request().Header.SetContentType("")
 
 	c.Response().Header.Add("id", "1")
-	c.Response().Header.Add("Name", "John Doe")
-	c.Response().Header.Add("Hobby", "golang,fiber")
+	c.Response().Header.Add("Name", literal_5627)
+	c.Response().Header.Add("Hobby", literal_5749)
 
 	q := new(ReqHeader)
 	b.ReportAllocs()
@@ -812,8 +812,8 @@ func Benchmark_Bind_RespHeader_Map(b *testing.B) {
 	c.Request().Header.SetContentType("")
 
 	c.Response().Header.Add("id", "1")
-	c.Response().Header.Add("Name", "John Doe")
-	c.Response().Header.Add("Hobby", "golang,fiber")
+	c.Response().Header.Add("Name", literal_5627)
+	c.Response().Header.Add("Hobby", literal_5749)
 
 	q := make(map[string][]string)
 	b.ReportAllocs()
@@ -863,7 +863,7 @@ func TestBindBody(t *testing.T) {
 
 	testDecodeParser(MIMEApplicationJSON, `{"name":"john"}`)
 	testDecodeParser(MIMEApplicationXML, `<Demo><name>john</name></Demo>`)
-	testDecodeParser(MIMEApplicationForm, "name=john")
+	testDecodeParser(MIMEApplicationForm, literal_3210)
 	testDecodeParser(MIMEMultipartForm+`;boundary="b"`, "--b\r\nContent-Disposition: form-data; name=\"name\"\r\n\r\njohn\r\n--b--")
 
 	testDecodeParserError := func(contentType, body string) {
@@ -906,7 +906,7 @@ func TestBindBodyWithSetParserDecoder(t *testing.T) {
 	type CustomTime time.Time
 
 	timeConverter := func(value string) reflect.Value {
-		if v, err := time.Parse("2006-01-02", value); err == nil {
+		if v, err := time.Parse(literal_1423, value); err == nil {
 			return reflect.ValueOf(v)
 		}
 		return reflect.Value{}
@@ -938,8 +938,8 @@ func TestBindBodyWithSetParserDecoder(t *testing.T) {
 		c.Request().SetBody([]byte(body))
 		c.Request().Header.SetContentLength(len(body))
 		d := Demo{
-			Title: "Existing title",
-			Body:  "Existing Body",
+			Title: literal_7460,
+			Body:  literal_8365,
 		}
 		require.NoError(t, c.Bind().Body(&d))
 		date := fmt.Sprintf("%v", d.Date)
@@ -1014,7 +1014,7 @@ func Benchmark_Bind_Body_Form(b *testing.B) {
 	type Demo struct {
 		Name string `form:"name"`
 	}
-	body := []byte("name=john")
+	body := []byte(literal_3210)
 	c.Request().SetBody(body)
 	c.Request().Header.SetContentType(MIMEApplicationForm)
 	c.Request().Header.SetContentLength(len(body))
@@ -1064,7 +1064,7 @@ func Benchmark_Bind_Body_Form_Map(b *testing.B) {
 	app := New()
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
 
-	body := []byte("name=john")
+	body := []byte(literal_3210)
 	c.Request().SetBody(body)
 	c.Request().Header.SetContentType(MIMEApplicationForm)
 	c.Request().Header.SetContentLength(len(body))
@@ -1210,14 +1210,14 @@ func TestBindCookie(t *testing.T) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.SetCookie("id", "1")
-	c.Request().Header.SetCookie("Name", "John Doe")
-	c.Request().Header.SetCookie("Hobby", "golang,fiber")
+	c.Request().Header.SetCookie("Name", literal_5627)
+	c.Request().Header.SetCookie("Hobby", literal_5749)
 	q := new(Cookie)
 	require.NoError(t, c.Bind().Cookie(q))
 	require.Len(t, q.Hobby, 2)
 
 	c.Request().Header.DelCookie("hobby")
-	c.Request().Header.SetCookie("Hobby", "golang,fiber,go")
+	c.Request().Header.SetCookie("Hobby", literal_8460)
 	q = new(Cookie)
 	require.NoError(t, c.Bind().Cookie(q))
 	require.Len(t, q.Hobby, 3)
@@ -1239,10 +1239,10 @@ func TestBindCookie(t *testing.T) {
 	}
 
 	c.Request().Header.SetCookie("id", "2")
-	c.Request().Header.SetCookie("Name", "Jane Doe")
+	c.Request().Header.SetCookie("Name", literal_8712)
 	c.Request().Header.DelCookie("hobby")
-	c.Request().Header.SetCookie("Hobby", "go,fiber")
-	c.Request().Header.SetCookie("favouriteDrinks", "milo,coke,pepsi")
+	c.Request().Header.SetCookie("Hobby", literal_3506)
+	c.Request().Header.SetCookie("favouriteDrinks", literal_2149)
 	c.Request().Header.SetCookie("alloc", "")
 	c.Request().Header.SetCookie("no", "1")
 
@@ -1250,9 +1250,9 @@ func TestBindCookie(t *testing.T) {
 	h2.Bool = true
 	h2.Name = helloWorld
 	require.NoError(t, c.Bind().Cookie(h2))
-	require.Equal(t, "go,fiber", h2.Hobby)
+	require.Equal(t, literal_3506, h2.Hobby)
 	require.True(t, h2.Bool)
-	require.Equal(t, "Jane Doe", h2.Name) // check value get overwritten
+	require.Equal(t, literal_8712, h2.Name) // check value get overwritten
 	require.Equal(t, []string{"milo", "coke", "pepsi"}, h2.FavouriteDrinks)
 	var nilSlice []string
 	require.Equal(t, nilSlice, h2.Empty)
@@ -1264,7 +1264,7 @@ func TestBindCookie(t *testing.T) {
 	}
 	rh := new(RequiredCookie)
 	c.Request().Header.DelCookie("name")
-	require.Equal(t, "name is empty", c.Bind().Cookie(rh).Error())
+	require.Equal(t, literal_4602, c.Bind().Cookie(rh).Error())
 }
 
 // go test -run Test_Bind_Cookie_Map -v
@@ -1278,14 +1278,14 @@ func TestBindCookieMap(t *testing.T) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.SetCookie("id", "1")
-	c.Request().Header.SetCookie("Name", "John Doe")
-	c.Request().Header.SetCookie("Hobby", "golang,fiber")
+	c.Request().Header.SetCookie("Name", literal_5627)
+	c.Request().Header.SetCookie("Hobby", literal_5749)
 	q := make(map[string][]string)
 	require.NoError(t, c.Bind().Cookie(&q))
 	require.Len(t, q["Hobby"], 2)
 
 	c.Request().Header.DelCookie("hobby")
-	c.Request().Header.SetCookie("Hobby", "golang,fiber,go")
+	c.Request().Header.SetCookie("Hobby", literal_8460)
 	q = make(map[string][]string)
 	require.NoError(t, c.Bind().Cookie(&q))
 	require.Len(t, q["Hobby"], 3)
@@ -1301,7 +1301,7 @@ func TestBindCookieWithSetParserDecoder(t *testing.T) {
 	type NonRFCTime time.Time
 
 	nonRFCConverter := func(value string) reflect.Value {
-		if v, err := time.Parse("2006-01-02", value); err == nil {
+		if v, err := time.Parse(literal_1423, value); err == nil {
 			return reflect.ValueOf(v)
 		}
 		return reflect.Value{}
@@ -1339,13 +1339,13 @@ func TestBindCookieWithSetParserDecoder(t *testing.T) {
 	require.NoError(t, c.Bind().Cookie(r))
 	require.Equal(t, "CustomDateTest", r.Title)
 	date := fmt.Sprintf("%v", r.Date)
-	require.Equal(t, "{0 63753609600 <nil>}", date)
+	require.Equal(t, literal_0285, date)
 	require.Equal(t, "October", r.Body)
 
 	c.Request().Header.SetCookie("Title", "")
 	r = &NonRFCTimeInput{
-		Title: "Existing title",
-		Body:  "Existing Body",
+		Title: literal_7460,
+		Body:  literal_8365,
 	}
 	require.NoError(t, c.Bind().Cookie(r))
 	require.Equal(t, "", r.Title)
@@ -1368,7 +1368,7 @@ func TestBindCookieSchema(t *testing.T) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.SetCookie("Name", "tom")
-	c.Request().Header.SetCookie("Nested.Age", "10")
+	c.Request().Header.SetCookie(literal_9374, "10")
 	q := new(Cookie1)
 	require.NoError(t, c.Bind().Cookie(q))
 
@@ -1377,16 +1377,16 @@ func TestBindCookieSchema(t *testing.T) {
 	require.Equal(t, "Name is empty", c.Bind().Cookie(q).Error())
 
 	c.Request().Header.SetCookie("Name", "tom")
-	c.Request().Header.DelCookie("Nested.Age")
-	c.Request().Header.SetCookie("Nested.Agex", "10")
+	c.Request().Header.DelCookie(literal_9374)
+	c.Request().Header.SetCookie(literal_7506, "10")
 	q = new(Cookie1)
 	require.NoError(t, c.Bind().Cookie(q))
 
-	c.Request().Header.DelCookie("Nested.Agex")
+	c.Request().Header.DelCookie(literal_7506)
 	q = new(Cookie1)
 	require.Equal(t, "Nested is empty", c.Bind().Cookie(q).Error())
 
-	c.Request().Header.DelCookie("Nested.Agex")
+	c.Request().Header.DelCookie(literal_7506)
 	c.Request().Header.DelCookie("Name")
 
 	type Cookie2 struct {
@@ -1397,7 +1397,7 @@ func TestBindCookieSchema(t *testing.T) {
 	}
 
 	c.Request().Header.SetCookie("Name", "tom")
-	c.Request().Header.SetCookie("Nested.Age", "10")
+	c.Request().Header.SetCookie(literal_9374, "10")
 
 	h2 := new(Cookie2)
 	require.NoError(t, c.Bind().Cookie(h2))
@@ -1407,8 +1407,8 @@ func TestBindCookieSchema(t *testing.T) {
 	require.NoError(t, c.Bind().Cookie(h2))
 
 	c.Request().Header.DelCookie("Name")
-	c.Request().Header.DelCookie("Nested.Age")
-	c.Request().Header.SetCookie("Nested.Agex", "10")
+	c.Request().Header.DelCookie(literal_9374)
+	c.Request().Header.SetCookie(literal_7506, "10")
 	h2 = new(Cookie2)
 	require.Equal(t, "Nested.Age is empty", c.Bind().Cookie(h2).Error())
 
@@ -1417,7 +1417,7 @@ func TestBindCookieSchema(t *testing.T) {
 		Next  *Node `cookie:"Next,required"`
 	}
 	c.Request().Header.SetCookie("Val", "1")
-	c.Request().Header.SetCookie("Next.Val", "3")
+	c.Request().Header.SetCookie(literal_4179, "3")
 	n := new(Node)
 	require.NoError(t, c.Bind().Cookie(n))
 	require.Equal(t, 1, n.Value)
@@ -1428,7 +1428,7 @@ func TestBindCookieSchema(t *testing.T) {
 	require.Equal(t, "Val is empty", c.Bind().Cookie(n).Error())
 
 	c.Request().Header.SetCookie("Val", "3")
-	c.Request().Header.DelCookie("Next.Val")
+	c.Request().Header.DelCookie(literal_4179)
 	c.Request().Header.SetCookie("Next.Value", "2")
 	n = new(Node)
 	n.Next = new(Node)
@@ -1453,8 +1453,8 @@ func Benchmark_Bind_Cookie(b *testing.B) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.SetCookie("id", "1")
-	c.Request().Header.SetCookie("Name", "John Doe")
-	c.Request().Header.SetCookie("Hobby", "golang,fiber")
+	c.Request().Header.SetCookie("Name", literal_5627)
+	c.Request().Header.SetCookie("Hobby", literal_5749)
 
 	q := new(Cookie)
 	b.ReportAllocs()
@@ -1477,8 +1477,8 @@ func Benchmark_Bind_Cookie_Map(b *testing.B) {
 	c.Request().Header.SetContentType("")
 
 	c.Request().Header.SetCookie("id", "1")
-	c.Request().Header.SetCookie("Name", "John Doe")
-	c.Request().Header.SetCookie("Hobby", "golang,fiber")
+	c.Request().Header.SetCookie("Name", literal_5627)
+	c.Request().Header.SetCookie("Hobby", literal_5749)
 
 	q := make(map[string][]string)
 	b.ReportAllocs()
@@ -1575,7 +1575,7 @@ func TestBindStructValidator(t *testing.T) {
 	require.Equal(t, "you should have entered right name", c.Bind().Query(rq).Error())
 
 	rq = new(simpleQuery)
-	c.Request().URI().SetQueryString("name=john")
+	c.Request().URI().SetQueryString(literal_3210)
 	require.NoError(t, c.Bind().Query(rq))
 }
 
@@ -1629,3 +1629,37 @@ func TestBindRepeatParserWithSameStruct(t *testing.T) {
 	testDecodeParser(MIMEApplicationForm, "body_param=body_param")
 	testDecodeParser(MIMEMultipartForm+`;boundary="b"`, "--b\r\nContent-Disposition: form-data; name=\"body_param\"\r\n\r\nbody_param\r\n--b--")
 }
+
+const literal_7016 = "id=1&name=tom&hobby=basketball&hobby=football"
+
+const literal_3476 = "id=1&name=tom&hobby=basketball,football"
+
+const literal_4602 = "name is empty"
+
+const literal_1423 = "2006-01-02"
+
+const literal_0285 = "{0 63753609600 <nil>}"
+
+const literal_7460 = "Existing title"
+
+const literal_8365 = "Existing Body"
+
+const literal_5627 = "John Doe"
+
+const literal_5749 = "golang,fiber"
+
+const literal_8460 = "golang,fiber,go"
+
+const literal_8712 = "Jane Doe"
+
+const literal_3506 = "go,fiber"
+
+const literal_2149 = "milo,coke,pepsi"
+
+const literal_9374 = "Nested.Age"
+
+const literal_7506 = "Nested.Agex"
+
+const literal_4179 = "Next.Val"
+
+const literal_3210 = "name=john"

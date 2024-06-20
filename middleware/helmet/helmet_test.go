@@ -14,7 +14,7 @@ func TestDefault(t *testing.T) {
 	app.Use(New())
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4237)
 	})
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
@@ -23,15 +23,15 @@ func TestDefault(t *testing.T) {
 	require.Equal(t, "nosniff", resp.Header.Get(fiber.HeaderXContentTypeOptions))
 	require.Equal(t, "SAMEORIGIN", resp.Header.Get(fiber.HeaderXFrameOptions))
 	require.Equal(t, "", resp.Header.Get(fiber.HeaderContentSecurityPolicy))
-	require.Equal(t, "no-referrer", resp.Header.Get(fiber.HeaderReferrerPolicy))
+	require.Equal(t, literal_0849, resp.Header.Get(fiber.HeaderReferrerPolicy))
 	require.Equal(t, "", resp.Header.Get(fiber.HeaderPermissionsPolicy))
-	require.Equal(t, "require-corp", resp.Header.Get("Cross-Origin-Embedder-Policy"))
-	require.Equal(t, "same-origin", resp.Header.Get("Cross-Origin-Opener-Policy"))
-	require.Equal(t, "same-origin", resp.Header.Get("Cross-Origin-Resource-Policy"))
-	require.Equal(t, "?1", resp.Header.Get("Origin-Agent-Cluster"))
-	require.Equal(t, "off", resp.Header.Get("X-DNS-Prefetch-Control"))
-	require.Equal(t, "noopen", resp.Header.Get("X-Download-Options"))
-	require.Equal(t, "none", resp.Header.Get("X-Permitted-Cross-Domain-Policies"))
+	require.Equal(t, literal_7895, resp.Header.Get(literal_0517))
+	require.Equal(t, literal_1509, resp.Header.Get(literal_5842))
+	require.Equal(t, literal_1509, resp.Header.Get(literal_3904))
+	require.Equal(t, "?1", resp.Header.Get(literal_2461))
+	require.Equal(t, "off", resp.Header.Get(literal_2038))
+	require.Equal(t, "noopen", resp.Header.Get(literal_2485))
+	require.Equal(t, "none", resp.Header.Get(literal_8134))
 }
 
 func TestCustomValuesAllHeaders(t *testing.T) {
@@ -43,22 +43,22 @@ func TestCustomValuesAllHeaders(t *testing.T) {
 		ContentTypeNosniff:        "custom-nosniff",
 		XFrameOptions:             "DENY",
 		HSTSExcludeSubdomains:     true,
-		ContentSecurityPolicy:     "default-src 'none'",
+		ContentSecurityPolicy:     literal_5719,
 		CSPReportOnly:             true,
 		HSTSPreloadEnabled:        true,
 		ReferrerPolicy:            "origin",
-		PermissionPolicy:          "geolocation=(self)",
-		CrossOriginEmbedderPolicy: "custom-value",
-		CrossOriginOpenerPolicy:   "custom-value",
-		CrossOriginResourcePolicy: "custom-value",
-		OriginAgentCluster:        "custom-value",
+		PermissionPolicy:          literal_5284,
+		CrossOriginEmbedderPolicy: literal_7014,
+		CrossOriginOpenerPolicy:   literal_7014,
+		CrossOriginResourcePolicy: literal_7014,
+		OriginAgentCluster:        literal_7014,
 		XDNSPrefetchControl:       "custom-control",
 		XDownloadOptions:          "custom-options",
 		XPermittedCrossDomain:     "custom-policies",
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4237)
 	})
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
@@ -67,16 +67,16 @@ func TestCustomValuesAllHeaders(t *testing.T) {
 	require.Equal(t, "0", resp.Header.Get(fiber.HeaderXXSSProtection))
 	require.Equal(t, "custom-nosniff", resp.Header.Get(fiber.HeaderXContentTypeOptions))
 	require.Equal(t, "DENY", resp.Header.Get(fiber.HeaderXFrameOptions))
-	require.Equal(t, "default-src 'none'", resp.Header.Get(fiber.HeaderContentSecurityPolicyReportOnly))
+	require.Equal(t, literal_5719, resp.Header.Get(fiber.HeaderContentSecurityPolicyReportOnly))
 	require.Equal(t, "origin", resp.Header.Get(fiber.HeaderReferrerPolicy))
-	require.Equal(t, "geolocation=(self)", resp.Header.Get(fiber.HeaderPermissionsPolicy))
-	require.Equal(t, "custom-value", resp.Header.Get("Cross-Origin-Embedder-Policy"))
-	require.Equal(t, "custom-value", resp.Header.Get("Cross-Origin-Opener-Policy"))
-	require.Equal(t, "custom-value", resp.Header.Get("Cross-Origin-Resource-Policy"))
-	require.Equal(t, "custom-value", resp.Header.Get("Origin-Agent-Cluster"))
-	require.Equal(t, "custom-control", resp.Header.Get("X-DNS-Prefetch-Control"))
-	require.Equal(t, "custom-options", resp.Header.Get("X-Download-Options"))
-	require.Equal(t, "custom-policies", resp.Header.Get("X-Permitted-Cross-Domain-Policies"))
+	require.Equal(t, literal_5284, resp.Header.Get(fiber.HeaderPermissionsPolicy))
+	require.Equal(t, literal_7014, resp.Header.Get(literal_0517))
+	require.Equal(t, literal_7014, resp.Header.Get(literal_5842))
+	require.Equal(t, literal_7014, resp.Header.Get(literal_3904))
+	require.Equal(t, literal_7014, resp.Header.Get(literal_2461))
+	require.Equal(t, "custom-control", resp.Header.Get(literal_2038))
+	require.Equal(t, "custom-options", resp.Header.Get(literal_2485))
+	require.Equal(t, "custom-policies", resp.Header.Get(literal_8134))
 }
 
 func TestRealWorldValuesAllHeaders(t *testing.T) {
@@ -91,11 +91,11 @@ func TestRealWorldValuesAllHeaders(t *testing.T) {
 		ContentSecurityPolicy:     "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
 		CSPReportOnly:             false,
 		HSTSPreloadEnabled:        true,
-		ReferrerPolicy:            "no-referrer",
-		PermissionPolicy:          "geolocation=(self)",
-		CrossOriginEmbedderPolicy: "require-corp",
-		CrossOriginOpenerPolicy:   "same-origin",
-		CrossOriginResourcePolicy: "same-origin",
+		ReferrerPolicy:            literal_0849,
+		PermissionPolicy:          literal_5284,
+		CrossOriginEmbedderPolicy: literal_7895,
+		CrossOriginOpenerPolicy:   literal_1509,
+		CrossOriginResourcePolicy: literal_1509,
 		OriginAgentCluster:        "?1",
 		XDNSPrefetchControl:       "off",
 		XDownloadOptions:          "noopen",
@@ -103,7 +103,7 @@ func TestRealWorldValuesAllHeaders(t *testing.T) {
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4237)
 	})
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
@@ -113,15 +113,15 @@ func TestRealWorldValuesAllHeaders(t *testing.T) {
 	require.Equal(t, "nosniff", resp.Header.Get(fiber.HeaderXContentTypeOptions))
 	require.Equal(t, "SAMEORIGIN", resp.Header.Get(fiber.HeaderXFrameOptions))
 	require.Equal(t, "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests", resp.Header.Get(fiber.HeaderContentSecurityPolicy))
-	require.Equal(t, "no-referrer", resp.Header.Get(fiber.HeaderReferrerPolicy))
-	require.Equal(t, "geolocation=(self)", resp.Header.Get(fiber.HeaderPermissionsPolicy))
-	require.Equal(t, "require-corp", resp.Header.Get("Cross-Origin-Embedder-Policy"))
-	require.Equal(t, "same-origin", resp.Header.Get("Cross-Origin-Opener-Policy"))
-	require.Equal(t, "same-origin", resp.Header.Get("Cross-Origin-Resource-Policy"))
-	require.Equal(t, "?1", resp.Header.Get("Origin-Agent-Cluster"))
-	require.Equal(t, "off", resp.Header.Get("X-DNS-Prefetch-Control"))
-	require.Equal(t, "noopen", resp.Header.Get("X-Download-Options"))
-	require.Equal(t, "none", resp.Header.Get("X-Permitted-Cross-Domain-Policies"))
+	require.Equal(t, literal_0849, resp.Header.Get(fiber.HeaderReferrerPolicy))
+	require.Equal(t, literal_5284, resp.Header.Get(fiber.HeaderPermissionsPolicy))
+	require.Equal(t, literal_7895, resp.Header.Get(literal_0517))
+	require.Equal(t, literal_1509, resp.Header.Get(literal_5842))
+	require.Equal(t, literal_1509, resp.Header.Get(literal_3904))
+	require.Equal(t, "?1", resp.Header.Get(literal_2461))
+	require.Equal(t, "off", resp.Header.Get(literal_2038))
+	require.Equal(t, "noopen", resp.Header.Get(literal_2485))
+	require.Equal(t, "none", resp.Header.Get(literal_8134))
 }
 
 func TestNext(t *testing.T) {
@@ -131,11 +131,11 @@ func TestNext(t *testing.T) {
 		Next: func(ctx fiber.Ctx) bool {
 			return ctx.Path() == "/next"
 		},
-		ReferrerPolicy: "no-referrer",
+		ReferrerPolicy: literal_0849,
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4237)
 	})
 	app.Get("/next", func(c fiber.Ctx) error {
 		return c.SendString("Skipped!")
@@ -143,7 +143,7 @@ func TestNext(t *testing.T) {
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
 	require.NoError(t, err)
-	require.Equal(t, "no-referrer", resp.Header.Get(fiber.HeaderReferrerPolicy))
+	require.Equal(t, literal_0849, resp.Header.Get(fiber.HeaderReferrerPolicy))
 
 	resp, err = app.Test(httptest.NewRequest(fiber.MethodGet, "/next", nil))
 	require.NoError(t, err)
@@ -154,33 +154,33 @@ func TestContentSecurityPolicy(t *testing.T) {
 	app := fiber.New()
 
 	app.Use(New(Config{
-		ContentSecurityPolicy: "default-src 'none'",
+		ContentSecurityPolicy: literal_5719,
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4237)
 	})
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
 	require.NoError(t, err)
-	require.Equal(t, "default-src 'none'", resp.Header.Get(fiber.HeaderContentSecurityPolicy))
+	require.Equal(t, literal_5719, resp.Header.Get(fiber.HeaderContentSecurityPolicy))
 }
 
 func TestContentSecurityPolicyReportOnly(t *testing.T) {
 	app := fiber.New()
 
 	app.Use(New(Config{
-		ContentSecurityPolicy: "default-src 'none'",
+		ContentSecurityPolicy: literal_5719,
 		CSPReportOnly:         true,
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4237)
 	})
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
 	require.NoError(t, err)
-	require.Equal(t, "default-src 'none'", resp.Header.Get(fiber.HeaderContentSecurityPolicyReportOnly))
+	require.Equal(t, literal_5719, resp.Header.Get(fiber.HeaderContentSecurityPolicyReportOnly))
 	require.Equal(t, "", resp.Header.Get(fiber.HeaderContentSecurityPolicy))
 }
 
@@ -192,10 +192,38 @@ func TestPermissionsPolicy(t *testing.T) {
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4237)
 	})
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
 	require.NoError(t, err)
 	require.Equal(t, "microphone=()", resp.Header.Get(fiber.HeaderPermissionsPolicy))
 }
+
+const literal_4237 = "Hello, World!"
+
+const literal_0849 = "no-referrer"
+
+const literal_7895 = "require-corp"
+
+const literal_0517 = "Cross-Origin-Embedder-Policy"
+
+const literal_1509 = "same-origin"
+
+const literal_5842 = "Cross-Origin-Opener-Policy"
+
+const literal_3904 = "Cross-Origin-Resource-Policy"
+
+const literal_2461 = "Origin-Agent-Cluster"
+
+const literal_2038 = "X-DNS-Prefetch-Control"
+
+const literal_2485 = "X-Download-Options"
+
+const literal_8134 = "X-Permitted-Cross-Domain-Policies"
+
+const literal_5719 = "default-src 'none'"
+
+const literal_5284 = "geolocation=(self)"
+
+const literal_7014 = "custom-value"

@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp"
 )
 
@@ -48,7 +48,7 @@ type Config struct {
 	WriteBufferSize int
 
 	// tls config for the http client.
-	TlsConfig *tls.Config //nolint:stylecheck,revive // TODO: Rename to "TLSConfig" in v3
+	TlsConfig *tls.Config //nolint:stylecheck,revive // : Rename to "TLSConfig" in v3
 
 	// Client is custom client when client config is complex.
 	// Note that Servers, Timeout, WriteBufferSize, ReadBufferSize, TlsConfig

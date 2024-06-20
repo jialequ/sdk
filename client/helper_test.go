@@ -98,7 +98,7 @@ func testRequest(t *testing.T, handler fiber.Handler, wrapAgent func(agent *Requ
 		req := AcquireRequest().SetClient(client)
 		wrapAgent(req)
 
-		resp, err := req.Get("http://example.com")
+		resp, err := req.Get(literal_6547)
 
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -125,7 +125,7 @@ func testRequestFail(t *testing.T, handler fiber.Handler, wrapAgent func(agent *
 		req := AcquireRequest().SetClient(client)
 		wrapAgent(req)
 
-		_, err := req.Get("http://example.com")
+		_, err := req.Get(literal_6547)
 
 		require.Equal(t, excepted.Error(), err.Error())
 	}
@@ -147,7 +147,7 @@ func testClient(t *testing.T, handler fiber.Handler, wrapAgent func(agent *Clien
 		client := New().SetDial(ln)
 		wrapAgent(client)
 
-		resp, err := client.Get("http://example.com")
+		resp, err := client.Get(literal_6547)
 
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -155,3 +155,5 @@ func testClient(t *testing.T, handler fiber.Handler, wrapAgent func(agent *Clien
 		resp.Close()
 	}
 }
+
+const literal_6547 = "http://example.com"

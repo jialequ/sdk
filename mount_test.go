@@ -24,8 +24,8 @@ func TestAppMount(t *testing.T) {
 	app := New()
 	app.Use("/john", micro)
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/john/doe", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_5340)
+	require.Equal(t, 200, resp.StatusCode, literal_2197)
 	require.Equal(t, uint32(1), app.handlersCount)
 }
 
@@ -44,8 +44,8 @@ func TestAppMountRootPathNested(t *testing.T) {
 	app.Use("/", dynamic)
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/api/v1/home", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_5340)
+	require.Equal(t, 200, resp.StatusCode, literal_2197)
 	require.Equal(t, uint32(1), app.handlersCount)
 }
 
@@ -74,16 +74,16 @@ func TestAppMountNested(t *testing.T) {
 	})
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/one/doe", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_5340)
+	require.Equal(t, 200, resp.StatusCode, literal_2197)
 
 	resp, err = app.Test(httptest.NewRequest(MethodGet, "/one/two/nested", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_5340)
+	require.Equal(t, 200, resp.StatusCode, literal_2197)
 
 	resp, err = app.Test(httptest.NewRequest(MethodGet, "/one/two/three/test", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_5340)
+	require.Equal(t, 200, resp.StatusCode, literal_2197)
 
 	require.Equal(t, uint32(3), app.handlersCount)
 	require.Equal(t, uint32(3), app.routesCount)
@@ -99,10 +99,10 @@ func TestAppMountExpressBehavior(t *testing.T) {
 	}
 	testEndpoint := func(app *App, route, expectedBody string, expectedStatusCode int) {
 		resp, err := app.Test(httptest.NewRequest(MethodGet, route, nil))
-		require.NoError(t, err, "app.Test(req)")
+		require.NoError(t, err, literal_5340)
 		body, err := io.ReadAll(resp.Body)
 		require.NoError(t, err)
-		require.Equal(t, expectedStatusCode, resp.StatusCode, "Status code")
+		require.Equal(t, expectedStatusCode, resp.StatusCode, literal_2197)
 		require.Equal(t, expectedBody, string(body), "Unexpected response body")
 	}
 
@@ -110,12 +110,12 @@ func TestAppMountExpressBehavior(t *testing.T) {
 	subApp := New()
 	// app setup
 	{
-		subApp.Get("/hello", createTestHandler("subapp hello!"))
-		subApp.Get("/world", createTestHandler("subapp world!")) // <- wins
+		subApp.Get(literal_5192, createTestHandler("subapp hello!"))
+		subApp.Get(literal_4367, createTestHandler("subapp world!")) // <- wins
 
-		app.Get("/hello", createTestHandler("app hello!")) // <- wins
+		app.Get(literal_5192, createTestHandler("app hello!")) // <- wins
 		app.Use("/", subApp)                               // <- subApp registration
-		app.Get("/world", createTestHandler("app world!"))
+		app.Get(literal_4367, createTestHandler("app world!"))
 
 		app.Get("/bar", createTestHandler("app bar!"))
 		subApp.Get("/bar", createTestHandler("subapp bar!")) // <- wins
@@ -129,8 +129,8 @@ func TestAppMountExpressBehavior(t *testing.T) {
 		})
 	}
 	// expectation check
-	testEndpoint(app, "/world", "subapp world!", StatusOK)
-	testEndpoint(app, "/hello", "app hello!", StatusOK)
+	testEndpoint(app, literal_4367, "subapp world!", StatusOK)
+	testEndpoint(app, literal_5192, "app hello!", StatusOK)
 	testEndpoint(app, "/bar", "subapp bar!", StatusOK)
 	testEndpoint(app, "/foo", "subapp foo!", StatusOK)
 	testEndpoint(app, "/unknown", ErrNotFound.Message, StatusNotFound)
@@ -144,10 +144,10 @@ func TestAppMountRoutePositions(t *testing.T) {
 	t.Parallel()
 	testEndpoint := func(app *App, route, expectedBody string) {
 		resp, err := app.Test(httptest.NewRequest(MethodGet, route, nil))
-		require.NoError(t, err, "app.Test(req)")
+		require.NoError(t, err, literal_5340)
 		body, err := io.ReadAll(resp.Body)
 		require.NoError(t, err)
-		require.Equal(t, StatusOK, resp.StatusCode, "Status code")
+		require.Equal(t, StatusOK, resp.StatusCode, literal_2197)
 		require.Equal(t, expectedBody, string(body), "Unexpected response body")
 	}
 
@@ -174,7 +174,7 @@ func TestAppMountRoutePositions(t *testing.T) {
 			return c.Next()
 		})
 		methods := subApp2.Group("/subApp2")
-		methods.Get("/world", func(c Ctx) error {
+		methods.Get(literal_4367, func(c Ctx) error {
 			v, ok := c.Locals("world").(string)
 			if !ok {
 				panic("unexpected data type")
@@ -231,40 +231,40 @@ func TestAppErrorHandlerGroupMount(t *testing.T) {
 	t.Parallel()
 	micro := New(Config{
 		ErrorHandler: func(c Ctx, err error) error {
-			require.Equal(t, "0: GET error", err.Error())
-			return c.Status(500).SendString("1: custom error")
+			require.Equal(t, literal_4926, err.Error())
+			return c.Status(500).SendString(literal_1204)
 		},
 	})
 	micro.Get("/doe", func(_ Ctx) error {
-		return errors.New("0: GET error")
+		return errors.New(literal_4926)
 	})
 
 	app := New()
 	v1 := app.Group("/v1")
 	v1.Use("/john", micro)
 
-	resp, err := app.Test(httptest.NewRequest(MethodGet, "/v1/john/doe", nil))
-	testErrorResponse(t, err, resp, "1: custom error")
+	resp, err := app.Test(httptest.NewRequest(MethodGet, literal_9168, nil))
+	testErrorResponse(t, err, resp, literal_1204)
 }
 
 func TestAppErrorHandlerGroupMountRootLevel(t *testing.T) {
 	t.Parallel()
 	micro := New(Config{
 		ErrorHandler: func(c Ctx, err error) error {
-			require.Equal(t, "0: GET error", err.Error())
-			return c.Status(500).SendString("1: custom error")
+			require.Equal(t, literal_4926, err.Error())
+			return c.Status(500).SendString(literal_1204)
 		},
 	})
 	micro.Get("/john/doe", func(_ Ctx) error {
-		return errors.New("0: GET error")
+		return errors.New(literal_4926)
 	})
 
 	app := New()
 	v1 := app.Group("/v1")
 	v1.Use("/", micro)
 
-	resp, err := app.Test(httptest.NewRequest(MethodGet, "/v1/john/doe", nil))
-	testErrorResponse(t, err, resp, "1: custom error")
+	resp, err := app.Test(httptest.NewRequest(MethodGet, literal_9168, nil))
+	testErrorResponse(t, err, resp, literal_1204)
 }
 
 // go test -run Test_App_Group_Mount
@@ -279,9 +279,9 @@ func TestAppGroupMount(t *testing.T) {
 	v1 := app.Group("/v1")
 	v1.Use("/john", micro)
 
-	resp, err := app.Test(httptest.NewRequest(MethodGet, "/v1/john/doe", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	resp, err := app.Test(httptest.NewRequest(MethodGet, literal_9168, nil))
+	require.NoError(t, err, literal_5340)
+	require.Equal(t, 200, resp.StatusCode, literal_2197)
 	require.Equal(t, uint32(1), app.handlersCount)
 }
 
@@ -289,19 +289,19 @@ func TestAppUseParentErrorHandler(t *testing.T) {
 	t.Parallel()
 	app := New(Config{
 		ErrorHandler: func(ctx Ctx, _ error) error {
-			return ctx.Status(500).SendString("hi, i'm a custom error")
+			return ctx.Status(500).SendString(literal_4612)
 		},
 	})
 
 	fiber := New()
 	fiber.Get("/", func(_ Ctx) error {
-		return errors.New("something happened")
+		return errors.New(literal_8076)
 	})
 
 	app.Use("/api", fiber)
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/api", nil))
-	testErrorResponse(t, err, resp, "hi, i'm a custom error")
+	testErrorResponse(t, err, resp, literal_4612)
 }
 
 func TestAppUseMountedErrorHandler(t *testing.T) {
@@ -310,17 +310,17 @@ func TestAppUseMountedErrorHandler(t *testing.T) {
 
 	fiber := New(Config{
 		ErrorHandler: func(c Ctx, _ error) error {
-			return c.Status(500).SendString("hi, i'm a custom error")
+			return c.Status(500).SendString(literal_4612)
 		},
 	})
 	fiber.Get("/", func(_ Ctx) error {
-		return errors.New("something happened")
+		return errors.New(literal_8076)
 	})
 
 	app.Use("/api", fiber)
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/api", nil))
-	testErrorResponse(t, err, resp, "hi, i'm a custom error")
+	testErrorResponse(t, err, resp, literal_4612)
 }
 
 func TestAppUseMountedErrorHandlerRootLevel(t *testing.T) {
@@ -329,17 +329,17 @@ func TestAppUseMountedErrorHandlerRootLevel(t *testing.T) {
 
 	fiber := New(Config{
 		ErrorHandler: func(c Ctx, _ error) error {
-			return c.Status(500).SendString("hi, i'm a custom error")
+			return c.Status(500).SendString(literal_4612)
 		},
 	})
 	fiber.Get("/api", func(_ Ctx) error {
-		return errors.New("something happened")
+		return errors.New(literal_8076)
 	})
 
 	app.Use("/", fiber)
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/api", nil))
-	testErrorResponse(t, err, resp, "hi, i'm a custom error")
+	testErrorResponse(t, err, resp, literal_4612)
 }
 
 func TestAppUseMountedErrorHandlerForBestPrefixMatch(t *testing.T) {
@@ -353,7 +353,7 @@ func TestAppUseMountedErrorHandlerForBestPrefixMatch(t *testing.T) {
 		ErrorHandler: tsf,
 	})
 	tripleSubFiber.Get("/", func(_ Ctx) error {
-		return errors.New("something happened")
+		return errors.New(literal_8076)
 	})
 
 	sf := func(c Ctx, _ error) error {
@@ -363,18 +363,18 @@ func TestAppUseMountedErrorHandlerForBestPrefixMatch(t *testing.T) {
 		ErrorHandler: sf,
 	})
 	subfiber.Get("/", func(_ Ctx) error {
-		return errors.New("something happened")
+		return errors.New(literal_8076)
 	})
 	subfiber.Use("/third", tripleSubFiber)
 
 	f := func(c Ctx, _ error) error {
-		return c.Status(200).SendString("hi, i'm a custom error")
+		return c.Status(200).SendString(literal_4612)
 	}
 	fiber := New(Config{
 		ErrorHandler: f,
 	})
 	fiber.Get("/", func(_ Ctx) error {
-		return errors.New("something happened")
+		return errors.New(literal_8076)
 	})
 	fiber.Use("/sub", subfiber)
 
@@ -382,7 +382,7 @@ func TestAppUseMountedErrorHandlerForBestPrefixMatch(t *testing.T) {
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/api/sub", nil))
 	require.NoError(t, err, "/api/sub req")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.Equal(t, 200, resp.StatusCode, literal_2197)
 
 	b, err := io.ReadAll(resp.Body)
 	require.NoError(t, err, "iotuil.ReadAll()")
@@ -390,7 +390,7 @@ func TestAppUseMountedErrorHandlerForBestPrefixMatch(t *testing.T) {
 
 	resp2, err := app.Test(httptest.NewRequest(MethodGet, "/api/sub/third", nil))
 	require.NoError(t, err, "/api/sub/third req")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.Equal(t, 200, resp.StatusCode, literal_2197)
 
 	b, err = io.ReadAll(resp2.Body)
 	require.NoError(t, err, "iotuil.ReadAll()")
@@ -402,23 +402,23 @@ func TestMountRouteNames(t *testing.T) {
 	t.Parallel()
 	// create sub-app with 2 handlers:
 	subApp1 := New()
-	subApp1.Get("/users", func(c Ctx) error {
-		url, err := c.GetRouteURL("add-user", Map{})
+	subApp1.Get(literal_5718, func(c Ctx) error {
+		url, err := c.GetRouteURL(literal_9874, Map{})
 		require.NoError(t, err)
-		require.Equal(t, "/app1/users", url, "handler: app1.add-user") // the prefix is /app1 because of the mount
+		require.Equal(t, literal_8956, url, "handler: app1.add-user") // the prefix is /app1 because of the mount
 		// if subApp1 is not mounted, expected url just /users
 		return nil
-	}).Name("get-users")
-	subApp1.Post("/users", func(c Ctx) error {
-		route := c.App().GetRoute("get-users")
+	}).Name(literal_4351)
+	subApp1.Post(literal_5718, func(c Ctx) error {
+		route := c.App().GetRoute(literal_4351)
 		require.Equal(t, MethodGet, route.Method, "handler: app1.get-users method")
-		require.Equal(t, "/app1/users", route.Path, "handler: app1.get-users path")
+		require.Equal(t, literal_8956, route.Path, "handler: app1.get-users path")
 		return nil
-	}).Name("add-user")
+	}).Name(literal_9874)
 
 	// create sub-app with 2 handlers inside a group:
 	subApp2 := New()
-	app2Grp := subApp2.Group("/users").Name("users.")
+	app2Grp := subApp2.Group(literal_5718).Name("users.")
 	app2Grp.Get("", emptyHandler).Name("get")
 	app2Grp.Post("", emptyHandler).Name("add")
 
@@ -430,175 +430,69 @@ func TestMountRouteNames(t *testing.T) {
 	rootApp.startupProcess()
 
 	// take route directly from sub-app
-	route := subApp1.GetRoute("get-users")
+	route := subApp1.GetRoute(literal_4351)
 	require.Equal(t, MethodGet, route.Method)
-	require.Equal(t, "/users", route.Path)
+	require.Equal(t, literal_5718, route.Path)
 
-	route = subApp1.GetRoute("add-user")
+	route = subApp1.GetRoute(literal_9874)
 	require.Equal(t, MethodPost, route.Method)
-	require.Equal(t, "/users", route.Path)
+	require.Equal(t, literal_5718, route.Path)
 
 	// take route directly from sub-app with group
 	route = subApp2.GetRoute("users.get")
 	require.Equal(t, MethodGet, route.Method)
-	require.Equal(t, "/users", route.Path)
+	require.Equal(t, literal_5718, route.Path)
 
 	route = subApp2.GetRoute("users.add")
 	require.Equal(t, MethodPost, route.Method)
-	require.Equal(t, "/users", route.Path)
+	require.Equal(t, literal_5718, route.Path)
 
 	// take route from root app (using names of sub-apps)
-	route = rootApp.GetRoute("add-user")
+	route = rootApp.GetRoute(literal_9874)
 	require.Equal(t, MethodPost, route.Method)
-	require.Equal(t, "/app1/users", route.Path)
+	require.Equal(t, literal_8956, route.Path)
 
 	route = rootApp.GetRoute("users.add")
 	require.Equal(t, MethodPost, route.Method)
 	require.Equal(t, "/app2/users", route.Path)
 
 	// GetRouteURL inside handler
-	req := httptest.NewRequest(MethodGet, "/app1/users", nil)
+	req := httptest.NewRequest(MethodGet, literal_8956, nil)
 	resp, err := rootApp.Test(req)
 
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_5340)
+	require.Equal(t, StatusOK, resp.StatusCode, literal_2197)
 
 	// ctx.App().GetRoute() inside handler
-	req = httptest.NewRequest(MethodPost, "/app1/users", nil)
+	req = httptest.NewRequest(MethodPost, literal_8956, nil)
 	resp, err = rootApp.Test(req)
 
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_5340)
+	require.Equal(t, StatusOK, resp.StatusCode, literal_2197)
 }
 
-// go test -run Test_Ctx_Render_Mount
-func TestCtxRenderMount(t *testing.T) {
-	t.Parallel()
+const literal_5340 = "app.Test(req)"
 
-	engine := &testTemplateEngine{}
-	err := engine.Load()
-	require.NoError(t, err)
+const literal_2197 = "Status code"
 
-	sub := New(Config{
-		Views: engine,
-	})
+const literal_5192 = "/hello"
 
-	sub.Get("/:name", func(c Ctx) error {
-		return c.Render("hello_world.tmpl", Map{
-			"Name": c.Params("name"),
-		})
-	})
+const literal_4367 = "/world"
 
-	app := New()
-	app.Use("/hello", sub)
+const literal_4926 = "0: GET error"
 
-	resp, err := app.Test(httptest.NewRequest(MethodGet, "/hello/a", nil))
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
-	require.NoError(t, err, "app.Test(req)")
+const literal_1204 = "1: custom error"
 
-	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err)
-	require.Equal(t, "<h1>Hello a!</h1>", string(body))
-}
+const literal_9168 = "/v1/john/doe"
 
-// go test -run Test_Ctx_Render_Mount_ParentOrSubHasViews
-func TestCtxRenderMountParentOrSubHasViews(t *testing.T) {
-	t.Parallel()
+const literal_4612 = "hi, i'm a custom error"
 
-	engine := &testTemplateEngine{}
-	err := engine.Load()
-	require.NoError(t, err)
+const literal_8076 = "something happened"
 
-	engine2 := &testTemplateEngine{path: "testdata2"}
-	err = engine2.Load()
-	require.NoError(t, err)
+const literal_5718 = "/users"
 
-	engine3 := &testTemplateEngine{path: "testdata3"}
-	err = engine3.Load()
-	require.NoError(t, err)
+const literal_9874 = "add-user"
 
-	sub := New(Config{
-		Views: engine3,
-	})
+const literal_8956 = "/app1/users"
 
-	sub2 := New(Config{
-		Views: engine2,
-	})
-
-	app := New(Config{
-		Views: engine,
-	})
-
-	app.Get("/test", func(c Ctx) error {
-		return c.Render("index.tmpl", Map{
-			"Title": "Hello, World!",
-		})
-	})
-
-	sub.Get("/world/:name", func(c Ctx) error {
-		return c.Render("hello_world.tmpl", Map{
-			"Name": c.Params("name"),
-		})
-	})
-
-	sub2.Get("/moment", func(c Ctx) error {
-		return c.Render("bruh.tmpl", Map{})
-	})
-
-	sub.Use("/bruh", sub2)
-	app.Use("/hello", sub)
-
-	resp, err := app.Test(httptest.NewRequest(MethodGet, "/hello/world/a", nil))
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
-	require.NoError(t, err, "app.Test(req)")
-
-	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err)
-	require.Equal(t, "<h1>Hello a!</h1>", string(body))
-
-	resp, err = app.Test(httptest.NewRequest(MethodGet, "/test", nil))
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
-	require.NoError(t, err, "app.Test(req)")
-
-	body, err = io.ReadAll(resp.Body)
-	require.NoError(t, err)
-	require.Equal(t, "<h1>Hello, World!</h1>", string(body))
-
-	resp, err = app.Test(httptest.NewRequest(MethodGet, "/hello/bruh/moment", nil))
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
-	require.NoError(t, err, "app.Test(req)")
-
-	body, err = io.ReadAll(resp.Body)
-	require.NoError(t, err)
-	require.Equal(t, "<h1>I'm Bruh</h1>", string(body))
-}
-
-func TestCtxRenderMountGroup(t *testing.T) {
-	t.Parallel()
-
-	engine := &testTemplateEngine{}
-	err := engine.Load()
-	require.NoError(t, err)
-
-	micro := New(Config{
-		Views: engine,
-	})
-
-	micro.Get("/doe", func(c Ctx) error {
-		return c.Render("hello_world.tmpl", Map{
-			"Name": "doe",
-		})
-	})
-
-	app := New()
-	v1 := app.Group("/v1")
-	v1.Use("/john", micro)
-
-	resp, err := app.Test(httptest.NewRequest(MethodGet, "/v1/john/doe", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
-
-	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err)
-	require.Equal(t, "<h1>Hello doe!</h1>", string(body))
-}
+const literal_4351 = "get-users"

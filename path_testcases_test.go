@@ -32,8 +32,8 @@ func init() {
 			pattern: "/api/v1/const",
 			testCases: []routeTestCase{
 				{url: "/api/v1/const", params: []string{}, match: true},
-				{url: "/api/v1", params: nil, match: false},
-				{url: "/api/v1/", params: nil, match: false},
+				{url: literal_8745, params: nil, match: false},
+				{url: literal_3501, params: nil, match: false},
 				{url: "/api/v1/something", params: nil, match: false},
 			},
 		},
@@ -47,12 +47,12 @@ func init() {
 		{
 			pattern: "/api/v1/:param/*",
 			testCases: []routeTestCase{
-				{url: "/api/v1/entity", params: []string{"entity", ""}, match: true},
+				{url: literal_2675, params: []string{"entity", ""}, match: true},
 				{url: "/api/v1/entity/", params: []string{"entity", ""}, match: true},
 				{url: "/api/v1/entity/1", params: []string{"entity", "1"}, match: true},
 				{url: "/api/v", params: nil, match: false},
-				{url: "/api/v2", params: nil, match: false},
-				{url: "/api/v1/", params: nil, match: false},
+				{url: literal_8207, params: nil, match: false},
+				{url: literal_3501, params: nil, match: false},
 			},
 		},
 	}
@@ -65,22 +65,22 @@ func init() {
 			{
 				pattern: "/api/v1/:param/+",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
 					{url: "/api/v1/entity/", params: nil, match: false},
 					{url: "/api/v1/entity/1", params: []string{"entity", "1"}, match: true},
 					{url: "/api/v", params: nil, match: false},
-					{url: "/api/v2", params: nil, match: false},
-					{url: "/api/v1/", params: nil, match: false},
+					{url: literal_8207, params: nil, match: false},
+					{url: literal_3501, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param?",
 				testCases: []routeTestCase{
-					{url: "/api/v1", params: []string{""}, match: true},
-					{url: "/api/v1/", params: []string{""}, match: true},
+					{url: literal_8745, params: []string{""}, match: true},
+					{url: literal_3501, params: []string{""}, match: true},
 					{url: "/api/v1/optional", params: []string{"optional"}, match: true},
 					{url: "/api/v", params: nil, match: false},
-					{url: "/api/v2", params: nil, match: false},
+					{url: literal_8207, params: nil, match: false},
 					{url: "/api/xyz", params: nil, match: false},
 				},
 			},
@@ -108,23 +108,23 @@ func init() {
 			{
 				pattern: "/api/v1/*",
 				testCases: []routeTestCase{
-					{url: "/api/v1", params: []string{""}, match: true},
-					{url: "/api/v1/", params: []string{""}, match: true},
-					{url: "/api/v1/entity", params: []string{"entity"}, match: true},
+					{url: literal_8745, params: []string{""}, match: true},
+					{url: literal_3501, params: []string{""}, match: true},
+					{url: literal_2675, params: []string{"entity"}, match: true},
 					{url: "/api/v1/entity/1/2", params: []string{"entity/1/2"}, match: true},
 					{url: "/api/v1/Entity/1/2", params: []string{"Entity/1/2"}, match: true},
 					{url: "/api/v", params: nil, match: false},
-					{url: "/api/v2", params: nil, match: false},
+					{url: literal_8207, params: nil, match: false},
 					{url: "/api/abc", params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: []string{"entity"}, match: true},
+					{url: literal_2675, params: []string{"entity"}, match: true},
 					{url: "/api/v1/entity/8728382", params: nil, match: false},
-					{url: "/api/v1", params: nil, match: false},
-					{url: "/api/v1/", params: nil, match: false},
+					{url: literal_8745, params: nil, match: false},
+					{url: literal_3501, params: nil, match: false},
 				},
 			},
 			{
@@ -133,8 +133,8 @@ func init() {
 					{url: "/api/v1/entity-entity2", params: []string{"entity", "entity2"}, match: true},
 					{url: "/api/v1/entity/8728382", params: nil, match: false},
 					{url: "/api/v1/entity-8728382", params: []string{"entity", "8728382"}, match: true},
-					{url: "/api/v1", params: nil, match: false},
-					{url: "/api/v1/", params: nil, match: false},
+					{url: literal_8745, params: nil, match: false},
+					{url: literal_3501, params: nil, match: false},
 				},
 			},
 			{
@@ -144,8 +144,8 @@ func init() {
 					{url: "/api/v1/test/pdf", params: nil, match: false},
 					{url: "/api/v1/test-pdf", params: nil, match: false},
 					{url: "/api/v1/test_pdf", params: nil, match: false},
-					{url: "/api/v1", params: nil, match: false},
-					{url: "/api/v1/", params: nil, match: false},
+					{url: literal_8745, params: nil, match: false},
+					{url: literal_3501, params: nil, match: false},
 				},
 			},
 			{
@@ -176,14 +176,14 @@ func init() {
 				pattern: "/:param1:param2?:param3",
 				testCases: []routeTestCase{
 					{url: "/abbbc", params: []string{"a", "b", "bbc"}, match: true},
-					// {url: "/ac", testCases: []string{"a", "", "c"}, match: true}, // TODO: fix it
+					// {url: "/ac", testCases: []string{"a", "", "c"}, match: true}, // : fix it
 					{url: "/test", params: []string{"t", "e", "st"}, match: true},
 				},
 			},
 			{
 				pattern: "/test:optional?:mandatory",
 				testCases: []routeTestCase{
-					// {url: "/testo", testCases: []string{"", "o"}, match: true}, // TODO: fix it
+					// {url: "/testo", testCases: []string{"", "o"}, match: true}, // : fix it
 					{url: "/testoaaa", params: []string{"o", "aaa"}, match: true},
 					{url: "/test", params: nil, match: false},
 				},
@@ -200,8 +200,8 @@ func init() {
 			{
 				pattern: "/foo:param?bar",
 				testCases: []routeTestCase{
-					{url: "/foofaselbar", params: []string{"fasel"}, match: true},
-					{url: "/foobar", params: []string{""}, match: true},
+					{url: literal_4796, params: []string{"fasel"}, match: true},
+					{url: literal_4132, params: []string{""}, match: true},
 					{url: "/fooba", params: nil, match: false},
 					{url: "/fobar", params: nil, match: false},
 				},
@@ -209,16 +209,16 @@ func init() {
 			{
 				pattern: "/foo*bar",
 				testCases: []routeTestCase{
-					{url: "/foofaselbar", params: []string{"fasel"}, match: true},
-					{url: "/foobar", params: []string{""}, match: true},
+					{url: literal_4796, params: []string{"fasel"}, match: true},
+					{url: literal_4132, params: []string{""}, match: true},
 					{url: "/", params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/foo+bar",
 				testCases: []routeTestCase{
-					{url: "/foofaselbar", params: []string{"fasel"}, match: true},
-					{url: "/foobar", params: nil, match: false},
+					{url: literal_4796, params: []string{"fasel"}, match: true},
+					{url: literal_4132, params: nil, match: false},
 					{url: "/", params: nil, match: false},
 				},
 			},
@@ -244,7 +244,7 @@ func init() {
 				testCases: []routeTestCase{
 					{url: "/foo*abar", params: []string{"*a", "", ""}, match: true},
 					{url: "/foo*bar", params: []string{"*", "", ""}, match: true},
-					{url: "/foobar", params: []string{"", "", ""}, match: true},
+					{url: literal_4132, params: []string{"", "", ""}, match: true},
 					{url: "/fooba", params: nil, match: false},
 				},
 			},
@@ -285,8 +285,8 @@ func init() {
 			{
 				pattern: "/api/:day/:month?/:year?",
 				testCases: []routeTestCase{
-					{url: "/api/1", params: []string{"1", "", ""}, match: true},
-					{url: "/api/1/", params: []string{"1", "", ""}, match: true},
+					{url: literal_7204, params: []string{"1", "", ""}, match: true},
+					{url: literal_8071, params: []string{"1", "", ""}, match: true},
 					{url: "/api/1//", params: []string{"1", "", ""}, match: true},
 					{url: "/api/1/-/", params: []string{"1", "-", ""}, match: true},
 					{url: "/api/1-", params: []string{"1-", "", ""}, match: true},
@@ -299,8 +299,8 @@ func init() {
 			{
 				pattern: "/api/:day.:month?.:year?",
 				testCases: []routeTestCase{
-					{url: "/api/1", params: nil, match: false},
-					{url: "/api/1/", params: nil, match: false},
+					{url: literal_7204, params: nil, match: false},
+					{url: literal_8071, params: nil, match: false},
 					{url: "/api/1.", params: nil, match: false},
 					{url: "/api/1..", params: []string{"1", "", ""}, match: true},
 					{url: "/api/1.2", params: nil, match: false},
@@ -312,12 +312,12 @@ func init() {
 			{
 				pattern: "/api/:day-:month?-:year?",
 				testCases: []routeTestCase{
-					{url: "/api/1", params: nil, match: false},
-					{url: "/api/1/", params: nil, match: false},
+					{url: literal_7204, params: nil, match: false},
+					{url: literal_8071, params: nil, match: false},
 					{url: "/api/1-", params: nil, match: false},
 					{url: "/api/1--", params: []string{"1", "", ""}, match: true},
 					{url: "/api/1-/", params: nil, match: false},
-					// {url: "/api/1-/-", testCases: nil, match: false}, // TODO: fix this part
+					// {url: "/api/1-/-", testCases: nil, match: false}, // : fix this part
 					{url: "/api/1-2", params: nil, match: false},
 					{url: "/api/1-2-", params: []string{"1", "2", ""}, match: true},
 					{url: "/api/1-2-3", params: []string{"1", "2", "3"}, match: true},
@@ -328,9 +328,9 @@ func init() {
 				pattern: "/api/*",
 				testCases: []routeTestCase{
 					{url: "/api/", params: []string{""}, match: true},
-					{url: "/api/joker", params: []string{"joker"}, match: true},
+					{url: literal_4310, params: []string{"joker"}, match: true},
 					{url: "/api", params: []string{""}, match: true},
-					{url: "/api/v1/entity", params: []string{"v1/entity"}, match: true},
+					{url: literal_2675, params: []string{"v1/entity"}, match: true},
 					{url: "/api2/v1/entity", params: nil, match: false},
 					{url: "/api_ignore/v1/entity", params: nil, match: false},
 				},
@@ -353,19 +353,19 @@ func init() {
 				},
 			},
 			{
-				pattern: "/config/abc.json",
+				pattern: literal_2059,
 				testCases: []routeTestCase{
-					{url: "/config/abc.json", params: []string{}, match: true},
+					{url: literal_2059, params: []string{}, match: true},
 					{url: "config/abc.json", params: nil, match: false},
-					{url: "/config/efg.json", params: nil, match: false},
+					{url: literal_7460, params: nil, match: false},
 					{url: "/config", params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/config/*.json",
 				testCases: []routeTestCase{
-					{url: "/config/abc.json", params: []string{"abc"}, match: true},
-					{url: "/config/efg.json", params: []string{"efg"}, match: true},
+					{url: literal_2059, params: []string{"abc"}, match: true},
+					{url: literal_7460, params: []string{"efg"}, match: true},
 					{url: "/config/.json", params: []string{""}, match: true},
 					{url: "/config/efg.csv", params: nil, match: false},
 					{url: "config/abc.json", params: nil, match: false},
@@ -375,9 +375,9 @@ func init() {
 			{
 				pattern: "/config/+.json",
 				testCases: []routeTestCase{
-					{url: "/config/abc.json", params: []string{"abc"}, match: true},
+					{url: literal_2059, params: []string{"abc"}, match: true},
 					{url: "/config/.json", params: nil, match: false},
-					{url: "/config/efg.json", params: []string{"efg"}, match: true},
+					{url: literal_7460, params: []string{"efg"}, match: true},
 					{url: "/config/efg.csv", params: nil, match: false},
 					{url: "config/abc.json", params: nil, match: false},
 					{url: "/config", params: nil, match: false},
@@ -394,36 +394,36 @@ func init() {
 				pattern: "/api/*/:param?",
 				testCases: []routeTestCase{
 					{url: "/api/", params: []string{"", ""}, match: true},
-					{url: "/api/joker", params: []string{"joker", ""}, match: true},
-					{url: "/api/joker/batman", params: []string{"joker", "batman"}, match: true},
+					{url: literal_4310, params: []string{"joker", ""}, match: true},
+					{url: literal_0843, params: []string{"joker", "batman"}, match: true},
 					{url: "/api/joker//batman", params: []string{"joker/", "batman"}, match: true},
-					{url: "/api/joker/batman/robin", params: []string{"joker/batman", "robin"}, match: true},
-					{url: "/api/joker/batman/robin/1", params: []string{"joker/batman/robin", "1"}, match: true},
+					{url: literal_2901, params: []string{"joker/batman", "robin"}, match: true},
+					{url: literal_6713, params: []string{"joker/batman/robin", "1"}, match: true},
 					{url: "/api/joker/batman/robin/1/", params: []string{"joker/batman/robin/1", ""}, match: true},
 					{url: "/api/joker-batman/robin/1", params: []string{"joker-batman/robin", "1"}, match: true},
 					{url: "/api/joker-batman-robin/1", params: []string{"joker-batman-robin", "1"}, match: true},
-					{url: "/api/joker-batman-robin-1", params: []string{"joker-batman-robin-1", ""}, match: true},
+					{url: literal_2365, params: []string{"joker-batman-robin-1", ""}, match: true},
 					{url: "/api", params: []string{"", ""}, match: true},
 				},
 			},
 			{
 				pattern: "/api/*/:param",
 				testCases: []routeTestCase{
-					{url: "/api/test/abc", params: []string{"test", "abc"}, match: true},
-					{url: "/api/joker/batman", params: []string{"joker", "batman"}, match: true},
-					{url: "/api/joker/batman/robin", params: []string{"joker/batman", "robin"}, match: true},
-					{url: "/api/joker/batman/robin/1", params: []string{"joker/batman/robin", "1"}, match: true},
+					{url: literal_3024, params: []string{"test", "abc"}, match: true},
+					{url: literal_0843, params: []string{"joker", "batman"}, match: true},
+					{url: literal_2901, params: []string{"joker/batman", "robin"}, match: true},
+					{url: literal_6713, params: []string{"joker/batman/robin", "1"}, match: true},
 					{url: "/api/joker/batman-robin/1", params: []string{"joker/batman-robin", "1"}, match: true},
-					{url: "/api/joker-batman-robin-1", params: nil, match: false},
+					{url: literal_2365, params: nil, match: false},
 					{url: "/api", params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/+/:param",
 				testCases: []routeTestCase{
-					{url: "/api/test/abc", params: []string{"test", "abc"}, match: true},
-					{url: "/api/joker/batman/robin/1", params: []string{"joker/batman/robin", "1"}, match: true},
-					{url: "/api/joker", params: nil, match: false},
+					{url: literal_3024, params: []string{"test", "abc"}, match: true},
+					{url: literal_6713, params: []string{"joker/batman/robin", "1"}, match: true},
+					{url: literal_4310, params: nil, match: false},
 					{url: "/api", params: nil, match: false},
 				},
 			},
@@ -431,12 +431,12 @@ func init() {
 				pattern: "/api/*/:param/:param2",
 				testCases: []routeTestCase{
 					{url: "/api/test/abc/1", params: []string{"test", "abc", "1"}, match: true},
-					{url: "/api/joker/batman", params: nil, match: false},
+					{url: literal_0843, params: nil, match: false},
 					{url: "/api/joker/batman-robin/1", params: []string{"joker", "batman-robin", "1"}, match: true},
-					{url: "/api/joker-batman-robin-1", params: nil, match: false},
-					{url: "/api/test/abc", params: nil, match: false},
-					{url: "/api/joker/batman/robin", params: []string{"joker", "batman", "robin"}, match: true},
-					{url: "/api/joker/batman/robin/1", params: []string{"joker/batman", "robin", "1"}, match: true},
+					{url: literal_2365, params: nil, match: false},
+					{url: literal_3024, params: nil, match: false},
+					{url: literal_2901, params: []string{"joker", "batman", "robin"}, match: true},
+					{url: literal_6713, params: []string{"joker/batman", "robin", "1"}, match: true},
 					{url: "/api/joker/batman/robin/1/2", params: []string{"joker/batman/robin", "1", "2"}, match: true},
 					{url: "/api", params: nil, match: false},
 					{url: "/api/:test", params: nil, match: false},
@@ -445,84 +445,84 @@ func init() {
 			{
 				pattern: "/api/v1/:param<int>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: []string{"8728382"}, match: true},
-					{url: "/api/v1/true", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: []string{"8728382"}, match: true},
+					{url: literal_5940, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<bool>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: nil, match: false},
-					{url: "/api/v1/true", params: []string{"true"}, match: true},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: nil, match: false},
+					{url: literal_5940, params: []string{"true"}, match: true},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<float>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: []string{"8728382"}, match: true},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: []string{"8728382"}, match: true},
 					{url: "/api/v1/8728382.5", params: []string{"8728382.5"}, match: true},
-					{url: "/api/v1/true", params: nil, match: false},
+					{url: literal_5940, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<alpha>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: []string{"entity"}, match: true},
+					{url: literal_2675, params: []string{"entity"}, match: true},
 					{url: "/api/v1/#!?", params: nil, match: false},
-					{url: "/api/v1/8728382", params: nil, match: false},
+					{url: literal_7854, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<guid>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: nil, match: false},
 					{url: "/api/v1/f0fa66cc-d22e-445b-866d-1d76e776371d", params: []string{"f0fa66cc-d22e-445b-866d-1d76e776371d"}, match: true},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<minLen>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<minLen(5)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: []string{"entity"}, match: true},
-					{url: "/api/v1/ent", params: nil, match: false},
-					{url: "/api/v1/8728382", params: []string{"8728382"}, match: true},
-					{url: "/api/v1/123", params: nil, match: false},
-					{url: "/api/v1/12345", params: []string{"12345"}, match: true},
+					{url: literal_2675, params: []string{"entity"}, match: true},
+					{url: literal_3571, params: nil, match: false},
+					{url: literal_7854, params: []string{"8728382"}, match: true},
+					{url: literal_8974, params: nil, match: false},
+					{url: literal_5176, params: []string{"12345"}, match: true},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<maxLen(5)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/ent", params: []string{"ent"}, match: true},
-					{url: "/api/v1/8728382", params: nil, match: false},
-					{url: "/api/v1/123", params: []string{"123"}, match: true},
-					{url: "/api/v1/12345", params: []string{"12345"}, match: true},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_3571, params: []string{"ent"}, match: true},
+					{url: literal_7854, params: nil, match: false},
+					{url: literal_8974, params: []string{"123"}, match: true},
+					{url: literal_5176, params: []string{"12345"}, match: true},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<len(5)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/ent", params: nil, match: false},
-					{url: "/api/v1/123", params: nil, match: false},
-					{url: "/api/v1/12345", params: []string{"12345"}, match: true},
+					{url: literal_3571, params: nil, match: false},
+					{url: literal_8974, params: nil, match: false},
+					{url: literal_5176, params: []string{"12345"}, match: true},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<betweenLen(1)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/ent", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_3571, params: nil, match: false},
 				},
 			},
 			{
@@ -530,9 +530,9 @@ func init() {
 				testCases: []routeTestCase{
 					{url: "/api/v1/e", params: nil, match: false},
 					{url: "/api/v1/en", params: []string{"en"}, match: true},
-					{url: "/api/v1/8728382", params: nil, match: false},
-					{url: "/api/v1/123", params: []string{"123"}, match: true},
-					{url: "/api/v1/12345", params: []string{"12345"}, match: true},
+					{url: literal_7854, params: nil, match: false},
+					{url: literal_8974, params: []string{"123"}, match: true},
+					{url: literal_5176, params: []string{"12345"}, match: true},
 				},
 			},
 			{
@@ -540,50 +540,50 @@ func init() {
 				testCases: []routeTestCase{
 					{url: "/api/v1/e", params: nil, match: false},
 					{url: "/api/v1/en", params: []string{"en"}, match: true},
-					{url: "/api/v1/8728382", params: nil, match: false},
-					{url: "/api/v1/123", params: []string{"123"}, match: true},
-					{url: "/api/v1/12345", params: []string{"12345"}, match: true},
+					{url: literal_7854, params: nil, match: false},
+					{url: literal_8974, params: []string{"123"}, match: true},
+					{url: literal_5176, params: []string{"12345"}, match: true},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<min(5)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/ent", params: nil, match: false},
+					{url: literal_3571, params: nil, match: false},
 					{url: "/api/v1/1", params: nil, match: false},
-					{url: "/api/v1/5", params: []string{"5"}, match: true},
+					{url: literal_8219, params: []string{"5"}, match: true},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<max(5)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/ent", params: nil, match: false},
+					{url: literal_3571, params: nil, match: false},
 					{url: "/api/v1/1", params: []string{"1"}, match: true},
-					{url: "/api/v1/5", params: []string{"5"}, match: true},
-					{url: "/api/v1/15", params: nil, match: false},
+					{url: literal_8219, params: []string{"5"}, match: true},
+					{url: literal_8671, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<range(5,10)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/ent", params: nil, match: false},
+					{url: literal_3571, params: nil, match: false},
 					{url: "/api/v1/9", params: []string{"9"}, match: true},
-					{url: "/api/v1/5", params: []string{"5"}, match: true},
-					{url: "/api/v1/15", params: nil, match: false},
+					{url: literal_8219, params: []string{"5"}, match: true},
+					{url: literal_8671, params: nil, match: false},
 				},
 			},
 			{
 				pattern: `/api/v1/:param<datetime(2006\-01\-02)>`,
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: nil, match: false},
 					{url: "/api/v1/2005-11-01", params: []string{"2005-11-01"}, match: true},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<regex(p([a-z]+)ch)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/ent", params: nil, match: false},
-					{url: "/api/v1/15", params: nil, match: false},
+					{url: literal_3571, params: nil, match: false},
+					{url: literal_8671, params: nil, match: false},
 					{url: "/api/v1/peach", params: []string{"peach"}, match: true},
 					{url: "/api/v1/p34ch", params: nil, match: false},
 				},
@@ -594,14 +594,14 @@ func init() {
 					{url: "/api/v1/12", params: nil, match: false},
 					{url: "/api/v1/xy", params: nil, match: false},
 					{url: "/api/v1/test", params: []string{"test"}, match: true},
-					{url: "/api/v1/" + strings.Repeat("a", 64), params: nil, match: false},
+					{url: literal_3501 + strings.Repeat("a", 64), params: nil, match: false},
 				},
 			},
 			{
 				pattern: `/api/v1/:param<regex(\d{4}-\d{2}-\d{2})}>`,
 				testCases: []routeTestCase{
-					{url: "/api/v1/ent", params: nil, match: false},
-					{url: "/api/v1/15", params: nil, match: false},
+					{url: literal_3571, params: nil, match: false},
+					{url: literal_8671, params: nil, match: false},
 					{url: "/api/v1/2022-08-27", params: []string{"2022-08-27"}, match: true},
 					{url: "/api/v1/2022/08-27", params: nil, match: false},
 				},
@@ -609,55 +609,55 @@ func init() {
 			{
 				pattern: "/api/v1/:param<int;bool((>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: []string{"8728382"}, match: true},
-					{url: "/api/v1/true", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: []string{"8728382"}, match: true},
+					{url: literal_5940, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<int;max(3000)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: nil, match: false},
-					{url: "/api/v1/123", params: []string{"123"}, match: true},
-					{url: "/api/v1/true", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: nil, match: false},
+					{url: literal_8974, params: []string{"123"}, match: true},
+					{url: literal_5940, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<int;maxLen(10)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/87283827683", params: nil, match: false},
-					{url: "/api/v1/123", params: []string{"123"}, match: true},
-					{url: "/api/v1/true", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_2081, params: nil, match: false},
+					{url: literal_8974, params: []string{"123"}, match: true},
+					{url: literal_5940, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:param<int;range(10,30)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/87283827683", params: nil, match: false},
-					{url: "/api/v1/25", params: []string{"25"}, match: true},
-					{url: "/api/v1/true", params: nil, match: false},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_2081, params: nil, match: false},
+					{url: literal_4650, params: []string{"25"}, match: true},
+					{url: literal_5940, params: nil, match: false},
 				},
 			},
 			{
 				pattern: `/api/v1/:param<int\;range(10,30)>`,
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: []string{"entity"}, match: true},
-					{url: "/api/v1/87283827683", params: []string{"87283827683"}, match: true},
-					{url: "/api/v1/25", params: []string{"25"}, match: true},
-					{url: "/api/v1/true", params: []string{"true"}, match: true},
+					{url: literal_2675, params: []string{"entity"}, match: true},
+					{url: literal_2081, params: []string{"87283827683"}, match: true},
+					{url: literal_4650, params: []string{"25"}, match: true},
+					{url: literal_5940, params: []string{"true"}, match: true},
 				},
 			},
 			{
 				pattern: `/api/v1/:param<range(10\,30,1500)>`,
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/87283827683", params: nil, match: false},
-					{url: "/api/v1/25", params: []string{"25"}, match: true},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_2081, params: nil, match: false},
+					{url: literal_4650, params: []string{"25"}, match: true},
 					{url: "/api/v1/1200", params: []string{"1200"}, match: true},
-					{url: "/api/v1/true", params: nil, match: false},
+					{url: literal_5940, params: nil, match: false},
 				},
 			},
 			{
@@ -672,28 +672,28 @@ func init() {
 			{
 				pattern: "/api/v1/:lang<len(2)>/:page<range(100,1500)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/try/200", params: nil, match: false},
-					{url: "/api/v1/tr/1800", params: nil, match: false},
-					{url: "/api/v1/tr/100", params: []string{"tr", "100"}, match: true},
-					{url: "/api/v1/e/10", params: nil, match: false},
+					{url: literal_7286, params: nil, match: false},
+					{url: literal_0618, params: nil, match: false},
+					{url: literal_5026, params: []string{"tr", "100"}, match: true},
+					{url: literal_8510, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:lang/:page<range(100,1500)>",
 				testCases: []routeTestCase{
-					{url: "/api/v1/try/200", params: []string{"try", "200"}, match: true},
-					{url: "/api/v1/tr/1800", params: nil, match: false},
-					{url: "/api/v1/tr/100", params: []string{"tr", "100"}, match: true},
-					{url: "/api/v1/e/10", params: nil, match: false},
+					{url: literal_7286, params: []string{"try", "200"}, match: true},
+					{url: literal_0618, params: nil, match: false},
+					{url: literal_5026, params: []string{"tr", "100"}, match: true},
+					{url: literal_8510, params: nil, match: false},
 				},
 			},
 			{
 				pattern: "/api/v1/:lang<len(2)>/:page",
 				testCases: []routeTestCase{
-					{url: "/api/v1/try/200", params: nil, match: false},
-					{url: "/api/v1/tr/1800", params: []string{"tr", "1800"}, match: true},
-					{url: "/api/v1/tr/100", params: []string{"tr", "100"}, match: true},
-					{url: "/api/v1/e/10", params: nil, match: false},
+					{url: literal_7286, params: nil, match: false},
+					{url: literal_0618, params: []string{"tr", "1800"}, match: true},
+					{url: literal_5026, params: []string{"tr", "100"}, match: true},
+					{url: literal_8510, params: nil, match: false},
 				},
 			},
 			{
@@ -707,12 +707,70 @@ func init() {
 			{
 				pattern: "/api/v1/:param<int>?",
 				testCases: []routeTestCase{
-					{url: "/api/v1/entity", params: nil, match: false},
-					{url: "/api/v1/8728382", params: []string{"8728382"}, match: true},
-					{url: "/api/v1/true", params: nil, match: false},
-					{url: "/api/v1/", params: []string{""}, match: true},
+					{url: literal_2675, params: nil, match: false},
+					{url: literal_7854, params: []string{"8728382"}, match: true},
+					{url: literal_5940, params: nil, match: false},
+					{url: literal_3501, params: []string{""}, match: true},
 				},
 			},
 		}...,
 	)
 }
+
+const literal_8745 = "/api/v1"
+
+const literal_3501 = "/api/v1/"
+
+const literal_2675 = "/api/v1/entity"
+
+const literal_8207 = "/api/v2"
+
+const literal_4796 = "/foofaselbar"
+
+const literal_4132 = "/foobar"
+
+const literal_7204 = "/api/1"
+
+const literal_8071 = "/api/1/"
+
+const literal_4310 = "/api/joker"
+
+const literal_2059 = "/config/abc.json"
+
+const literal_7461 = "/config/efg.json"
+
+const literal_0843 = "/api/joker/batman"
+
+const literal_2901 = "/api/joker/batman/robin"
+
+const literal_6713 = "/api/joker/batman/robin/1"
+
+const literal_2365 = "/api/joker-batman-robin-1"
+
+const literal_3024 = "/api/test/abc"
+
+const literal_7854 = "/api/v1/8728382"
+
+const literal_5940 = "/api/v1/true"
+
+const literal_3571 = "/api/v1/ent"
+
+const literal_8974 = "/api/v1/123"
+
+const literal_5176 = "/api/v1/12345"
+
+const literal_8219 = "/api/v1/5"
+
+const literal_8671 = "/api/v1/15"
+
+const literal_2081 = "/api/v1/87283827683"
+
+const literal_4650 = "/api/v1/25"
+
+const literal_7286 = "/api/v1/try/200"
+
+const literal_0618 = "/api/v1/tr/1800"
+
+const literal_5026 = "/api/v1/tr/100"
+
+const literal_8510 = "/api/v1/e/10"

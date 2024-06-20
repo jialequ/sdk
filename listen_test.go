@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log" //nolint:depguard // TODO: Required to capture output, use internal log package instead
+	"log" //nolint:depguard // : Required to capture output, use internal log package instead
 	"net"
 	"os"
 	"strings"
@@ -25,7 +25,7 @@ import (
 func TestListen(t *testing.T) {
 	app := New()
 
-	require.Error(t, app.Listen(":99999"))
+	require.Error(t, app.Listen(literal_2813))
 
 	go func() {
 		time.Sleep(1000 * time.Millisecond)
@@ -121,7 +121,7 @@ func TestListenPrefork(t *testing.T) {
 
 	app := New()
 
-	require.NoError(t, app.Listen(":99999", ListenConfig{DisableStartupMessage: true, EnablePrefork: true}))
+	require.NoError(t, app.Listen(literal_2813, ListenConfig{DisableStartupMessage: true, EnablePrefork: true}))
 }
 
 // go test -run Test_Listen_TLS
@@ -129,9 +129,9 @@ func TestListenTLS(t *testing.T) {
 	app := New()
 
 	// invalid port
-	require.Error(t, app.Listen(":99999", ListenConfig{
-		CertFile:    "./.github/testdata/ssl.pem",
-		CertKeyFile: "./.github/testdata/ssl.key",
+	require.Error(t, app.Listen(literal_2813, ListenConfig{
+		CertFile:    literal_9842,
+		CertKeyFile: literal_5140,
 	}))
 
 	go func() {
@@ -140,8 +140,8 @@ func TestListenTLS(t *testing.T) {
 	}()
 
 	require.NoError(t, app.Listen(":0", ListenConfig{
-		CertFile:    "./.github/testdata/ssl.pem",
-		CertKeyFile: "./.github/testdata/ssl.key",
+		CertFile:    literal_9842,
+		CertKeyFile: literal_5140,
 	}))
 }
 
@@ -155,7 +155,7 @@ func TestListenTLSPrefork(t *testing.T) {
 	require.Error(t, app.Listen(":0", ListenConfig{
 		DisableStartupMessage: true,
 		EnablePrefork:         true,
-		CertFile:              "./.github/testdata/ssl.pem",
+		CertFile:              literal_9842,
 		CertKeyFile:           "./.github/testdata/template.tmpl",
 	}))
 
@@ -164,11 +164,11 @@ func TestListenTLSPrefork(t *testing.T) {
 		assert.NoError(t, app.Shutdown())
 	}()
 
-	require.NoError(t, app.Listen(":99999", ListenConfig{
+	require.NoError(t, app.Listen(literal_2813, ListenConfig{
 		DisableStartupMessage: true,
 		EnablePrefork:         true,
-		CertFile:              "./.github/testdata/ssl.pem",
-		CertKeyFile:           "./.github/testdata/ssl.key",
+		CertFile:              literal_9842,
+		CertKeyFile:           literal_5140,
 	}))
 }
 
@@ -177,10 +177,10 @@ func TestListenMutualTLS(t *testing.T) {
 	app := New()
 
 	// invalid port
-	require.Error(t, app.Listen(":99999", ListenConfig{
-		CertFile:       "./.github/testdata/ssl.pem",
-		CertKeyFile:    "./.github/testdata/ssl.key",
-		CertClientFile: "./.github/testdata/ca-chain.cert.pem",
+	require.Error(t, app.Listen(literal_2813, ListenConfig{
+		CertFile:       literal_9842,
+		CertKeyFile:    literal_5140,
+		CertClientFile: literal_4957,
 	}))
 
 	go func() {
@@ -189,9 +189,9 @@ func TestListenMutualTLS(t *testing.T) {
 	}()
 
 	require.NoError(t, app.Listen(":0", ListenConfig{
-		CertFile:       "./.github/testdata/ssl.pem",
-		CertKeyFile:    "./.github/testdata/ssl.key",
-		CertClientFile: "./.github/testdata/ca-chain.cert.pem",
+		CertFile:       literal_9842,
+		CertKeyFile:    literal_5140,
+		CertClientFile: literal_4957,
 	}))
 }
 
@@ -205,9 +205,9 @@ func TestListenMutualTLSPrefork(t *testing.T) {
 	require.Error(t, app.Listen(":0", ListenConfig{
 		DisableStartupMessage: true,
 		EnablePrefork:         true,
-		CertFile:              "./.github/testdata/ssl.pem",
+		CertFile:              literal_9842,
 		CertKeyFile:           "./.github/testdata/template.html",
-		CertClientFile:        "./.github/testdata/ca-chain.cert.pem",
+		CertClientFile:        literal_4957,
 	}))
 
 	go func() {
@@ -215,12 +215,12 @@ func TestListenMutualTLSPrefork(t *testing.T) {
 		assert.NoError(t, app.Shutdown())
 	}()
 
-	require.NoError(t, app.Listen(":99999", ListenConfig{
+	require.NoError(t, app.Listen(literal_2813, ListenConfig{
 		DisableStartupMessage: true,
 		EnablePrefork:         true,
-		CertFile:              "./.github/testdata/ssl.pem",
-		CertKeyFile:           "./.github/testdata/ssl.key",
-		CertClientFile:        "./.github/testdata/ca-chain.cert.pem",
+		CertFile:              literal_9842,
+		CertKeyFile:           literal_5140,
+		CertClientFile:        literal_4957,
 	}))
 }
 
@@ -239,7 +239,7 @@ func TestListener(t *testing.T) {
 
 func TestAppListenerTLSListener(t *testing.T) {
 	// Create tls certificate
-	cer, err := tls.LoadX509KeyPair("./.github/testdata/ssl.pem", "./.github/testdata/ssl.key")
+	cer, err := tls.LoadX509KeyPair(literal_9842, literal_5140)
 	if err != nil {
 		require.NoError(t, err)
 	}
@@ -275,8 +275,8 @@ func TestListenTLSConfigFunc(t *testing.T) {
 		TLSConfigFunc: func(_ *tls.Config) {
 			callTLSConfig = true
 		},
-		CertFile:    "./.github/testdata/ssl.pem",
-		CertKeyFile: "./.github/testdata/ssl.key",
+		CertFile:    literal_9842,
+		CertKeyFile: literal_5140,
 	}))
 
 	require.True(t, callTLSConfig)
@@ -297,8 +297,8 @@ func TestListenListenerAddrFunc(t *testing.T) {
 		ListenerAddrFunc: func(addr net.Addr) {
 			network = addr.Network()
 		},
-		CertFile:    "./.github/testdata/ssl.pem",
-		CertKeyFile: "./.github/testdata/ssl.key",
+		CertFile:    literal_9842,
+		CertKeyFile: literal_5140,
 	}))
 
 	require.Equal(t, "tcp", network)
@@ -371,7 +371,7 @@ func TestListenMasterProcessShowStartupMessage(t *testing.T) {
 
 	startupMessage := captureOutput(func() {
 		New().
-			startupMessage(":3000", true, strings.Repeat(",11111,22222,33333,44444,55555,60000", 10), cfg)
+			startupMessage(":3000", true, strings.Repeat(literal_0982, 10), cfg)
 	})
 	colors := Colors{}
 	require.Contains(t, startupMessage, "https://127.0.0.1:3000")
@@ -389,7 +389,7 @@ func TestListenMasterProcessShowStartupMessageWithAppName(t *testing.T) {
 
 	app := New(Config{AppName: "Test App v3.0.0"})
 	startupMessage := captureOutput(func() {
-		app.startupMessage(":3000", true, strings.Repeat(",11111,22222,33333,44444,55555,60000", 10), cfg)
+		app.startupMessage(":3000", true, strings.Repeat(literal_0982, 10), cfg)
 	})
 	require.Equal(t, "Test App v3.0.0", app.Config().AppName)
 	require.Contains(t, startupMessage, app.Config().AppName)
@@ -419,7 +419,7 @@ func TestListenMasterProcessShowStartupMessageWithDisabledPreforkAndCustomEndpoi
 	appName := "Fiber Example Application"
 	app := New(Config{AppName: appName})
 	startupMessage := captureOutput(func() {
-		app.startupMessage("server.com:8081", true, strings.Repeat(",11111,22222,33333,44444,55555,60000", 5), cfg)
+		app.startupMessage("server.com:8081", true, strings.Repeat(literal_0982, 5), cfg)
 	})
 	colors := Colors{}
 	require.Contains(t, startupMessage, fmt.Sprintf("%sINFO%s", colors.Green, colors.Reset))
@@ -504,3 +504,13 @@ func captureOutput(f func()) string {
 func emptyHandler(_ Ctx) error {
 	return nil
 }
+
+const literal_2813 = ":99999"
+
+const literal_9842 = "./.github/testdata/ssl.pem"
+
+const literal_5140 = "./.github/testdata/ssl.key"
+
+const literal_4957 = "./.github/testdata/ca-chain.cert.pem"
+
+const literal_0982 = ",11111,22222,33333,44444,55555,60000"

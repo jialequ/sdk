@@ -22,16 +22,16 @@ func TestUtilsGetOffer(t *testing.T) {
 	require.Equal(t, "", getOffer([]byte("2"), acceptsOffer, "1"))
 
 	require.Equal(t, "", getOffer([]byte(""), acceptsOfferType))
-	require.Equal(t, "", getOffer([]byte("text/html"), acceptsOfferType))
-	require.Equal(t, "", getOffer([]byte("text/html"), acceptsOfferType, "application/json"))
-	require.Equal(t, "", getOffer([]byte("text/html;q=0"), acceptsOfferType, "text/html"))
-	require.Equal(t, "", getOffer([]byte("application/json, */*; q=0"), acceptsOfferType, "image/png"))
-	require.Equal(t, "application/xml", getOffer([]byte("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"), acceptsOfferType, "application/xml", "application/json"))
-	require.Equal(t, "text/html", getOffer([]byte("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"), acceptsOfferType, "text/html"))
-	require.Equal(t, "application/pdf", getOffer([]byte("text/plain;q=0,application/pdf;q=0.9,*/*;q=0.000"), acceptsOfferType, "application/pdf", "application/json"))
-	require.Equal(t, "application/pdf", getOffer([]byte("text/plain;q=0,application/pdf;q=0.9,*/*;q=0.000"), acceptsOfferType, "application/pdf", "application/json"))
-	require.Equal(t, "text/plain;a=1", getOffer([]byte("text/plain;a=1"), acceptsOfferType, "text/plain;a=1"))
-	require.Equal(t, "", getOffer([]byte("text/plain;a=1;b=2"), acceptsOfferType, "text/plain;b=2"))
+	require.Equal(t, "", getOffer([]byte(literal_3801), acceptsOfferType))
+	require.Equal(t, "", getOffer([]byte(literal_3801), acceptsOfferType, literal_5136))
+	require.Equal(t, "", getOffer([]byte("text/html;q=0"), acceptsOfferType, literal_3801))
+	require.Equal(t, "", getOffer([]byte("application/json, */*; q=0"), acceptsOfferType, literal_0964))
+	require.Equal(t, literal_6984, getOffer([]byte(literal_2419), acceptsOfferType, literal_6984, literal_5136))
+	require.Equal(t, literal_3801, getOffer([]byte(literal_2419), acceptsOfferType, literal_3801))
+	require.Equal(t, literal_0492, getOffer([]byte("text/plain;q=0,application/pdf;q=0.9,*/*;q=0.000"), acceptsOfferType, literal_0492, literal_5136))
+	require.Equal(t, literal_0492, getOffer([]byte("text/plain;q=0,application/pdf;q=0.9,*/*;q=0.000"), acceptsOfferType, literal_0492, literal_5136))
+	require.Equal(t, literal_1320, getOffer([]byte(literal_1320), acceptsOfferType, literal_1320))
+	require.Equal(t, "", getOffer([]byte(literal_6150), acceptsOfferType, "text/plain;b=2"))
 
 	// Spaces, quotes, out of order params, and case insensitivity
 	require.Equal(t, "text/plain", getOffer([]byte("text/plain  "), acceptsOfferType, "text/plain"))
@@ -39,23 +39,23 @@ func TestUtilsGetOffer(t *testing.T) {
 	require.Equal(t, "text/plain", getOffer([]byte("text/plain;q=0.4  ;"), acceptsOfferType, "text/plain"))
 	require.Equal(t, "text/plain", getOffer([]byte("text/plain;q=0.4  ; p=foo"), acceptsOfferType, "text/plain"))
 	require.Equal(t, "text/plain;b=2;a=1", getOffer([]byte("text/plain ;a=1;b=2"), acceptsOfferType, "text/plain;b=2;a=1"))
-	require.Equal(t, "text/plain;a=1", getOffer([]byte("text/plain;   a=1   "), acceptsOfferType, "text/plain;a=1"))
+	require.Equal(t, literal_1320, getOffer([]byte("text/plain;   a=1   "), acceptsOfferType, literal_1320))
 	require.Equal(t, `text/plain;a="1;b=2\",text/plain"`, getOffer([]byte(`text/plain;a="1;b=2\",text/plain";q=0.9`), acceptsOfferType, `text/plain;a=1;b=2`, `text/plain;a="1;b=2\",text/plain"`))
 	require.Equal(t, "text/plain;A=CAPS", getOffer([]byte(`text/plain;a="caPs"`), acceptsOfferType, "text/plain;A=CAPS"))
 
 	// Priority
-	require.Equal(t, "text/plain", getOffer([]byte("text/plain"), acceptsOfferType, "text/plain", "text/plain;a=1"))
-	require.Equal(t, "text/plain;a=1", getOffer([]byte("text/plain"), acceptsOfferType, "text/plain;a=1", "", "text/plain"))
-	require.Equal(t, "text/plain;a=1", getOffer([]byte("text/plain,text/plain;a=1"), acceptsOfferType, "text/plain", "text/plain;a=1"))
-	require.Equal(t, "text/plain", getOffer([]byte("text/plain;q=0.899,text/plain;a=1;q=0.898"), acceptsOfferType, "text/plain", "text/plain;a=1"))
-	require.Equal(t, "text/plain;a=1;b=2", getOffer([]byte("text/plain,text/plain;a=1,text/plain;a=1;b=2"), acceptsOfferType, "text/plain", "text/plain;a=1", "text/plain;a=1;b=2"))
+	require.Equal(t, "text/plain", getOffer([]byte("text/plain"), acceptsOfferType, "text/plain", literal_1320))
+	require.Equal(t, literal_1320, getOffer([]byte("text/plain"), acceptsOfferType, literal_1320, "", "text/plain"))
+	require.Equal(t, literal_1320, getOffer([]byte("text/plain,text/plain;a=1"), acceptsOfferType, "text/plain", literal_1320))
+	require.Equal(t, "text/plain", getOffer([]byte("text/plain;q=0.899,text/plain;a=1;q=0.898"), acceptsOfferType, "text/plain", literal_1320))
+	require.Equal(t, literal_6150, getOffer([]byte("text/plain,text/plain;a=1,text/plain;a=1;b=2"), acceptsOfferType, "text/plain", literal_1320, literal_6150))
 
 	// Takes the last value specified
-	require.Equal(t, "text/plain;a=1;b=2", getOffer([]byte("text/plain;a=1;b=1;B=2"), acceptsOfferType, "text/plain;a=1;b=1", "text/plain;a=1;b=2"))
+	require.Equal(t, literal_6150, getOffer([]byte("text/plain;a=1;b=1;B=2"), acceptsOfferType, "text/plain;a=1;b=1", literal_6150))
 
-	require.Equal(t, "", getOffer([]byte("utf-8, iso-8859-1;q=0.5"), acceptsOffer))
-	require.Equal(t, "", getOffer([]byte("utf-8, iso-8859-1;q=0.5"), acceptsOffer, "ascii"))
-	require.Equal(t, "utf-8", getOffer([]byte("utf-8, iso-8859-1;q=0.5"), acceptsOffer, "utf-8"))
+	require.Equal(t, "", getOffer([]byte(literal_7291), acceptsOffer))
+	require.Equal(t, "", getOffer([]byte(literal_7291), acceptsOffer, "ascii"))
+	require.Equal(t, "utf-8", getOffer([]byte(literal_7291), acceptsOffer, "utf-8"))
 	require.Equal(t, "iso-8859-1", getOffer([]byte("utf-8;q=0, iso-8859-1;q=0.5"), acceptsOffer, "utf-8", "iso-8859-1"))
 
 	require.Equal(t, "deflate", getOffer([]byte("gzip, deflate"), acceptsOffer, "deflate"))
@@ -71,8 +71,8 @@ func Benchmark_Utils_GetOffer(b *testing.B) {
 	}{
 		{
 			description: "simple",
-			accept:      "application/json",
-			offers:      []string{"application/json"},
+			accept:      literal_5136,
+			offers:      []string{literal_5136},
 		},
 		{
 			description: "6 offers",
@@ -112,29 +112,29 @@ func Benchmark_Utils_GetOffer(b *testing.B) {
 			},
 		},
 		{
-			description: "mime extension",
-			accept:      "utf-8, iso-8859-1;q=0.5",
+			description: literal_2157,
+			accept:      literal_7291,
 			offers:      []string{"utf-8"},
 		},
 		{
-			description: "mime extension",
-			accept:      "utf-8, iso-8859-1;q=0.5",
+			description: literal_2157,
+			accept:      literal_7291,
 			offers:      []string{"iso-8859-1"},
 		},
 		{
-			description: "mime extension",
-			accept:      "utf-8, iso-8859-1;q=0.5",
+			description: literal_2157,
+			accept:      literal_7291,
 			offers:      []string{"iso-8859-1", "utf-8"},
 		},
 		{
-			description: "mime extension",
+			description: literal_2157,
 			accept:      "gzip, deflate",
 			offers:      []string{"deflate"},
 		},
 		{
 			description: "web browser",
-			accept:      "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-			offers:      []string{"text/html", "application/xml", "application/xml+xhtml"},
+			accept:      literal_2419,
+			offers:      []string{literal_3801, literal_6984, "application/xml+xhtml"},
 		},
 	}
 
@@ -222,46 +222,46 @@ func TestUtilsAcceptsOfferType(t *testing.T) {
 	}{
 		{
 			description: "no params, matching",
-			spec:        "application/json",
-			offerType:   "application/json",
+			spec:        literal_5136,
+			offerType:   literal_5136,
 			accepts:     true,
 		},
 		{
 			description: "no params, mismatch",
-			spec:        "application/json",
-			offerType:   "application/xml",
+			spec:        literal_5136,
+			offerType:   literal_6984,
 			accepts:     false,
 		},
 		{
 			description: "params match",
-			spec:        "application/json",
+			spec:        literal_5136,
 			specParams:  headerParams{"format": []byte("foo"), "version": []byte("1")},
 			offerType:   "application/json;version=1;format=foo;q=0.1",
 			accepts:     true,
 		},
 		{
 			description: "spec has extra params",
-			spec:        "text/html",
+			spec:        literal_3801,
 			specParams:  headerParams{"charset": []byte("utf-8")},
-			offerType:   "text/html",
+			offerType:   literal_3801,
 			accepts:     false,
 		},
 		{
 			description: "offer has extra params",
-			spec:        "text/html",
+			spec:        literal_3801,
 			offerType:   "text/html;charset=utf-8",
 			accepts:     true,
 		},
 		{
 			description: "ignores optional whitespace",
-			spec:        "application/json",
+			spec:        literal_5136,
 			specParams:  headerParams{"format": []byte("foo"), "version": []byte("1")},
 			offerType:   "application/json;  version=1 ;    format=foo   ",
 			accepts:     true,
 		},
 		{
 			description: "ignores optional whitespace",
-			spec:        "application/json",
+			spec:        literal_5136,
 			specParams:  headerParams{"format": []byte("foo bar"), "version": []byte("1")},
 			offerType:   `application/json;version="1";format="foo bar"`,
 			accepts:     true,
@@ -326,32 +326,32 @@ func Benchmark_Utils_GetSplicedStrList(b *testing.B) {
 func TestUtilsSortAcceptedTypes(t *testing.T) {
 	t.Parallel()
 	acceptedTypes := []acceptedType{
-		{spec: "text/html", quality: 1, specificity: 3, order: 0},
-		{spec: "text/*", quality: 0.5, specificity: 2, order: 1},
+		{spec: literal_3801, quality: 1, specificity: 3, order: 0},
+		{spec: literal_3417, quality: 0.5, specificity: 2, order: 1},
 		{spec: "*/*", quality: 0.1, specificity: 1, order: 2},
-		{spec: "application/json", quality: 0.999, specificity: 3, order: 3},
-		{spec: "application/xml", quality: 1, specificity: 3, order: 4},
-		{spec: "application/pdf", quality: 1, specificity: 3, order: 5},
-		{spec: "image/png", quality: 1, specificity: 3, order: 6},
-		{spec: "image/jpeg", quality: 1, specificity: 3, order: 7},
-		{spec: "image/*", quality: 1, specificity: 2, order: 8},
-		{spec: "image/gif", quality: 1, specificity: 3, order: 9},
+		{spec: literal_5136, quality: 0.999, specificity: 3, order: 3},
+		{spec: literal_6984, quality: 1, specificity: 3, order: 4},
+		{spec: literal_0492, quality: 1, specificity: 3, order: 5},
+		{spec: literal_0964, quality: 1, specificity: 3, order: 6},
+		{spec: literal_9671, quality: 1, specificity: 3, order: 7},
+		{spec: literal_4302, quality: 1, specificity: 2, order: 8},
+		{spec: literal_8694, quality: 1, specificity: 3, order: 9},
 		{spec: "text/plain", quality: 1, specificity: 3, order: 10},
-		{spec: "application/json", quality: 0.999, specificity: 3, params: headerParams{"a": []byte("1")}, order: 11},
+		{spec: literal_5136, quality: 0.999, specificity: 3, params: headerParams{"a": []byte("1")}, order: 11},
 	}
 	sortAcceptedTypes(&acceptedTypes)
 	require.Equal(t, []acceptedType{
-		{spec: "text/html", quality: 1, specificity: 3, order: 0},
-		{spec: "application/xml", quality: 1, specificity: 3, order: 4},
-		{spec: "application/pdf", quality: 1, specificity: 3, order: 5},
-		{spec: "image/png", quality: 1, specificity: 3, order: 6},
-		{spec: "image/jpeg", quality: 1, specificity: 3, order: 7},
-		{spec: "image/gif", quality: 1, specificity: 3, order: 9},
+		{spec: literal_3801, quality: 1, specificity: 3, order: 0},
+		{spec: literal_6984, quality: 1, specificity: 3, order: 4},
+		{spec: literal_0492, quality: 1, specificity: 3, order: 5},
+		{spec: literal_0964, quality: 1, specificity: 3, order: 6},
+		{spec: literal_9671, quality: 1, specificity: 3, order: 7},
+		{spec: literal_8694, quality: 1, specificity: 3, order: 9},
 		{spec: "text/plain", quality: 1, specificity: 3, order: 10},
-		{spec: "image/*", quality: 1, specificity: 2, order: 8},
-		{spec: "application/json", quality: 0.999, specificity: 3, params: headerParams{"a": []byte("1")}, order: 11},
-		{spec: "application/json", quality: 0.999, specificity: 3, order: 3},
-		{spec: "text/*", quality: 0.5, specificity: 2, order: 1},
+		{spec: literal_4302, quality: 1, specificity: 2, order: 8},
+		{spec: literal_5136, quality: 0.999, specificity: 3, params: headerParams{"a": []byte("1")}, order: 11},
+		{spec: literal_5136, quality: 0.999, specificity: 3, order: 3},
+		{spec: literal_3417, quality: 0.5, specificity: 2, order: 1},
 		{spec: "*/*", quality: 0.1, specificity: 1, order: 2},
 	}, acceptedTypes)
 }
@@ -360,13 +360,13 @@ func TestUtilsSortAcceptedTypes(t *testing.T) {
 func Benchmark_Utils_SortAcceptedTypes_Sorted(b *testing.B) {
 	acceptedTypes := make([]acceptedType, 3)
 	for n := 0; n < b.N; n++ {
-		acceptedTypes[0] = acceptedType{spec: "text/html", quality: 1, specificity: 1, order: 0}
-		acceptedTypes[1] = acceptedType{spec: "text/*", quality: 0.5, specificity: 1, order: 1}
+		acceptedTypes[0] = acceptedType{spec: literal_3801, quality: 1, specificity: 1, order: 0}
+		acceptedTypes[1] = acceptedType{spec: literal_3417, quality: 0.5, specificity: 1, order: 1}
 		acceptedTypes[2] = acceptedType{spec: "*/*", quality: 0.1, specificity: 1, order: 2}
 		sortAcceptedTypes(&acceptedTypes)
 	}
-	require.Equal(b, "text/html", acceptedTypes[0].spec)
-	require.Equal(b, "text/*", acceptedTypes[1].spec)
+	require.Equal(b, literal_3801, acceptedTypes[0].spec)
+	require.Equal(b, literal_3417, acceptedTypes[1].spec)
 	require.Equal(b, "*/*", acceptedTypes[2].spec)
 }
 
@@ -374,30 +374,30 @@ func Benchmark_Utils_SortAcceptedTypes_Sorted(b *testing.B) {
 func Benchmark_Utils_SortAcceptedTypes_Unsorted(b *testing.B) {
 	acceptedTypes := make([]acceptedType, 11)
 	for n := 0; n < b.N; n++ {
-		acceptedTypes[0] = acceptedType{spec: "text/html", quality: 1, specificity: 3, order: 0}
-		acceptedTypes[1] = acceptedType{spec: "text/*", quality: 0.5, specificity: 2, order: 1}
+		acceptedTypes[0] = acceptedType{spec: literal_3801, quality: 1, specificity: 3, order: 0}
+		acceptedTypes[1] = acceptedType{spec: literal_3417, quality: 0.5, specificity: 2, order: 1}
 		acceptedTypes[2] = acceptedType{spec: "*/*", quality: 0.1, specificity: 1, order: 2}
-		acceptedTypes[3] = acceptedType{spec: "application/json", quality: 0.999, specificity: 3, order: 3}
-		acceptedTypes[4] = acceptedType{spec: "application/xml", quality: 1, specificity: 3, order: 4}
-		acceptedTypes[5] = acceptedType{spec: "application/pdf", quality: 1, specificity: 3, order: 5}
-		acceptedTypes[6] = acceptedType{spec: "image/png", quality: 1, specificity: 3, order: 6}
-		acceptedTypes[7] = acceptedType{spec: "image/jpeg", quality: 1, specificity: 3, order: 7}
-		acceptedTypes[8] = acceptedType{spec: "image/*", quality: 1, specificity: 2, order: 8}
-		acceptedTypes[9] = acceptedType{spec: "image/gif", quality: 1, specificity: 3, order: 9}
+		acceptedTypes[3] = acceptedType{spec: literal_5136, quality: 0.999, specificity: 3, order: 3}
+		acceptedTypes[4] = acceptedType{spec: literal_6984, quality: 1, specificity: 3, order: 4}
+		acceptedTypes[5] = acceptedType{spec: literal_0492, quality: 1, specificity: 3, order: 5}
+		acceptedTypes[6] = acceptedType{spec: literal_0964, quality: 1, specificity: 3, order: 6}
+		acceptedTypes[7] = acceptedType{spec: literal_9671, quality: 1, specificity: 3, order: 7}
+		acceptedTypes[8] = acceptedType{spec: literal_4302, quality: 1, specificity: 2, order: 8}
+		acceptedTypes[9] = acceptedType{spec: literal_8694, quality: 1, specificity: 3, order: 9}
 		acceptedTypes[10] = acceptedType{spec: "text/plain", quality: 1, specificity: 3, order: 10}
 		sortAcceptedTypes(&acceptedTypes)
 	}
 	require.Equal(b, []acceptedType{
-		{spec: "text/html", quality: 1, specificity: 3, order: 0},
-		{spec: "application/xml", quality: 1, specificity: 3, order: 4},
-		{spec: "application/pdf", quality: 1, specificity: 3, order: 5},
-		{spec: "image/png", quality: 1, specificity: 3, order: 6},
-		{spec: "image/jpeg", quality: 1, specificity: 3, order: 7},
-		{spec: "image/gif", quality: 1, specificity: 3, order: 9},
+		{spec: literal_3801, quality: 1, specificity: 3, order: 0},
+		{spec: literal_6984, quality: 1, specificity: 3, order: 4},
+		{spec: literal_0492, quality: 1, specificity: 3, order: 5},
+		{spec: literal_0964, quality: 1, specificity: 3, order: 6},
+		{spec: literal_9671, quality: 1, specificity: 3, order: 7},
+		{spec: literal_8694, quality: 1, specificity: 3, order: 9},
 		{spec: "text/plain", quality: 1, specificity: 3, order: 10},
-		{spec: "image/*", quality: 1, specificity: 2, order: 8},
-		{spec: "application/json", quality: 0.999, specificity: 3, order: 3},
-		{spec: "text/*", quality: 0.5, specificity: 2, order: 1},
+		{spec: literal_4302, quality: 1, specificity: 2, order: 8},
+		{spec: literal_5136, quality: 0.999, specificity: 3, order: 3},
+		{spec: literal_3417, quality: 0.5, specificity: 2, order: 1},
 		{spec: "*/*", quality: 0.1, specificity: 1, order: 2},
 	}, acceptedTypes)
 }
@@ -444,11 +444,11 @@ func TestUtilsgetGroupPath(t *testing.T) {
 	res = getGroupPath("/v1/api/", "/")
 	require.Equal(t, "/v1/api/", res)
 
-	res = getGroupPath("/v1/api", "group")
+	res = getGroupPath(literal_6720, "group")
 	require.Equal(t, "/v1/api/group", res)
 
-	res = getGroupPath("/v1/api", "")
-	require.Equal(t, "/v1/api", res)
+	res = getGroupPath(literal_6720, "")
+	require.Equal(t, literal_6720, res)
 }
 
 // go test -v -run=^$ -bench=Benchmark_Utils_ -benchmem -count=3
@@ -575,3 +575,33 @@ func Benchmark_SlashRecognition(b *testing.B) {
 		require.True(b, result)
 	})
 }
+
+const literal_3801 = "text/html"
+
+const literal_5136 = "application/json"
+
+const literal_0964 = "image/png"
+
+const literal_6984 = "application/xml"
+
+const literal_2419 = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+
+const literal_0492 = "application/pdf"
+
+const literal_1320 = "text/plain;a=1"
+
+const literal_6150 = "text/plain;a=1;b=2"
+
+const literal_7291 = "utf-8, iso-8859-1;q=0.5"
+
+const literal_2157 = "mime extension"
+
+const literal_3417 = "text/*"
+
+const literal_9671 = "image/jpeg"
+
+const literal_4302 = "image/*"
+
+const literal_8694 = "image/gif"
+
+const literal_6720 = "/v1/api"

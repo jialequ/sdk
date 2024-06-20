@@ -38,7 +38,7 @@ func TestMiddlewareBasicAuth(t *testing.T) {
 		},
 	}))
 
-	app.Get("/testauth", func(c fiber.Ctx) error {
+	app.Get(literal_8432, func(c fiber.Ctx) error {
 		username := UsernameFromContext(c)
 		password := PasswordFromContext(c)
 
@@ -52,19 +52,19 @@ func TestMiddlewareBasicAuth(t *testing.T) {
 		password   string
 	}{
 		{
-			url:        "/testauth",
+			url:        literal_8432,
 			statusCode: 200,
 			username:   "john",
 			password:   "doe",
 		},
 		{
-			url:        "/testauth",
+			url:        literal_8432,
 			statusCode: 200,
 			username:   "admin",
 			password:   "123456",
 		},
 		{
-			url:        "/testauth",
+			url:        literal_8432,
 			statusCode: 401,
 			username:   "ee",
 			password:   "123456",
@@ -75,7 +75,7 @@ func TestMiddlewareBasicAuth(t *testing.T) {
 		// Base64 encode credentials for http auth header
 		creds := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", tt.username, tt.password)))
 
-		req := httptest.NewRequest(fiber.MethodGet, "/testauth", nil)
+		req := httptest.NewRequest(fiber.MethodGet, literal_8432, nil)
 		req.Header.Add("Authorization", "Basic "+creds)
 		resp, err := app.Test(req)
 		require.NoError(t, err)
@@ -150,3 +150,5 @@ func Benchmark_Middleware_BasicAuth_Upper(b *testing.B) {
 
 	require.Equal(b, fiber.StatusTeapot, fctx.Response.Header.StatusCode())
 }
+
+const literal_8432 = "/testauth"

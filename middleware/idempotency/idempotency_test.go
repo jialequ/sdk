@@ -30,7 +30,7 @@ func TestIdempotency(t *testing.T) {
 
 		isMethodSafe := fiber.IsMethodSafe(c.Method())
 		isIdempotent := idempotency.IsFromCache(c) || idempotency.WasPutToCache(c)
-		hasReqHeader := c.Get("X-Idempotency-Key") != ""
+		hasReqHeader := c.Get(literal_5263) != ""
 
 		if isMethodSafe {
 			if isIdempotent {
@@ -80,7 +80,7 @@ func TestIdempotency(t *testing.T) {
 	doReq := func(method, route, idempotencyKey string) string {
 		req := httptest.NewRequest(method, route, nil)
 		if idempotencyKey != "" {
-			req.Header.Set("X-Idempotency-Key", idempotencyKey)
+			req.Header.Set(literal_5263, idempotencyKey)
 		}
 		resp, err := app.Test(req, 15*time.Second)
 		require.NoError(t, err)
@@ -96,18 +96,18 @@ func TestIdempotency(t *testing.T) {
 	require.Equal(t, "3", doReq(fiber.MethodPost, "/", ""))
 	require.Equal(t, "4", doReq(fiber.MethodPost, "/", ""))
 
-	require.Equal(t, "5", doReq(fiber.MethodGet, "/", "00000000-0000-0000-0000-000000000000"))
-	require.Equal(t, "6", doReq(fiber.MethodGet, "/", "00000000-0000-0000-0000-000000000000"))
+	require.Equal(t, "5", doReq(fiber.MethodGet, "/", literal_3529))
+	require.Equal(t, "6", doReq(fiber.MethodGet, "/", literal_3529))
 
-	require.Equal(t, "7", doReq(fiber.MethodPost, "/", "00000000-0000-0000-0000-000000000000"))
-	require.Equal(t, "7", doReq(fiber.MethodPost, "/", "00000000-0000-0000-0000-000000000000"))
+	require.Equal(t, "7", doReq(fiber.MethodPost, "/", literal_3529))
+	require.Equal(t, "7", doReq(fiber.MethodPost, "/", literal_3529))
 	require.Equal(t, "8", doReq(fiber.MethodPost, "/", ""))
 	require.Equal(t, "9", doReq(fiber.MethodPost, "/", "11111111-1111-1111-1111-111111111111"))
 
-	require.Equal(t, "7", doReq(fiber.MethodPost, "/", "00000000-0000-0000-0000-000000000000"))
+	require.Equal(t, "7", doReq(fiber.MethodPost, "/", literal_3529))
 	time.Sleep(4 * lifetime)
-	require.Equal(t, "10", doReq(fiber.MethodPost, "/", "00000000-0000-0000-0000-000000000000"))
-	require.Equal(t, "10", doReq(fiber.MethodPost, "/", "00000000-0000-0000-0000-000000000000"))
+	require.Equal(t, "10", doReq(fiber.MethodPost, "/", literal_3529))
+	require.Equal(t, "10", doReq(fiber.MethodPost, "/", literal_3529))
 
 	// Test raciness
 	{
@@ -116,14 +116,14 @@ func TestIdempotency(t *testing.T) {
 			wg.Add(1)
 			go func() {
 				defer wg.Done()
-				assert.Equal(t, "11", doReq(fiber.MethodPost, "/slow", "22222222-2222-2222-2222-222222222222"))
+				assert.Equal(t, "11", doReq(fiber.MethodPost, "/slow", literal_0546))
 			}()
 		}
 		wg.Wait()
-		require.Equal(t, "11", doReq(fiber.MethodPost, "/slow", "22222222-2222-2222-2222-222222222222"))
+		require.Equal(t, "11", doReq(fiber.MethodPost, "/slow", literal_0546))
 	}
 	time.Sleep(3 * lifetime)
-	require.Equal(t, "12", doReq(fiber.MethodPost, "/slow", "22222222-2222-2222-2222-222222222222"))
+	require.Equal(t, "12", doReq(fiber.MethodPost, "/slow", literal_0546))
 }
 
 // go test -v -run=^$ -bench=Benchmark_Idempotency -benchmem -count=4
@@ -147,7 +147,7 @@ func Benchmark_Idempotency(b *testing.B) {
 		c := &fasthttp.RequestCtx{}
 		c.Request.Header.SetMethod(fiber.MethodPost)
 		c.Request.SetRequestURI("/")
-		c.Request.Header.Set("X-Idempotency-Key", "00000000-0000-0000-0000-000000000000")
+		c.Request.Header.Set(literal_5263, literal_3529)
 
 		b.ReportAllocs()
 		b.ResetTimer()
@@ -168,3 +168,9 @@ func Benchmark_Idempotency(b *testing.B) {
 		}
 	})
 }
+
+const literal_5263 = "X-Idempotency-Key"
+
+const literal_3529 = "00000000-0000-0000-0000-000000000000"
+
+const literal_0546 = "22222222-2222-2222-2222-222222222222"

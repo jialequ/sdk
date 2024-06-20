@@ -1,10 +1,10 @@
-package recover //nolint:predeclared // TODO: Rename to some non-builtin
+package recover //nolint:predeclared // : Rename to some non-builtin
 
 import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/stretchr/testify/require"
 )
 
@@ -13,18 +13,18 @@ func TestRecover(t *testing.T) {
 	t.Parallel()
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(c fiber.Ctx, err error) error {
-			require.Equal(t, "Hi, I'm an error!", err.Error())
+			require.Equal(t, literal_9082, err.Error())
 			return c.SendStatus(fiber.StatusTeapot)
 		},
 	})
 
 	app.Use(New())
 
-	app.Get("/panic", func(_ fiber.Ctx) error {
-		panic("Hi, I'm an error!")
+	app.Get(literal_2853, func(_ fiber.Ctx) error {
+		panic(literal_9082)
 	})
 
-	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/panic", nil))
+	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, literal_2853, nil))
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusTeapot, resp.StatusCode)
 }
@@ -51,11 +51,15 @@ func TestRecoverEnableStackTrace(t *testing.T) {
 		EnableStackTrace: true,
 	}))
 
-	app.Get("/panic", func(_ fiber.Ctx) error {
-		panic("Hi, I'm an error!")
+	app.Get(literal_2853, func(_ fiber.Ctx) error {
+		panic(literal_9082)
 	})
 
-	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/panic", nil))
+	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, literal_2853, nil))
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusInternalServerError, resp.StatusCode)
 }
+
+const literal_9082 = "Hi, I'm an error!"
+
+const literal_2853 = "/panic"

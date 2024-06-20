@@ -35,14 +35,14 @@ func TestAddMissingPort(t *testing.T) {
 		{
 			name: "add 80 port",
 			args: args{
-				addr: "example.com",
+				addr: literal_8716,
 			},
 			want: "example.com:80",
 		},
 		{
 			name: "add 443 port",
 			args: args{
-				addr:  "example.com",
+				addr:  literal_8716,
 				isTLS: true,
 			},
 			want: "example.com:443",
@@ -67,7 +67,7 @@ func TestExecFunc(t *testing.T) {
 	})
 
 	app.Get("/return-error", func(_ fiber.Ctx) error {
-		return errors.New("the request is error")
+		return errors.New(literal_8076)
 	})
 
 	app.Get("/hang-up", func(c fiber.Ctx) error {
@@ -94,7 +94,7 @@ func TestExecFunc(t *testing.T) {
 		resp, err := core.execFunc()
 		require.NoError(t, err)
 		require.Equal(t, 200, resp.RawResponse.StatusCode())
-		require.Equal(t, "example.com", string(resp.RawResponse.Body()))
+		require.Equal(t, literal_8716, string(resp.RawResponse.Body()))
 	})
 
 	t.Run("the request return an error", func(t *testing.T) {
@@ -111,7 +111,7 @@ func TestExecFunc(t *testing.T) {
 
 		require.NoError(t, err)
 		require.Equal(t, 500, resp.RawResponse.StatusCode())
-		require.Equal(t, "the request is error", string(resp.RawResponse.Body()))
+		require.Equal(t, literal_8076, string(resp.RawResponse.Body()))
 	})
 
 	t.Run("the request timeout", func(t *testing.T) {
@@ -125,7 +125,7 @@ func TestExecFunc(t *testing.T) {
 		core.req = req
 
 		client.SetDial(func(_ string) (net.Conn, error) { return ln.Dial() })
-		req.RawRequest.SetRequestURI("http://example.com/hang-up")
+		req.RawRequest.SetRequestURI(literal_1593)
 
 		_, err := core.execFunc()
 
@@ -143,7 +143,7 @@ func TestExecute(t *testing.T) {
 	})
 
 	app.Get("/return-error", func(_ fiber.Ctx) error {
-		return errors.New("the request is error")
+		return errors.New(literal_8076)
 	})
 
 	app.Get("/hang-up", func(c fiber.Ctx) error {
@@ -196,7 +196,7 @@ func TestExecute(t *testing.T) {
 		client.SetDial(func(_ string) (net.Conn, error) {
 			return ln.Dial()
 		})
-		req.SetURL("http://example.com/hang-up")
+		req.SetURL(literal_1593)
 
 		resp, err := core.execute(context.Background(), client, req)
 		require.NoError(t, err)
@@ -210,7 +210,7 @@ func TestExecute(t *testing.T) {
 		client.SetDial(func(_ string) (net.Conn, error) {
 			return ln.Dial()
 		})
-		req.SetURL("http://example.com/hang-up")
+		req.SetURL(literal_1593)
 
 		_, err := core.execute(context.Background(), client, req)
 		require.Equal(t, ErrTimeoutOrCancel, err)
@@ -223,7 +223,7 @@ func TestExecute(t *testing.T) {
 		client.SetDial(func(_ string) (net.Conn, error) {
 			return ln.Dial()
 		})
-		req.SetURL("http://example.com/hang-up").
+		req.SetURL(literal_1593).
 			SetTimeout(300 * time.Millisecond)
 
 		_, err := core.execute(context.Background(), client, req)
@@ -238,7 +238,7 @@ func TestExecute(t *testing.T) {
 		client.SetDial(func(_ string) (net.Conn, error) {
 			return ln.Dial()
 		})
-		req.SetURL("http://example.com/hang-up").
+		req.SetURL(literal_1593).
 			SetTimeout(3000 * time.Millisecond)
 
 		resp, err := core.execute(context.Background(), client, req)
@@ -246,3 +246,9 @@ func TestExecute(t *testing.T) {
 		require.Equal(t, "example.com hang up", string(resp.RawResponse.Body()))
 	})
 }
+
+const literal_8716 = "example.com"
+
+const literal_8076 = "the request is error"
+
+const literal_1593 = "http://example.com/hang-up"

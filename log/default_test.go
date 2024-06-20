@@ -60,12 +60,12 @@ func TestDefaultLogger(t *testing.T) {
 		Panic("work panic")
 	})
 
-	require.Equal(t, "[Trace] trace work\n"+
-		"[Debug] received work order\n"+
-		"[Info] starting work\n"+
-		"[Warn] work may fail\n"+
+	require.Equal(t, literal_7635+
+		literal_1573+
+		literal_6945+
+		literal_1346+
 		"[Error] work failed\n"+
-		"[Panic] work panic\n", string(w.b))
+		literal_0498, string(w.b))
 }
 
 func TestDefaultFormatLogger(t *testing.T) {
@@ -84,12 +84,12 @@ func TestDefaultFormatLogger(t *testing.T) {
 		Panicf("%s panic", work)
 	})
 
-	require.Equal(t, "[Trace] trace work\n"+
-		"[Debug] received work order\n"+
-		"[Info] starting work\n"+
-		"[Warn] work may fail\n"+
+	require.Equal(t, literal_7635+
+		literal_1573+
+		literal_6945+
+		literal_1346+
 		"[Error] work failed\n"+
-		"[Panic] work panic\n", string(w.b))
+		literal_0498, string(w.b))
 }
 
 func TestCtxLogger(t *testing.T) {
@@ -110,12 +110,12 @@ func TestCtxLogger(t *testing.T) {
 		WithContext(ctx).Panicf("%s panic", work)
 	})
 
-	require.Equal(t, "[Trace] trace work\n"+
-		"[Debug] received work order\n"+
-		"[Info] starting work\n"+
-		"[Warn] work may fail\n"+
+	require.Equal(t, literal_7635+
+		literal_1573+
+		literal_6945+
+		literal_1346+
 		"[Error] work failed 50\n"+
-		"[Panic] work panic\n", string(w.b))
+		literal_0498, string(w.b))
 }
 
 func TestLogfKeyAndValues(t *testing.T) {
@@ -148,7 +148,7 @@ func TestLogfKeyAndValues(t *testing.T) {
 			level:         LevelWarn,
 			format:        "",
 			fmtArgs:       nil,
-			keysAndValues: []any{"error", "not found", "id", 123},
+			keysAndValues: []any{"error", literal_6584, "id", 123},
 			wantOutput:    "[Warn] error=not found id=123\n",
 		},
 		{
@@ -156,7 +156,7 @@ func TestLogfKeyAndValues(t *testing.T) {
 			level:         LevelWarn,
 			format:        "test",
 			fmtArgs:       nil,
-			keysAndValues: []any{"error", "not found", "id", 123},
+			keysAndValues: []any{"error", literal_6584, "id", 123},
 			wantOutput:    "[Warn] test error=not found id=123\n",
 		},
 		{
@@ -330,13 +330,13 @@ func Benchmark_LogfKeyAndValues(b *testing.B) {
 			name:          "test logf with warn level and key-values",
 			level:         LevelWarn,
 			format:        "",
-			keysAndValues: []any{"error", "not found", "id", 123},
+			keysAndValues: []any{"error", literal_6584, "id", 123},
 		},
 		{
 			name:          "test logf with format and key-values",
 			level:         LevelWarn,
 			format:        "test",
-			keysAndValues: []any{"error", "not found", "id", 123},
+			keysAndValues: []any{"error", literal_6584, "id", 123},
 		},
 		{
 			name:          "test logf with one key",
@@ -388,13 +388,13 @@ func Benchmark_LogfKeyAndValuesParallel(b *testing.B) {
 			name:          "warn level with key-values",
 			level:         LevelWarn,
 			format:        "",
-			keysAndValues: []any{"error", "not found", "id", 123},
+			keysAndValues: []any{"error", literal_6584, "id", 123},
 		},
 		{
 			name:          "warn level with format and key-values",
 			level:         LevelWarn,
 			format:        "test",
-			keysAndValues: []any{"error", "not found", "id", 123},
+			keysAndValues: []any{"error", literal_6584, "id", 123},
 		},
 		{
 			name:          "warn level with one key",
@@ -422,3 +422,15 @@ func Benchmark_LogfKeyAndValuesParallel(b *testing.B) {
 		})
 	}
 }
+
+const literal_7635 = "[Trace] trace work\n"
+
+const literal_1573 = "[Debug] received work order\n"
+
+const literal_6945 = "[Info] starting work\n"
+
+const literal_1346 = "[Warn] work may fail\n"
+
+const literal_0498 = "[Panic] work panic\n"
+
+const literal_6584 = "not found"

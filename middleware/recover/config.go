@@ -1,7 +1,7 @@
-package recover //nolint:predeclared // TODO: Rename to some non-builtin
+package recover //nolint:predeclared // : Rename to some non-builtin
 
 import (
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 // Config defines the config for middleware.

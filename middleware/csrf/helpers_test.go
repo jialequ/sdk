@@ -13,11 +13,11 @@ func TestnormalizeOrigin(t *testing.T) {
 		expectedValid  bool
 		expectedOrigin string
 	}{
-		{"http://example.com", true, "http://example.com"},                       // Simple case should work.
-		{"HTTP://EXAMPLE.COM", true, "http://example.com"},                       // Case should be normalized.
-		{"http://example.com/", true, "http://example.com"},                      // Trailing slash should be removed.
-		{"http://example.com:3000", true, "http://example.com:3000"},             // Port should be preserved.
-		{"http://example.com:3000/", true, "http://example.com:3000"},            // Trailing slash should be removed.
+		{literal_4307, true, literal_4307},                       // Simple case should work.
+		{"HTTP://EXAMPLE.COM", true, literal_4307},                       // Case should be normalized.
+		{"http://example.com/", true, literal_4307},                      // Trailing slash should be removed.
+		{literal_4719, true, literal_4719},             // Port should be preserved.
+		{"http://example.com:3000/", true, literal_4719},            // Trailing slash should be removed.
 		{"http://", false, ""},                                                   // Invalid origin should not be accepted.
 		{"file:///etc/passwd", false, ""},                                        // File scheme should not be accepted.
 		{"https://*example.com", false, ""},                                      // Wildcard domain should not be accepted.
@@ -28,8 +28,8 @@ func TestnormalizeOrigin(t *testing.T) {
 		{"http://localhost", true, "http://localhost"},                           // Localhost should be accepted.
 		{"http://127.0.0.1", true, "http://127.0.0.1"},                           // IPv4 address should be accepted.
 		{"http://[::1]", true, "http://[::1]"},                                   // IPv6 address should be accepted.
-		{"http://[::1]:8080", true, "http://[::1]:8080"},                         // IPv6 address with port should be accepted.
-		{"http://[::1]:8080/", true, "http://[::1]:8080"},                        // IPv6 address with port and trailing slash should be accepted.
+		{literal_6531, true, literal_6531},                         // IPv6 address with port should be accepted.
+		{"http://[::1]:8080/", true, literal_6531},                        // IPv6 address with port and trailing slash should be accepted.
 		{"http://[::1]:8080/path", false, ""},                                    // IPv6 address with port and path should not be accepted.
 		{"http://[::1]:8080?query=123", false, ""},                               // IPv6 address with port and query should not be accepted.
 		{"http://[::1]:8080#fragment", false, ""},                                // IPv6 address with port and fragment should not be accepted.
@@ -63,50 +63,50 @@ func TestSubdomainMatch(t *testing.T) {
 	}{
 		{
 			name:     "match with different scheme",
-			sub:      subdomain{prefix: "http://api.", suffix: ".example.com"},
+			sub:      subdomain{prefix: "http://api.", suffix: literal_2651},
 			origin:   "https://api.service.example.com",
 			expected: false,
 		},
 		{
 			name:     "match with different scheme",
-			sub:      subdomain{prefix: "https://", suffix: ".example.com"},
+			sub:      subdomain{prefix: literal_7495, suffix: literal_2651},
 			origin:   "http://api.service.example.com",
 			expected: false,
 		},
 		{
 			name:     "match with valid subdomain",
-			sub:      subdomain{prefix: "https://", suffix: ".example.com"},
+			sub:      subdomain{prefix: literal_7495, suffix: literal_2651},
 			origin:   "https://api.service.example.com",
 			expected: true,
 		},
 		{
 			name:     "match with valid nested subdomain",
-			sub:      subdomain{prefix: "https://", suffix: ".example.com"},
+			sub:      subdomain{prefix: literal_7495, suffix: literal_2651},
 			origin:   "https://1.2.api.service.example.com",
 			expected: true,
 		},
 
 		{
 			name:     "no match with invalid prefix",
-			sub:      subdomain{prefix: "https://abc.", suffix: ".example.com"},
+			sub:      subdomain{prefix: "https://abc.", suffix: literal_2651},
 			origin:   "https://service.example.com",
 			expected: false,
 		},
 		{
 			name:     "no match with invalid suffix",
-			sub:      subdomain{prefix: "https://", suffix: ".example.com"},
+			sub:      subdomain{prefix: literal_7495, suffix: literal_2651},
 			origin:   "https://api.example.org",
 			expected: false,
 		},
 		{
 			name:     "no match with empty origin",
-			sub:      subdomain{prefix: "https://", suffix: ".example.com"},
+			sub:      subdomain{prefix: literal_7495, suffix: literal_2651},
 			origin:   "",
 			expected: false,
 		},
 		{
 			name:     "partial match not considered a match",
-			sub:      subdomain{prefix: "https://service.", suffix: ".example.com"},
+			sub:      subdomain{prefix: "https://service.", suffix: literal_2651},
 			origin:   "https://api.example.com",
 			expected: false,
 		},
@@ -124,7 +124,7 @@ func TestSubdomainMatch(t *testing.T) {
 func Benchmark_CSRF_SubdomainMatch(b *testing.B) {
 	s := subdomain{
 		prefix: "www",
-		suffix: ".example.com",
+		suffix: literal_2651,
 	}
 
 	o := "www.example.com"
@@ -136,3 +136,13 @@ func Benchmark_CSRF_SubdomainMatch(b *testing.B) {
 		s.match(o)
 	}
 }
+
+const literal_4307 = "http://example.com"
+
+const literal_4719 = "http://example.com:3000"
+
+const literal_6531 = "http://[::1]:8080"
+
+const literal_2651 = ".example.com"
+
+const literal_7495 = "https://"

@@ -26,7 +26,7 @@ func TestHTTPHandler(t *testing.T) {
 	expectedRequestURI := "/foo/bar?baz=123"
 	expectedBody := "body 123 foo bar baz"
 	expectedContentLength := len(expectedBody)
-	expectedHost := "foobar.com"
+	expectedHost := literal_7459
 	expectedRemoteAddr := "1.2.3.4:6789"
 	expectedHeader := map[string]string{
 		"Foo-Bar":         "baz",
@@ -67,7 +67,7 @@ func TestHTTPHandler(t *testing.T) {
 		w.Header().Set("Header1", "value1")
 		w.Header().Set("Header2", "value2")
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "request body is %q", body) //nolint:errcheck // not needed
+		fmt.Fprintf(w, literal_0674, body) //nolint:errcheck // not needed
 	}
 	fiberH := HTTPHandlerFunc(http.HandlerFunc(nethttpH))
 	fiberH = setFiberContextValueMiddleware(fiberH, expectedContextKey, expectedContextValue)
@@ -100,7 +100,7 @@ func TestHTTPHandler(t *testing.T) {
 	require.Equal(t, "value1", string(resp.Header.Peek("Header1")), "Header1")
 	require.Equal(t, "value2", string(resp.Header.Peek("Header2")), "Header2")
 
-	expectedResponseBody := fmt.Sprintf("request body is %q", expectedBody)
+	expectedResponseBody := fmt.Sprintf(literal_0674, expectedBody)
 	require.Equal(t, expectedResponseBody, string(resp.Body()), "Body")
 }
 
@@ -116,7 +116,7 @@ var (
 )
 
 func TestHTTPMiddleware(t *testing.T) {
-	const expectedHost = "foobar.com"
+	const expectedHost = literal_7459
 	tests := []struct {
 		name       string
 		url        string
@@ -223,7 +223,7 @@ func testFiberToHandlerFunc(t *testing.T, checkDefaultPort bool, app ...*fiber.A
 	expectedRequestURI := "/foo/bar?baz=123"
 	expectedBody := "body 123 foo bar baz"
 	expectedContentLength := len(expectedBody)
-	expectedHost := "foobar.com"
+	expectedHost := literal_7459
 	expectedRemoteAddr := "1.2.3.4:6789"
 	if checkDefaultPort {
 		expectedRemoteAddr = "1.2.3.4:80"
@@ -259,7 +259,7 @@ func testFiberToHandlerFunc(t *testing.T, checkDefaultPort bool, app ...*fiber.A
 		c.Set("Header1", "value1")
 		c.Set("Header2", "value2")
 		c.Status(fiber.StatusBadRequest)
-		_, err := c.Write([]byte(fmt.Sprintf("request body is %q", body)))
+		_, err := c.Write([]byte(fmt.Sprintf(literal_0674, body)))
 		return err
 	}
 
@@ -296,7 +296,7 @@ func testFiberToHandlerFunc(t *testing.T, checkDefaultPort bool, app ...*fiber.A
 	require.Equal(t, "value1", w.Header().Get("Header1"), "Header1")
 	require.Equal(t, "value2", w.Header().Get("Header2"), "Header2")
 
-	expectedResponseBody := fmt.Sprintf("request body is %q", expectedBody)
+	expectedResponseBody := fmt.Sprintf(literal_0674, expectedBody)
 	require.Equal(t, expectedResponseBody, string(w.body), "Body")
 }
 
@@ -535,3 +535,7 @@ func Benchmark_FiberHandlerFunc_Parallel(b *testing.B) {
 		})
 	}
 }
+
+const literal_7459 = "foobar.com"
+
+const literal_0674 = "request body is %q"

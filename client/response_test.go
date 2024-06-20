@@ -42,7 +42,7 @@ func TestResponseStatus(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example")
+			Get(literal_7368)
 
 		require.NoError(t, err)
 		require.Equal(t, "OK", resp.Status())
@@ -93,7 +93,7 @@ func TestResponseStatusCode(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example")
+			Get(literal_7368)
 
 		require.NoError(t, err)
 		require.Equal(t, 200, resp.StatusCode())
@@ -135,7 +135,7 @@ func TestResponseProtocol(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example")
+			Get(literal_7368)
 
 		require.NoError(t, err)
 		require.Equal(t, "HTTP/1.1", resp.Protocol())
@@ -192,7 +192,7 @@ func TestResponseHeader(t *testing.T) {
 
 	resp, err := AcquireRequest().
 		SetClient(client).
-		Get("http://example.com")
+		Get(literal_7162)
 
 	require.NoError(t, err)
 	require.Equal(t, "bar", resp.Header("foo"))
@@ -217,7 +217,7 @@ func TestResponseCookie(t *testing.T) {
 
 	resp, err := AcquireRequest().
 		SetClient(client).
-		Get("http://example.com")
+		Get(literal_7162)
 
 	require.NoError(t, err)
 	require.Equal(t, "bar", string(resp.Cookies()[0].Value()))
@@ -230,11 +230,11 @@ func TestResponseBody(t *testing.T) {
 	setupApp := func() *testServer {
 		server := startTestServer(t, func(app *fiber.App) {
 			app.Get("/", func(c fiber.Ctx) error {
-				return c.SendString("hello world")
+				return c.SendString(literal_6903)
 			})
 
 			app.Get("/json", func(c fiber.Ctx) error {
-				return c.SendString("{\"status\":\"success\"}")
+				return c.SendString(literal_8503)
 			})
 
 			app.Get("/xml", func(c fiber.Ctx) error {
@@ -255,10 +255,10 @@ func TestResponseBody(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example.com")
+			Get(literal_7162)
 
 		require.NoError(t, err)
-		require.Equal(t, []byte("hello world"), resp.Body())
+		require.Equal(t, []byte(literal_6903), resp.Body())
 		resp.Close()
 	})
 
@@ -272,10 +272,10 @@ func TestResponseBody(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example.com")
+			Get(literal_7162)
 
 		require.NoError(t, err)
-		require.Equal(t, "hello world", resp.String())
+		require.Equal(t, literal_6903, resp.String())
 		resp.Close()
 	})
 
@@ -292,7 +292,7 @@ func TestResponseBody(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example.com/json")
+			Get(literal_0793)
 
 		require.NoError(t, err)
 
@@ -335,7 +335,7 @@ func TestResponseSave(t *testing.T) {
 	setupApp := func() *testServer {
 		server := startTestServer(t, func(app *fiber.App) {
 			app.Get("/json", func(c fiber.Ctx) error {
-				return c.SendString("{\"status\":\"success\"}")
+				return c.SendString(literal_8503)
 			})
 		})
 
@@ -352,21 +352,21 @@ func TestResponseSave(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example.com/json")
+			Get(literal_0793)
 
 		require.NoError(t, err)
 
-		err = resp.Save("./test/tmp.json")
+		err = resp.Save(literal_0973)
 		require.NoError(t, err)
 		defer func() {
-			_, err := os.Stat("./test/tmp.json")
+			_, err := os.Stat(literal_0973)
 			require.NoError(t, err)
 
 			err = os.RemoveAll("./test")
 			require.NoError(t, err)
 		}()
 
-		file, err := os.Open("./test/tmp.json")
+		file, err := os.Open(literal_0973)
 		require.NoError(t, err)
 		defer func(file *os.File) {
 			err := file.Close()
@@ -375,7 +375,7 @@ func TestResponseSave(t *testing.T) {
 
 		data, err := io.ReadAll(file)
 		require.NoError(t, err)
-		require.Equal(t, "{\"status\":\"success\"}", string(data))
+		require.Equal(t, literal_8503, string(data))
 	})
 
 	t.Run("io.Writer", func(t *testing.T) {
@@ -388,7 +388,7 @@ func TestResponseSave(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example.com/json")
+			Get(literal_0793)
 
 		require.NoError(t, err)
 
@@ -396,7 +396,7 @@ func TestResponseSave(t *testing.T) {
 
 		err = resp.Save(buf)
 		require.NoError(t, err)
-		require.Equal(t, "{\"status\":\"success\"}", buf.String())
+		require.Equal(t, literal_8503, buf.String())
 	})
 
 	t.Run("error type", func(t *testing.T) {
@@ -409,7 +409,7 @@ func TestResponseSave(t *testing.T) {
 
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Get("http://example.com/json")
+			Get(literal_0793)
 
 		require.NoError(t, err)
 
@@ -417,3 +417,15 @@ func TestResponseSave(t *testing.T) {
 		require.Error(t, err)
 	})
 }
+
+const literal_7368 = "http://example"
+
+const literal_7162 = "http://example.com"
+
+const literal_6903 = "hello world"
+
+const literal_8503 = "{\"status\":\"success\"}"
+
+const literal_0793 = "http://example.com/json"
+
+const literal_0973 = "./test/tmp.json"

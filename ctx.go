@@ -180,7 +180,7 @@ func (c *DefaultCtx) Attachment(filename ...string) {
 
 // BaseURL returns (protocol + host + base path).
 func (c *DefaultCtx) BaseURL() string {
-	// TODO: Could be improved: 53.8 ns/op  32 B/op  1 allocs/op
+	// : Could be improved: 53.8 ns/op  32 B/op  1 allocs/op
 	// Should work like https://codeigniter.com/user_guide/helpers/url_helper.html
 	if c.baseURI != "" {
 		return c.baseURI
@@ -651,7 +651,7 @@ func (c *DefaultCtx) IP() string {
 // extractIPsFromHeader will return a slice of IPs it found given a header name in the order they appear.
 // When IP validation is enabled, any invalid IPs will be omitted.
 func (c *DefaultCtx) extractIPsFromHeader(header string) []string {
-	// TODO: Reuse the c.extractIPFromHeader func somehow in here
+	// : Reuse the c.extractIPFromHeader func somehow in here
 
 	headerValue := c.Get(header)
 

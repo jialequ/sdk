@@ -14,7 +14,7 @@ func TestRedirect(t *testing.T) {
 
 	app.Use(New(Config{
 		Rules: map[string]string{
-			"/default": "google.com",
+			literal_8194: literal_1328,
 		},
 		StatusCode: fiber.StatusMovedPermanently,
 	}))
@@ -66,8 +66,8 @@ func TestRedirect(t *testing.T) {
 	}{
 		{
 			name:       "should be returns status StatusFound without a wildcard",
-			url:        "/default",
-			redirectTo: "google.com",
+			url:        literal_8194,
+			redirectTo: literal_1328,
 			statusCode: fiber.StatusMovedPermanently,
 		},
 		{
@@ -138,7 +138,7 @@ func TestNext(t *testing.T) {
 			return true
 		},
 		Rules: map[string]string{
-			"/default": "google.com",
+			literal_8194: literal_1328,
 		},
 		StatusCode: fiber.StatusMovedPermanently,
 	}))
@@ -147,7 +147,7 @@ func TestNext(t *testing.T) {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
-	req, err := http.NewRequestWithContext(context.Background(), fiber.MethodGet, "/default", nil)
+	req, err := http.NewRequestWithContext(context.Background(), fiber.MethodGet, literal_8194, nil)
 	require.NoError(t, err)
 	resp, err := app.Test(req)
 	require.NoError(t, err)
@@ -161,18 +161,18 @@ func TestNext(t *testing.T) {
 			return false
 		},
 		Rules: map[string]string{
-			"/default": "google.com",
+			literal_8194: literal_1328,
 		},
 		StatusCode: fiber.StatusMovedPermanently,
 	}))
 
-	req, err = http.NewRequestWithContext(context.Background(), fiber.MethodGet, "/default", nil)
+	req, err = http.NewRequestWithContext(context.Background(), fiber.MethodGet, literal_8194, nil)
 	require.NoError(t, err)
 	resp, err = app.Test(req)
 	require.NoError(t, err)
 
 	require.Equal(t, fiber.StatusMovedPermanently, resp.StatusCode)
-	require.Equal(t, "google.com", resp.Header.Get("Location"))
+	require.Equal(t, literal_1328, resp.Header.Get("Location"))
 }
 
 func TestNoRules(t *testing.T) {
@@ -187,7 +187,7 @@ func TestNoRules(t *testing.T) {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
-	req, err := http.NewRequestWithContext(context.Background(), fiber.MethodGet, "/default", nil)
+	req, err := http.NewRequestWithContext(context.Background(), fiber.MethodGet, literal_8194, nil)
 	require.NoError(t, err)
 	resp, err := app.Test(req)
 	require.NoError(t, err)
@@ -200,7 +200,7 @@ func TestNoRules(t *testing.T) {
 		StatusCode: fiber.StatusMovedPermanently,
 	}))
 
-	req, err = http.NewRequestWithContext(context.Background(), fiber.MethodGet, "/default", nil)
+	req, err = http.NewRequestWithContext(context.Background(), fiber.MethodGet, literal_8194, nil)
 	require.NoError(t, err)
 	resp, err = app.Test(req)
 	require.NoError(t, err)
@@ -213,7 +213,7 @@ func TestDefaultConfig(t *testing.T) {
 
 	app.Use(New())
 
-	req, err := http.NewRequestWithContext(context.Background(), fiber.MethodGet, "/default", nil)
+	req, err := http.NewRequestWithContext(context.Background(), fiber.MethodGet, literal_8194, nil)
 	require.NoError(t, err)
 	resp, err := app.Test(req)
 
@@ -228,7 +228,7 @@ func TestDefaultConfig(t *testing.T) {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
-	req, err = http.NewRequestWithContext(context.Background(), fiber.MethodGet, "/default", nil)
+	req, err = http.NewRequestWithContext(context.Background(), fiber.MethodGet, literal_8194, nil)
 	require.NoError(t, err)
 	resp, err = app.Test(req)
 
@@ -248,7 +248,7 @@ func TestRegexRules(t *testing.T) {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
-	req, err := http.NewRequestWithContext(context.Background(), fiber.MethodGet, "/default", nil)
+	req, err := http.NewRequestWithContext(context.Background(), fiber.MethodGet, literal_8194, nil)
 	require.NoError(t, err)
 	resp, err := app.Test(req)
 
@@ -259,7 +259,7 @@ func TestRegexRules(t *testing.T) {
 	app = *fiber.New()
 	app.Use(New(Config{
 		Rules: map[string]string{
-			"/default": "google.com",
+			literal_8194: literal_1328,
 		},
 		StatusCode: fiber.StatusMovedPermanently,
 	}))
@@ -268,22 +268,26 @@ func TestRegexRules(t *testing.T) {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
-	req, err = http.NewRequestWithContext(context.Background(), fiber.MethodGet, "/default", nil)
+	req, err = http.NewRequestWithContext(context.Background(), fiber.MethodGet, literal_8194, nil)
 	require.NoError(t, err)
 	resp, err = app.Test(req)
 
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusMovedPermanently, resp.StatusCode)
-	require.Equal(t, "google.com", resp.Header.Get("Location"))
+	require.Equal(t, literal_1328, resp.Header.Get("Location"))
 
 	// Case 3: Test invalid regex throws panic
 	app = *fiber.New()
 	require.Panics(t, func() {
 		app.Use(New(Config{
 			Rules: map[string]string{
-				"(": "google.com",
+				"(": literal_1328,
 			},
 			StatusCode: fiber.StatusMovedPermanently,
 		}))
 	})
 }
+
+const literal_8194 = "/default"
+
+const literal_1328 = "google.com"

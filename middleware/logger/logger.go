@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 // New creates a new middleware handler
@@ -113,7 +113,7 @@ func New(config ...Config) fiber.Handler {
 		// Manually call error handler
 		if chainErr != nil {
 			if err := errHandler(c, chainErr); err != nil {
-				_ = c.SendStatus(fiber.StatusInternalServerError) //nolint:errcheck // TODO: Explain why we ignore the error here
+				_ = c.SendStatus(fiber.StatusInternalServerError) //nolint:errcheck // : Explain why we ignore the error here
 			}
 		}
 

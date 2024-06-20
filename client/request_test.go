@@ -137,7 +137,7 @@ func TestRequestHeader(t *testing.T) {
 		require.Equal(t, "foo", res[0])
 	})
 
-	t.Run("set headers", func(t *testing.T) {
+	t.Run(literal_1587, func(t *testing.T) {
 		t.Parallel()
 		req := AcquireRequest()
 		req.SetHeader("foo", "bar").
@@ -200,7 +200,7 @@ func TestRequestQueryParam(t *testing.T) {
 		require.Equal(t, "foo", res[0])
 	})
 
-	t.Run("set headers", func(t *testing.T) {
+	t.Run(literal_1587, func(t *testing.T) {
 		t.Parallel()
 		req := AcquireRequest()
 		req.SetParam("foo", "bar").
@@ -294,8 +294,8 @@ func TestRequestUA(t *testing.T) {
 func TestRequestReferer(t *testing.T) {
 	t.Parallel()
 
-	req := AcquireRequest().SetReferer("http://example.com")
-	require.Equal(t, "http://example.com", req.Referer())
+	req := AcquireRequest().SetReferer(literal_4097)
+	require.Equal(t, literal_4097, req.Referer())
 
 	req.SetReferer("https://example.com")
 	require.Equal(t, "https://example.com", req.Referer())
@@ -487,7 +487,7 @@ func TestRequestFormData(t *testing.T) {
 		require.Equal(t, "foo", res[0])
 	})
 
-	t.Run("set headers", func(t *testing.T) {
+	t.Run(literal_1587, func(t *testing.T) {
 		t.Parallel()
 		req := AcquireRequest()
 		defer ReleaseRequest(req)
@@ -577,12 +577,12 @@ func TestRequestFile(t *testing.T) {
 	t.Run("add file", func(t *testing.T) {
 		t.Parallel()
 		req := AcquireRequest().
-			AddFile("../.github/index.html").
-			AddFiles(AcquireFile(SetFileName("tmp.txt")))
+			AddFile(literal_3172).
+			AddFiles(AcquireFile(SetFileName(literal_4860)))
 
-		require.Equal(t, "../.github/index.html", req.File("index.html").path)
-		require.Equal(t, "../.github/index.html", req.FileByPath("../.github/index.html").path)
-		require.Equal(t, "tmp.txt", req.File("tmp.txt").name)
+		require.Equal(t, literal_3172, req.File("index.html").path)
+		require.Equal(t, literal_3172, req.FileByPath(literal_3172).path)
+		require.Equal(t, literal_4860, req.File(literal_4860).name)
 		require.Nil(t, req.File("tmp2.txt"))
 		require.Nil(t, req.FileByPath("tmp2.txt"))
 	})
@@ -590,11 +590,11 @@ func TestRequestFile(t *testing.T) {
 	t.Run("add file by reader", func(t *testing.T) {
 		t.Parallel()
 		req := AcquireRequest().
-			AddFileWithReader("tmp.txt", io.NopCloser(strings.NewReader("world")))
+			AddFileWithReader(literal_4860, io.NopCloser(strings.NewReader("world")))
 
-		require.Equal(t, "tmp.txt", req.File("tmp.txt").name)
+		require.Equal(t, literal_4860, req.File(literal_4860).name)
 
-		content, err := io.ReadAll(req.File("tmp.txt").reader)
+		content, err := io.ReadAll(req.File(literal_4860).reader)
 		require.NoError(t, err)
 		require.Equal(t, "world", string(content))
 	})
@@ -602,10 +602,10 @@ func TestRequestFile(t *testing.T) {
 	t.Run("add files", func(t *testing.T) {
 		t.Parallel()
 		req := AcquireRequest().
-			AddFiles(AcquireFile(SetFileName("tmp.txt")), AcquireFile(SetFileName("foo.txt")))
+			AddFiles(AcquireFile(SetFileName(literal_4860)), AcquireFile(SetFileName(literal_2917)))
 
-		require.Equal(t, "tmp.txt", req.File("tmp.txt").name)
-		require.Equal(t, "foo.txt", req.File("foo.txt").name)
+		require.Equal(t, literal_4860, req.File(literal_4860).name)
+		require.Equal(t, literal_2917, req.File(literal_2917).name)
 	})
 }
 
@@ -652,7 +652,7 @@ func TestRequestGet(t *testing.T) {
 	for i := 0; i < 5; i++ {
 		req := AcquireRequest().SetClient(client)
 
-		resp, err := req.Get("http://example.com")
+		resp, err := req.Get(literal_4097)
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusOK, resp.StatusCode())
 		require.Equal(t, "example.com", resp.String())
@@ -678,7 +678,7 @@ func TestRequestPost(t *testing.T) {
 		resp, err := AcquireRequest().
 			SetClient(client).
 			SetFormData("foo", "bar").
-			Post("http://example.com")
+			Post(literal_4097)
 
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusCreated, resp.StatusCode())
@@ -703,7 +703,7 @@ func TestRequestHead(t *testing.T) {
 	for i := 0; i < 5; i++ {
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Head("http://example.com")
+			Head(literal_4097)
 
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -729,7 +729,7 @@ func TestRequestPut(t *testing.T) {
 		resp, err := AcquireRequest().
 			SetClient(client).
 			SetFormData("foo", "bar").
-			Put("http://example.com")
+			Put(literal_4097)
 
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -757,7 +757,7 @@ func TestRequestDelete(t *testing.T) {
 	for i := 0; i < 5; i++ {
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Delete("http://example.com")
+			Delete(literal_4097)
 
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusNoContent, resp.StatusCode())
@@ -785,7 +785,7 @@ func TestRequestOptions(t *testing.T) {
 	for i := 0; i < 5; i++ {
 		resp, err := AcquireRequest().
 			SetClient(client).
-			Options("http://example.com")
+			Options(literal_4097)
 
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -813,7 +813,7 @@ func TestRequestSend(t *testing.T) {
 	for i := 0; i < 5; i++ {
 		resp, err := AcquireRequest().
 			SetClient(client).
-			SetURL("http://example.com").
+			SetURL(literal_4097).
 			SetMethod(fiber.MethodPost).
 			Send()
 
@@ -843,7 +843,7 @@ func TestRequestPatch(t *testing.T) {
 		resp, err := AcquireRequest().
 			SetClient(client).
 			SetFormData("foo", "bar").
-			Patch("http://example.com")
+			Patch(literal_4097)
 
 		require.NoError(t, err)
 		require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -1110,7 +1110,7 @@ func TestRequestBodyWithServer(t *testing.T) {
 				AddFile("../.github/testdata/index.tmpl").
 				SetBoundary("myBoundary")
 
-			resp, err := req.Post("http://example.com")
+			resp, err := req.Post(literal_4097)
 			require.NoError(t, err)
 			require.Equal(t, "multipart form files", resp.String())
 
@@ -1195,7 +1195,7 @@ func TestRequestErrorBodyWithServer(t *testing.T) {
 		_, err := AcquireRequest().
 			SetBoundary("*").
 			AddFileWithReader("t.txt", io.NopCloser(strings.NewReader("world"))).
-			Get("http://example.com")
+			Get(literal_4097)
 		require.Equal(t, "set boundary error: mime: invalid boundary character", err.Error())
 	})
 
@@ -1204,7 +1204,7 @@ func TestRequestErrorBodyWithServer(t *testing.T) {
 
 		_, err := AcquireRequest().
 			AddFile("non-exist-file!").
-			Get("http://example.com")
+			Get(literal_4097)
 		require.Contains(t, err.Error(), "open non-exist-file!")
 	})
 }
@@ -1224,7 +1224,7 @@ func TestRequestTimeoutWithServer(t *testing.T) {
 	_, err := AcquireRequest().
 		SetClient(client).
 		SetTimeout(50 * time.Millisecond).
-		Get("http://example.com")
+		Get(literal_4097)
 
 	require.Equal(t, ErrTimeoutOrCancel, err)
 }
@@ -1275,7 +1275,7 @@ func TestRequestMaxRedirects(t *testing.T) {
 		resp, err := AcquireRequest().
 			SetClient(client).
 			SetMaxRedirects(1).
-			Get("http://example.com")
+			Get(literal_4097)
 
 		require.Nil(t, resp)
 		require.Equal(t, "too many redirects detected when doing the request", err.Error())
@@ -1622,3 +1622,13 @@ func Benchmark_SetValWithStruct(b *testing.B) {
 		require.Equal(b, 0, p.Len())
 	})
 }
+
+const literal_1587 = "set headers"
+
+const literal_4097 = "http://example.com"
+
+const literal_3172 = "../.github/index.html"
+
+const literal_4860 = "tmp.txt"
+
+const literal_2917 = "foo.txt"

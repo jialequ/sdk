@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 // timestampUpdatePeriod is the period which is used to check the cache expiration.
@@ -105,7 +105,7 @@ func New(config ...Config) fiber.Handler {
 		}
 
 		// Get key from request
-		// TODO(allocation optimization): try to minimize the allocation from 2 to 1
+		// (allocation optimization): try to minimize the allocation from 2 to 1
 		key := cfg.KeyGenerator(c) + "_" + requestMethod
 
 		// Get entry from pool

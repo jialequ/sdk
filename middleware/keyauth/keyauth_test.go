@@ -40,7 +40,7 @@ func TestAuthSources(t *testing.T) {
 			description:   "auth with no key",
 			APIKey:        "",
 			expectedCode:  401, // 404 in case of param authentication
-			expectedBody:  "missing or malformed API Key",
+			expectedBody:  literal_0165,
 		},
 		{
 			route:         "/",
@@ -48,7 +48,7 @@ func TestAuthSources(t *testing.T) {
 			description:   "auth with wrong key",
 			APIKey:        "WRONGKEY",
 			expectedCode:  401,
-			expectedBody:  "missing or malformed API Key",
+			expectedBody:  literal_0165,
 		},
 	}
 
@@ -137,7 +137,7 @@ func TestMultipleKeyAuth(t *testing.T) {
 	// setup keyauth for /auth1
 	app.Use(New(Config{
 		Next: func(c fiber.Ctx) bool {
-			return c.OriginalURL() != "/auth1"
+			return c.OriginalURL() != literal_5679
 		},
 		KeyLookup: "header:key",
 		Validator: func(_ fiber.Ctx, key string) (bool, error) {
@@ -151,7 +151,7 @@ func TestMultipleKeyAuth(t *testing.T) {
 	// setup keyauth for /auth2
 	app.Use(New(Config{
 		Next: func(c fiber.Ctx) bool {
-			return c.OriginalURL() != "/auth2"
+			return c.OriginalURL() != literal_6710
 		},
 		KeyLookup: "header:key",
 		Validator: func(_ fiber.Ctx, key string) (bool, error) {
@@ -166,11 +166,11 @@ func TestMultipleKeyAuth(t *testing.T) {
 		return c.SendString("No auth needed!")
 	})
 
-	app.Get("/auth1", func(c fiber.Ctx) error {
+	app.Get(literal_5679, func(c fiber.Ctx) error {
 		return c.SendString("Successfully authenticated for auth1!")
 	})
 
-	app.Get("/auth2", func(c fiber.Ctx) error {
+	app.Get(literal_6710, func(c fiber.Ctx) error {
 		return c.SendString("Successfully authenticated for auth2!")
 	})
 
@@ -193,48 +193,48 @@ func TestMultipleKeyAuth(t *testing.T) {
 
 		// auth needed for auth1
 		{
-			route:        "/auth1",
+			route:        literal_5679,
 			description:  "Normal Authentication Case",
 			APIKey:       "password1",
 			expectedCode: 200,
 			expectedBody: "Successfully authenticated for auth1!",
 		},
 		{
-			route:        "/auth1",
-			description:  "Wrong API Key",
+			route:        literal_5679,
+			description:  literal_1738,
 			APIKey:       "WRONG KEY",
 			expectedCode: 401,
-			expectedBody: "missing or malformed API Key",
+			expectedBody: literal_0165,
 		},
 		{
-			route:        "/auth1",
-			description:  "Wrong API Key",
+			route:        literal_5679,
+			description:  literal_1738,
 			APIKey:       "", // NO KEY
 			expectedCode: 401,
-			expectedBody: "missing or malformed API Key",
+			expectedBody: literal_0165,
 		},
 
 		// Auth 2 has a different password
 		{
-			route:        "/auth2",
+			route:        literal_6710,
 			description:  "Normal Authentication Case for auth2",
 			APIKey:       "password2",
 			expectedCode: 200,
 			expectedBody: "Successfully authenticated for auth2!",
 		},
 		{
-			route:        "/auth2",
-			description:  "Wrong API Key",
+			route:        literal_6710,
+			description:  literal_1738,
 			APIKey:       "WRONG KEY",
 			expectedCode: 401,
-			expectedBody: "missing or malformed API Key",
+			expectedBody: literal_0165,
 		},
 		{
-			route:        "/auth2",
-			description:  "Wrong API Key",
+			route:        literal_6710,
+			description:  literal_1738,
 			APIKey:       "", // NO KEY
 			expectedCode: 401,
-			expectedBody: "missing or malformed API Key",
+			expectedBody: literal_0165,
 		},
 	}
 
@@ -319,7 +319,7 @@ func TestCustomNextFunc(t *testing.T) {
 
 	app.Use(New(Config{
 		Next: func(c fiber.Ctx) bool {
-			return c.Path() == "/allowed"
+			return c.Path() == literal_4751
 		},
 		Validator: func(_ fiber.Ctx, key string) (bool, error) {
 			if key == CorrectKey {
@@ -330,12 +330,12 @@ func TestCustomNextFunc(t *testing.T) {
 	}))
 
 	// Define a test handler
-	app.Get("/allowed", func(c fiber.Ctx) error {
+	app.Get(literal_4751, func(c fiber.Ctx) error {
 		return c.SendString("API key is valid and request was allowed by custom filter")
 	})
 
-	// Create a request with the "/allowed" path and send it to the app
-	req := httptest.NewRequest(fiber.MethodGet, "/allowed", nil)
+	// Create a request with the literal_4751 path and send it to the app
+	req := httptest.NewRequest(fiber.MethodGet, literal_4751, nil)
 	res, err := app.Test(req)
 	require.NoError(t, err)
 
@@ -391,7 +391,7 @@ func TestAuthSchemeToken(t *testing.T) {
 
 	// Define a test handler
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("API key is valid")
+		return c.SendString(literal_9280)
 	})
 
 	// Create a request with a valid API key in the "Token" Authorization header
@@ -408,7 +408,7 @@ func TestAuthSchemeToken(t *testing.T) {
 
 	// Check that the response has the expected status code and body
 	require.Equal(t, http.StatusOK, res.StatusCode)
-	require.Equal(t, "API key is valid", string(body))
+	require.Equal(t, literal_9280, string(body))
 }
 
 func TestAuthSchemeBasic(t *testing.T) {
@@ -427,7 +427,7 @@ func TestAuthSchemeBasic(t *testing.T) {
 
 	// Define a test handler
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("API key is valid")
+		return c.SendString(literal_9280)
 	})
 
 	// Create a request without an API key and  Send the request to the app
@@ -456,5 +456,17 @@ func TestAuthSchemeBasic(t *testing.T) {
 
 	// Check that the response has the expected status code and body
 	require.Equal(t, http.StatusOK, res.StatusCode)
-	require.Equal(t, "API key is valid", string(body))
+	require.Equal(t, literal_9280, string(body))
 }
+
+const literal_0165 = "missing or malformed API Key"
+
+const literal_5679 = "/auth1"
+
+const literal_6710 = "/auth2"
+
+const literal_1738 = "Wrong API Key"
+
+const literal_4751 = "/allowed"
+
+const literal_9280 = "API key is valid"

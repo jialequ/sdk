@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/middleware/session"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
@@ -71,7 +71,7 @@ func TestCSRFWithSession(t *testing.T) {
 
 	// session store
 	store := session.New(session.Config{
-		KeyLookup: "cookie:_session",
+		KeyLookup: literal_5641,
 	})
 
 	// fiber instance
@@ -204,7 +204,7 @@ func TestCSRFExpiredTokenWithSession(t *testing.T) {
 
 	// session store
 	store := session.New(session.Config{
-		KeyLookup: "cookie:_session",
+		KeyLookup: literal_5641,
 	})
 
 	// fiber instance
@@ -429,7 +429,7 @@ func TestCSRFFromForm(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderContentType, fiber.MIMEApplicationForm)
-	ctx.Request.SetBodyString("_csrf=" + token)
+	ctx.Request.SetBodyString(literal_3751 + token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
 	h(ctx)
 	require.Equal(t, 200, ctx.Response.StatusCode())
@@ -592,7 +592,7 @@ func TestCSRFFromCustom(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderContentType, fiber.MIMETextPlain)
-	ctx.Request.SetBodyString("_csrf=" + token)
+	ctx.Request.SetBodyString(literal_3751 + token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
 	h(ctx)
 	require.Equal(t, 200, ctx.Response.StatusCode())
@@ -634,7 +634,7 @@ func TestCSRFExtractorEmptyString(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderContentType, fiber.MIMETextPlain)
-	ctx.Request.SetBodyString("_csrf=" + token)
+	ctx.Request.SetBodyString(literal_3751 + token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
 	h(ctx)
 	require.Equal(t, 403, ctx.Response.StatusCode())
@@ -678,9 +678,9 @@ func TestCSRFOrigin(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.URI().SetScheme("http")
-	ctx.Request.URI().SetHost("example.com")
+	ctx.Request.URI().SetHost(literal_4390)
 	ctx.Request.Header.SetProtocol("http")
-	ctx.Request.Header.SetHost("example.com")
+	ctx.Request.Header.SetHost(literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "http://example.com:3000")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -692,9 +692,9 @@ func TestCSRFOrigin(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.URI().SetScheme("http")
-	ctx.Request.URI().SetHost("example.com")
+	ctx.Request.URI().SetHost(literal_4390)
 	ctx.Request.Header.SetProtocol("http")
-	ctx.Request.Header.SetHost("example.com")
+	ctx.Request.Header.SetHost(literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "null")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -708,9 +708,9 @@ func TestCSRFOrigin(t *testing.T) {
 	ctx.Request.URI().SetScheme("http")
 	ctx.Request.URI().SetHost("10.0.1.42.com:8080")
 	ctx.Request.Header.SetProtocol("http")
-	ctx.Request.Header.SetHost("10.0.1.42:8080")
+	ctx.Request.Header.SetHost(literal_7053)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "http")
-	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, "example.com")
+	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedFor, `192.0.2.43, "[2001:db8:cafe::17]"`)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "http://example.com")
 	ctx.Request.Header.Set(HeaderName, token)
@@ -723,9 +723,9 @@ func TestCSRFOrigin(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.URI().SetScheme("http")
-	ctx.Request.URI().SetHost("10.0.1.42:8080")
+	ctx.Request.URI().SetHost(literal_7053)
 	ctx.Request.Header.SetProtocol("http")
-	ctx.Request.Header.SetHost("10.0.1.42:8080")
+	ctx.Request.Header.SetHost(literal_7053)
 	ctx.Request.Header.Set(fiber.HeaderXUrlScheme, "http") // We need to set this header to make sure c.Protocol() returns http
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "http://example.com")
 	ctx.Request.Header.Set(HeaderName, token)
@@ -738,7 +738,7 @@ func TestCSRFOrigin(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "http")
-	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, "example.com")
+	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "http://csrf.example.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -777,9 +777,9 @@ func TestCSRFTrustedOrigins(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.URI().SetScheme("http")
-	ctx.Request.URI().SetHost("example.com")
+	ctx.Request.URI().SetHost(literal_4390)
 	ctx.Request.Header.SetProtocol("http")
-	ctx.Request.Header.SetHost("example.com")
+	ctx.Request.Header.SetHost(literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "http://safe.example.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -791,9 +791,9 @@ func TestCSRFTrustedOrigins(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.URI().SetScheme("http")
-	ctx.Request.URI().SetHost("domain-1.com")
+	ctx.Request.URI().SetHost(literal_6891)
 	ctx.Request.Header.SetProtocol("http")
-	ctx.Request.Header.SetHost("domain-1.com")
+	ctx.Request.Header.SetHost(literal_6891)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "http://safe.domain-1.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -805,9 +805,9 @@ func TestCSRFTrustedOrigins(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.URI().SetScheme("https")
-	ctx.Request.URI().SetHost("a.b.c.domain-1.com")
+	ctx.Request.URI().SetHost(literal_1538)
 	ctx.Request.Header.SetProtocol("https")
-	ctx.Request.Header.SetHost("a.b.c.domain-1.com")
+	ctx.Request.Header.SetHost(literal_1538)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "https://a.b.c.domain-1.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -819,9 +819,9 @@ func TestCSRFTrustedOrigins(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.URI().SetScheme("http")
-	ctx.Request.URI().SetHost("domain-1.com")
+	ctx.Request.URI().SetHost(literal_6891)
 	ctx.Request.Header.SetProtocol("http")
-	ctx.Request.Header.SetHost("domain-1.com")
+	ctx.Request.Header.SetHost(literal_6891)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "http://evildomain-1.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -834,9 +834,9 @@ func TestCSRFTrustedOrigins(t *testing.T) {
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
 	ctx.Request.URI().SetScheme("https")
-	ctx.Request.URI().SetHost("example.com")
+	ctx.Request.URI().SetHost(literal_4390)
 	ctx.Request.Header.SetProtocol("https")
-	ctx.Request.Header.SetHost("example.com")
+	ctx.Request.Header.SetHost(literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderReferer, "https://safe.example.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -849,9 +849,9 @@ func TestCSRFTrustedOrigins(t *testing.T) {
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
 	ctx.Request.URI().SetScheme("https")
-	ctx.Request.URI().SetHost("domain-1.com")
+	ctx.Request.URI().SetHost(literal_6891)
 	ctx.Request.Header.SetProtocol("https")
-	ctx.Request.Header.SetHost("domain-1.com")
+	ctx.Request.Header.SetHost(literal_6891)
 	ctx.Request.Header.Set(fiber.HeaderReferer, "https://safe.domain-1.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -864,9 +864,9 @@ func TestCSRFTrustedOrigins(t *testing.T) {
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
 	ctx.Request.URI().SetScheme("https")
-	ctx.Request.URI().SetHost("a.b.c.domain-1.com")
+	ctx.Request.URI().SetHost(literal_1538)
 	ctx.Request.Header.SetProtocol("https")
-	ctx.Request.Header.SetHost("a.b.c.domain-1.com")
+	ctx.Request.Header.SetHost(literal_1538)
 	ctx.Request.Header.Set(fiber.HeaderReferer, "https://a.b.c.domain-1.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -961,11 +961,11 @@ func TestCSRFReferer(t *testing.T) {
 	ctx.Request.URI().SetScheme("https")
 	ctx.Request.URI().SetHost("10.0.1.42.com:8443")
 	ctx.Request.Header.SetProtocol("https")
-	ctx.Request.Header.SetHost("10.0.1.42:8443")
+	ctx.Request.Header.SetHost(literal_4105)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
-	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, "example.com")
+	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedFor, `192.0.2.43, "[2001:db8:cafe::17]"`)
-	ctx.Request.Header.Set(fiber.HeaderReferer, "https://example.com")
+	ctx.Request.Header.Set(fiber.HeaderReferer, literal_6739)
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
 	h(ctx)
@@ -977,11 +977,11 @@ func TestCSRFReferer(t *testing.T) {
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
 	ctx.Request.URI().SetScheme("https")
-	ctx.Request.URI().SetHost("10.0.1.42:8443")
+	ctx.Request.URI().SetHost(literal_4105)
 	ctx.Request.Header.SetProtocol("https")
-	ctx.Request.Header.SetHost("10.0.1.42:8443")
+	ctx.Request.Header.SetHost(literal_4105)
 	ctx.Request.Header.Set(fiber.HeaderXUrlScheme, "https") // We need to set this header to make sure c.Protocol() returns https
-	ctx.Request.Header.Set(fiber.HeaderReferer, "https://example.com")
+	ctx.Request.Header.Set(fiber.HeaderReferer, literal_6739)
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
 	h(ctx)
@@ -992,7 +992,7 @@ func TestCSRFReferer(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
-	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, "example.com")
+	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderReferer, "https://example.com/action/items?gogogo=true")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -1004,7 +1004,7 @@ func TestCSRFReferer(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
-	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, "example.com")
+	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderReferer, "https://csrf.example.com")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -1073,7 +1073,7 @@ func TestCSRFDeleteTokenWithSession(t *testing.T) {
 
 	// session store
 	store := session.New(session.Config{
-		KeyLookup: "cookie:_session",
+		KeyLookup: literal_5641,
 	})
 
 	// fiber instance
@@ -1174,7 +1174,7 @@ func TestCSRFErrorHandlerEmptyToken(t *testing.T) {
 
 	errHandler := func(ctx fiber.Ctx, err error) error {
 		require.Equal(t, ErrMissingHeader, err)
-		return ctx.Status(419).Send([]byte("empty CSRF token"))
+		return ctx.Status(419).Send([]byte(literal_7519))
 	}
 
 	app.Use(New(Config{ErrorHandler: errHandler}))
@@ -1196,7 +1196,7 @@ func TestCSRFErrorHandlerEmptyToken(t *testing.T) {
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	h(ctx)
 	require.Equal(t, 419, ctx.Response.StatusCode())
-	require.Equal(t, "empty CSRF token", string(ctx.Response.Body()))
+	require.Equal(t, literal_7519, string(ctx.Response.Body()))
 }
 
 func TestCSRFErrorHandlerMissingReferer(t *testing.T) {
@@ -1205,7 +1205,7 @@ func TestCSRFErrorHandlerMissingReferer(t *testing.T) {
 
 	errHandler := func(ctx fiber.Ctx, err error) error {
 		require.Equal(t, ErrRefererNotFound, err)
-		return ctx.Status(419).Send([]byte("empty CSRF token"))
+		return ctx.Status(419).Send([]byte(literal_7519))
 	}
 
 	app.Use(New(Config{
@@ -1229,7 +1229,7 @@ func TestCSRFErrorHandlerMissingReferer(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
-	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, "example.com")
+	ctx.Request.Header.Set(fiber.HeaderXForwardedHost, literal_4390)
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
 	h(ctx)
@@ -1269,7 +1269,7 @@ func TestCSRFCookieInjectionExploit(t *testing.T) {
 	require.Equal(t, 403, ctx.Response.StatusCode(), "CSRF exploit successful")
 }
 
-// TODO: use this test case and make the unsafe header value bug from https://github.com/gofiber/fiber/issues/2045 reproducible and permanently fixed/tested by this testcase
+// : use this test case and make the unsafe header value bug from https://github.com/gofiber/fiber/issues/2045 reproducible and permanently fixed/tested by this testcase
 // func Test_CSRF_UnsafeHeaderValue(t *testing.T) {
 //  t.Parallel()
 // 	app := fiber.New()
@@ -1349,10 +1349,10 @@ func Benchmark_Middleware_CSRF_Check(b *testing.B) {
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
 	ctx.Request.URI().SetScheme("https")
-	ctx.Request.URI().SetHost("example.com")
+	ctx.Request.URI().SetHost(literal_4390)
 	ctx.Request.Header.SetProtocol("https")
-	ctx.Request.Header.SetHost("example.com")
-	ctx.Request.Header.Set(fiber.HeaderReferer, "https://example.com")
+	ctx.Request.Header.SetHost(literal_4390)
+	ctx.Request.Header.Set(fiber.HeaderReferer, literal_6739)
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
 
@@ -1420,9 +1420,9 @@ func TestCSRFInvalidURLHeaders(t *testing.T) {
 	ctx.Response.Reset()
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.URI().SetScheme("http")
-	ctx.Request.URI().SetHost("example.com")
+	ctx.Request.URI().SetHost(literal_4390)
 	ctx.Request.Header.SetProtocol("http")
-	ctx.Request.Header.SetHost("example.com")
+	ctx.Request.Header.SetHost(literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderOrigin, "http://[::1]:%38%30/Invalid Origin")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -1436,9 +1436,9 @@ func TestCSRFInvalidURLHeaders(t *testing.T) {
 	ctx.Request.Header.SetMethod(fiber.MethodPost)
 	ctx.Request.Header.Set(fiber.HeaderXForwardedProto, "https")
 	ctx.Request.URI().SetScheme("https")
-	ctx.Request.URI().SetHost("example.com")
+	ctx.Request.URI().SetHost(literal_4390)
 	ctx.Request.Header.SetProtocol("https")
-	ctx.Request.Header.SetHost("example.com")
+	ctx.Request.Header.SetHost(literal_4390)
 	ctx.Request.Header.Set(fiber.HeaderReferer, "http://[::1]:%38%30/Invalid Referer")
 	ctx.Request.Header.Set(HeaderName, token)
 	ctx.Request.Header.SetCookie(ConfigDefault.CookieName, token)
@@ -1503,3 +1503,21 @@ func TestCSRFFromContextMethodsInvalid(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode)
 }
+
+const literal_5641 = "cookie:_session"
+
+const literal_3751 = "_csrf="
+
+const literal_4390 = "example.com"
+
+const literal_7053 = "10.0.1.42:8080"
+
+const literal_6891 = "domain-1.com"
+
+const literal_1538 = "a.b.c.domain-1.com"
+
+const literal_4105 = "10.0.1.42:8443"
+
+const literal_6739 = "https://example.com"
+
+const literal_7519 = "empty CSRF token"

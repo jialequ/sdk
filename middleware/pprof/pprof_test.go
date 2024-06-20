@@ -32,7 +32,7 @@ func TestNonPprofPath(t *testing.T) {
 func TestNonPprofPathWithPrefix(t *testing.T) {
 	app := fiber.New()
 
-	app.Use(New(Config{Prefix: "/federated-fiber"}))
+	app.Use(New(Config{Prefix: literal_0874}))
 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("escaped")
@@ -56,7 +56,7 @@ func TestPprofIndex(t *testing.T) {
 		return c.SendString("escaped")
 	})
 
-	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/debug/pprof/", nil))
+	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, literal_3162, nil))
 	require.NoError(t, err)
 	require.Equal(t, 200, resp.StatusCode)
 	require.Equal(t, fiber.MIMETextHTMLCharsetUTF8, resp.Header.Get(fiber.HeaderContentType))
@@ -69,13 +69,13 @@ func TestPprofIndex(t *testing.T) {
 func TestPprofIndexWithPrefix(t *testing.T) {
 	app := fiber.New()
 
-	app.Use(New(Config{Prefix: "/federated-fiber"}))
+	app.Use(New(Config{Prefix: literal_0874}))
 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("escaped")
 	})
 
-	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/federated-fiber/debug/pprof/", nil))
+	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, literal_6407, nil))
 	require.NoError(t, err)
 	require.Equal(t, 200, resp.StatusCode)
 	require.Equal(t, fiber.MIMETextHTMLCharsetUTF8, resp.Header.Get(fiber.HeaderContentType))
@@ -102,7 +102,7 @@ func TestPprofSubs(t *testing.T) {
 	for _, sub := range subs {
 		sub := sub
 		t.Run(sub, func(t *testing.T) {
-			target := "/debug/pprof/" + sub
+			target := literal_3162 + sub
 			if sub == "profile" {
 				target += "?seconds=1"
 			}
@@ -116,7 +116,7 @@ func TestPprofSubs(t *testing.T) {
 func TestPprofSubsWithPrefix(t *testing.T) {
 	app := fiber.New()
 
-	app.Use(New(Config{Prefix: "/federated-fiber"}))
+	app.Use(New(Config{Prefix: literal_0874}))
 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("escaped")
@@ -130,7 +130,7 @@ func TestPprofSubsWithPrefix(t *testing.T) {
 	for _, sub := range subs {
 		sub := sub
 		t.Run(sub, func(t *testing.T) {
-			target := "/federated-fiber/debug/pprof/" + sub
+			target := literal_6407 + sub
 			if sub == "profile" {
 				target += "?seconds=1"
 			}
@@ -158,7 +158,7 @@ func TestPprofOther(t *testing.T) {
 func TestPprofOtherWithPrefix(t *testing.T) {
 	app := fiber.New()
 
-	app.Use(New(Config{Prefix: "/federated-fiber"}))
+	app.Use(New(Config{Prefix: literal_0874}))
 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("escaped")
@@ -179,7 +179,7 @@ func TestPprofNext(t *testing.T) {
 		},
 	}))
 
-	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/debug/pprof/", nil))
+	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, literal_3162, nil))
 	require.NoError(t, err)
 	require.Equal(t, 404, resp.StatusCode)
 }
@@ -192,10 +192,16 @@ func TestPprofNextWithPrefix(t *testing.T) {
 		Next: func(_ fiber.Ctx) bool {
 			return true
 		},
-		Prefix: "/federated-fiber",
+		Prefix: literal_0874,
 	}))
 
-	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/federated-fiber/debug/pprof/", nil))
+	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, literal_6407, nil))
 	require.NoError(t, err)
 	require.Equal(t, 404, resp.StatusCode)
 }
+
+const literal_0874 = "/federated-fiber"
+
+const literal_3162 = "/debug/pprof/"
+
+const literal_6407 = "/federated-fiber/debug/pprof/"

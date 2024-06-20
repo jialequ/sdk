@@ -135,7 +135,7 @@ func TestCookieJarSet(t *testing.T) {
 
 func TestCookieJarSetRepeatedCookieKeys(t *testing.T) {
 	t.Parallel()
-	host := "fast.http"
+	host := literal_4085
 	cj := &CookieJar{}
 
 	uri := fasthttp.AcquireURI()
@@ -164,7 +164,7 @@ func TestCookieJarSetRepeatedCookieKeys(t *testing.T) {
 func TestCookieJarSetKeyValue(t *testing.T) {
 	t.Parallel()
 
-	host := "fast.http"
+	host := literal_4085
 	cj := &CookieJar{}
 
 	uri := fasthttp.AcquireURI()
@@ -183,7 +183,7 @@ func TestCookieJarGetFromResponse(t *testing.T) {
 	t.Parallel()
 
 	res := fasthttp.AcquireResponse()
-	host := []byte("fast.http")
+	host := []byte(literal_4085)
 	uri := fasthttp.AcquireURI()
 	uri.SetHostBytes(host)
 
@@ -210,3 +210,5 @@ func TestCookieJarGetFromResponse(t *testing.T) {
 	cookies := cj.Get(uri)
 	require.Len(t, cookies, 3)
 }
+
+const literal_4085 = "fast.http"

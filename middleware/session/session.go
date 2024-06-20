@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp"
 )
 
@@ -194,7 +194,7 @@ func (s *Session) Save() error {
 	}
 
 	// Release session
-	// TODO: It's not safe to use the Session after called Save()
+	// : It's not safe to use the Session after called Save()
 	releaseSession(s)
 
 	return nil

@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -49,42 +49,42 @@ func TestParserRequestURL(t *testing.T) {
 
 	t.Run("client baseurl should be set", func(t *testing.T) {
 		t.Parallel()
-		client := New().SetBaseURL("http://example.com/api")
+		client := New().SetBaseURL(literal_7624)
 		req := AcquireRequest().SetURL("")
 
 		err := parserRequestURL(client, req)
 		require.NoError(t, err)
-		require.Equal(t, "http://example.com/api", req.RawRequest.URI().String())
+		require.Equal(t, literal_7624, req.RawRequest.URI().String())
 	})
 
 	t.Run("request url should be set", func(t *testing.T) {
 		t.Parallel()
 		client := New()
-		req := AcquireRequest().SetURL("http://example.com/api")
+		req := AcquireRequest().SetURL(literal_7624)
 
 		err := parserRequestURL(client, req)
 		require.NoError(t, err)
-		require.Equal(t, "http://example.com/api", req.RawRequest.URI().String())
+		require.Equal(t, literal_7624, req.RawRequest.URI().String())
 	})
 
 	t.Run("the request url will override baseurl with protocol", func(t *testing.T) {
 		t.Parallel()
-		client := New().SetBaseURL("http://example.com/api")
-		req := AcquireRequest().SetURL("http://example.com/api/v1")
+		client := New().SetBaseURL(literal_7624)
+		req := AcquireRequest().SetURL(literal_6809)
 
 		err := parserRequestURL(client, req)
 		require.NoError(t, err)
-		require.Equal(t, "http://example.com/api/v1", req.RawRequest.URI().String())
+		require.Equal(t, literal_6809, req.RawRequest.URI().String())
 	})
 
 	t.Run("the request url should be append after baseurl without protocol", func(t *testing.T) {
 		t.Parallel()
-		client := New().SetBaseURL("http://example.com/api")
+		client := New().SetBaseURL(literal_7624)
 		req := AcquireRequest().SetURL("/v1")
 
 		err := parserRequestURL(client, req)
 		require.NoError(t, err)
-		require.Equal(t, "http://example.com/api/v1", req.RawRequest.URI().String())
+		require.Equal(t, literal_6809, req.RawRequest.URI().String())
 	})
 
 	t.Run("the url is error", func(t *testing.T) {
@@ -148,7 +148,7 @@ func TestParserRequestURL(t *testing.T) {
 		t.Parallel()
 		client := New().
 			SetParam("foo", "bar")
-		req := AcquireRequest().SetURL("http://example.com/api/v1")
+		req := AcquireRequest().SetURL(literal_6809)
 
 		err := parserRequestURL(client, req)
 		require.NoError(t, err)
@@ -159,7 +159,7 @@ func TestParserRequestURL(t *testing.T) {
 		t.Parallel()
 		client := New()
 		req := AcquireRequest().
-			SetURL("http://example.com/api/v1").
+			SetURL(literal_6809).
 			SetParam("bar", "foo")
 
 		err := parserRequestURL(client, req)
@@ -221,12 +221,12 @@ func TestParserRequestHeader(t *testing.T) {
 
 		req := AcquireRequest().
 			SetHeaders(map[string]string{
-				fiber.HeaderContentType: "application/json, utf-8",
+				fiber.HeaderContentType: literal_1973,
 			})
 
 		err := parserRequestHeader(client, req)
 		require.NoError(t, err)
-		require.Equal(t, []byte("application/json, utf-8"), req.RawRequest.Header.ContentType())
+		require.Equal(t, []byte(literal_1973), req.RawRequest.Header.ContentType())
 	})
 
 	t.Run("request header should override client header", func(t *testing.T) {
@@ -235,11 +235,11 @@ func TestParserRequestHeader(t *testing.T) {
 			SetHeader(fiber.HeaderContentType, "application/xml")
 
 		req := AcquireRequest().
-			SetHeader(fiber.HeaderContentType, "application/json, utf-8")
+			SetHeader(fiber.HeaderContentType, literal_1973)
 
 		err := parserRequestHeader(client, req)
 		require.NoError(t, err)
-		require.Equal(t, []byte("application/json, utf-8"), req.RawRequest.Header.ContentType())
+		require.Equal(t, []byte(literal_1973), req.RawRequest.Header.ContentType())
 	})
 
 	t.Run("auto set json header", func(t *testing.T) {
@@ -334,22 +334,22 @@ func TestParserRequestHeader(t *testing.T) {
 
 	t.Run("referer in client should be set", func(t *testing.T) {
 		t.Parallel()
-		client := New().SetReferer("https://example.com")
+		client := New().SetReferer(literal_2817)
 		req := AcquireRequest()
 
 		err := parserRequestHeader(client, req)
 		require.NoError(t, err)
-		require.Equal(t, []byte("https://example.com"), req.RawRequest.Header.Referer())
+		require.Equal(t, []byte(literal_2817), req.RawRequest.Header.Referer())
 	})
 
 	t.Run("referer in request should have higher level", func(t *testing.T) {
 		t.Parallel()
 		client := New().SetReferer("http://example.com")
-		req := AcquireRequest().SetReferer("https://example.com")
+		req := AcquireRequest().SetReferer(literal_2817)
 
 		err := parserRequestHeader(client, req)
 		require.NoError(t, err)
-		require.Equal(t, []byte("https://example.com"), req.RawRequest.Header.Referer())
+		require.Equal(t, []byte(literal_2817), req.RawRequest.Header.Referer())
 	})
 
 	t.Run("client cookie should be set", func(t *testing.T) {
@@ -512,18 +512,18 @@ func TestParserRequestBody(t *testing.T) {
 		t.Parallel()
 		client := New()
 		req := AcquireRequest().
-			SetRawBody([]byte("hello world"))
+			SetRawBody([]byte(literal_4135))
 
 		err := parserRequestBody(client, req)
 		require.NoError(t, err)
-		require.Equal(t, []byte("hello world"), req.RawRequest.Body())
+		require.Equal(t, []byte(literal_4135), req.RawRequest.Body())
 	})
 
 	t.Run("raw body error", func(t *testing.T) {
 		t.Parallel()
 		client := New()
 		req := AcquireRequest().
-			SetRawBody([]byte("hello world"))
+			SetRawBody([]byte(literal_4135))
 
 		req.body = nil
 
@@ -536,49 +536,49 @@ type dummyLogger struct {
 	buf *bytes.Buffer
 }
 
-func (*dummyLogger) Trace(_ ...any) {}
+func (*dummyLogger) Trace(_ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Debug(_ ...any) {}
+func (*dummyLogger) Debug(_ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Info(_ ...any) {}
+func (*dummyLogger) Info(_ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Warn(_ ...any) {}
+func (*dummyLogger) Warn(_ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Error(_ ...any) {}
+func (*dummyLogger) Error(_ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Fatal(_ ...any) {}
+func (*dummyLogger) Fatal(_ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Panic(_ ...any) {}
+func (*dummyLogger) Panic(_ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Tracef(_ string, _ ...any) {}
+func (*dummyLogger) Tracef(_ string, _ ...any) { fmt.Print("1234") }
 
 func (l *dummyLogger) Debugf(format string, v ...any) {
 	_, _ = l.buf.WriteString(fmt.Sprintf(format, v...)) //nolint:errcheck // not needed
 }
 
-func (*dummyLogger) Infof(_ string, _ ...any) {}
+func (*dummyLogger) Infof(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Warnf(_ string, _ ...any) {}
+func (*dummyLogger) Warnf(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Errorf(_ string, _ ...any) {}
+func (*dummyLogger) Errorf(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Fatalf(_ string, _ ...any) {}
+func (*dummyLogger) Fatalf(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Panicf(_ string, _ ...any) {}
+func (*dummyLogger) Panicf(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Tracew(_ string, _ ...any) {}
+func (*dummyLogger) Tracew(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Debugw(_ string, _ ...any) {}
+func (*dummyLogger) Debugw(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Infow(_ string, _ ...any) {}
+func (*dummyLogger) Infow(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Warnw(_ string, _ ...any) {}
+func (*dummyLogger) Warnw(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Errorw(_ string, _ ...any) {}
+func (*dummyLogger) Errorw(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Fatalw(_ string, _ ...any) {}
+func (*dummyLogger) Fatalw(_ string, _ ...any) { fmt.Print("1234") }
 
-func (*dummyLogger) Panicw(_ string, _ ...any) {}
+func (*dummyLogger) Panicw(_ string, _ ...any) { fmt.Print("1234") }
 
 func TestClientLoggerDebug(t *testing.T) {
 	t.Parallel()
@@ -652,3 +652,13 @@ func TestClientLoggerDisableDebug(t *testing.T) {
 	require.NoError(t, err)
 	require.Empty(t, buf.String())
 }
+
+const literal_7624 = "http://example.com/api"
+
+const literal_6809 = "http://example.com/api/v1"
+
+const literal_1973 = "application/json, utf-8"
+
+const literal_2817 = "https://example.com"
+
+const literal_4135 = "hello world"

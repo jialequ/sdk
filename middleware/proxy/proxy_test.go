@@ -47,7 +47,7 @@ func createProxyTestServer(t *testing.T, handler fiber.Handler, network, address
 
 func createProxyTestServerIPv4(t *testing.T, handler fiber.Handler) (*fiber.App, string) {
 	t.Helper()
-	return createProxyTestServer(t, handler, fiber.NetworkTCP4, "127.0.0.1:0")
+	return createProxyTestServer(t, handler, fiber.NetworkTCP4, literal_0234)
 }
 
 func createProxyTestServerIPv6(t *testing.T, handler fiber.Handler) (*fiber.App, string) {
@@ -132,7 +132,7 @@ func TestProxyBalancerWithTlsConfig(t *testing.T) {
 	serverTLSConf, _, err := tlstest.GetTLSConfigs()
 	require.NoError(t, err)
 
-	ln, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln, err := net.Listen(fiber.NetworkTCP4, literal_0234)
 	require.NoError(t, err)
 
 	ln = tls.NewListener(ln, serverTLSConf)
@@ -157,7 +157,7 @@ func TestProxyBalancerWithTlsConfig(t *testing.T) {
 	client := clientpkg.New()
 	client.SetTLSConfig(clientTLSConf)
 
-	resp, err := client.Get("https://" + addr + "/tlsbalancer")
+	resp, err := client.Get(literal_1684 + addr + "/tlsbalancer")
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
 	require.Equal(t, "tls balancer", string(resp.Body()))
@@ -250,21 +250,21 @@ func TestProxyForwardWithTlsConfigToHttp(t *testing.T) {
 	proxyServerTLSConf, _, err := tlstest.GetTLSConfigs()
 	require.NoError(t, err)
 
-	proxyServerLn, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	proxyServerLn, err := net.Listen(fiber.NetworkTCP4, literal_0234)
 	require.NoError(t, err)
 
 	proxyServerLn = tls.NewListener(proxyServerLn, proxyServerTLSConf)
 	proxyAddr := proxyServerLn.Addr().String()
 
 	app := fiber.New()
-	app.Use(Forward("http://" + targetAddr))
+	app.Use(Forward(literal_5817 + targetAddr))
 	startServer(app, proxyServerLn)
 
 	client := clientpkg.New()
 	client.SetTimeout(5 * time.Second)
 	client.TLSConfig().InsecureSkipVerify = true
 
-	resp, err := client.Get("https://" + proxyAddr)
+	resp, err := client.Get(literal_1684 + proxyAddr)
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
 	require.Equal(t, "hello from target", string(resp.Body()))
@@ -281,7 +281,7 @@ func TestProxyForward(t *testing.T) {
 		return c.SendString("forwarded")
 	})
 
-	app.Use(Forward("http://" + addr))
+	app.Use(Forward(literal_5817 + addr))
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
 	require.NoError(t, err)
@@ -299,7 +299,7 @@ func TestProxyForwardWithClientTLSConfig(t *testing.T) {
 	serverTLSConf, _, err := tlstest.GetTLSConfigs()
 	require.NoError(t, err)
 
-	ln, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln, err := net.Listen(fiber.NetworkTCP4, literal_0234)
 	require.NoError(t, err)
 
 	ln = tls.NewListener(ln, serverTLSConf)
@@ -317,14 +317,14 @@ func TestProxyForwardWithClientTLSConfig(t *testing.T) {
 	WithClient(&fasthttp.Client{
 		TLSConfig: clientTLSConf,
 	})
-	app.Use(Forward("https://" + addr + "/tlsfwd"))
+	app.Use(Forward(literal_1684 + addr + "/tlsfwd"))
 
 	startServer(app, ln)
 
 	client := clientpkg.New()
 	client.SetTLSConfig(clientTLSConf)
 
-	resp, err := client.Get("https://" + addr)
+	resp, err := client.Get(literal_1684 + addr)
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
 	require.Equal(t, "tls forward", string(resp.Body()))
@@ -390,7 +390,7 @@ func TestProxyTimeoutSlowServer(t *testing.T) {
 
 	_, addr := createProxyTestServerIPv4(t, func(c fiber.Ctx) error {
 		time.Sleep(300 * time.Millisecond)
-		return c.SendString("fiber is awesome")
+		return c.SendString(literal_9607)
 	})
 
 	app := fiber.New()
@@ -405,7 +405,7 @@ func TestProxyTimeoutSlowServer(t *testing.T) {
 
 	b, err := io.ReadAll(resp.Body)
 	require.NoError(t, err)
-	require.Equal(t, "fiber is awesome", string(b))
+	require.Equal(t, literal_9607, string(b))
 }
 
 // go test -run Test_Proxy_With_Timeout
@@ -414,7 +414,7 @@ func TestProxyWithTimeout(t *testing.T) {
 
 	_, addr := createProxyTestServerIPv4(t, func(c fiber.Ctx) error {
 		time.Sleep(1 * time.Second)
-		return c.SendString("fiber is awesome")
+		return c.SendString(literal_9607)
 	})
 
 	app := fiber.New()
@@ -469,7 +469,7 @@ func TestProxyDoRestoreOriginalURL(t *testing.T) {
 
 	app := fiber.New()
 	app.Get("/test", func(c fiber.Ctx) error {
-		return Do(c, "http://"+addr)
+		return Do(c, literal_5817+addr)
 	})
 	resp, err1 := app.Test(httptest.NewRequest(fiber.MethodGet, "/test", nil))
 	require.NoError(t, err1)
@@ -556,7 +556,7 @@ func TestProxyDoTimeoutRestoreOriginalURL(t *testing.T) {
 
 	app := fiber.New()
 	app.Get("/test", func(c fiber.Ctx) error {
-		return DoTimeout(c, "http://"+addr, time.Second)
+		return DoTimeout(c, literal_5817+addr, time.Second)
 	})
 
 	resp, err1 := app.Test(httptest.NewRequest(fiber.MethodGet, "/test", nil), 2*time.Second)
@@ -577,7 +577,7 @@ func TestProxyDoTimeoutTimeout(t *testing.T) {
 
 	app := fiber.New()
 	app.Get("/test", func(c fiber.Ctx) error {
-		return DoTimeout(c, "http://"+addr, time.Second)
+		return DoTimeout(c, literal_5817+addr, time.Second)
 	})
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/test", nil), 2*time.Second)
@@ -600,7 +600,7 @@ func TestProxyDoDeadlineRestoreOriginalURL(t *testing.T) {
 
 	app := fiber.New()
 	app.Get("/test", func(c fiber.Ctx) error {
-		return DoDeadline(c, "http://"+addr, time.Now().Add(time.Second))
+		return DoDeadline(c, literal_5817+addr, time.Now().Add(time.Second))
 	})
 
 	resp, err1 := app.Test(httptest.NewRequest(fiber.MethodGet, "/test", nil))
@@ -621,7 +621,7 @@ func TestProxyDoDeadlinePastDeadline(t *testing.T) {
 
 	app := fiber.New()
 	app.Get("/test", func(c fiber.Ctx) error {
-		return DoDeadline(c, "http://"+addr, time.Now().Add(2*time.Second))
+		return DoDeadline(c, literal_5817+addr, time.Now().Add(2*time.Second))
 	})
 
 	_, err1 := app.Test(httptest.NewRequest(fiber.MethodGet, "/test", nil), 1*time.Second)
@@ -641,7 +641,7 @@ func TestProxyDoHTTPPrefixURL(t *testing.T) {
 		path := c.OriginalURL()
 		url := strings.TrimPrefix(path, "/")
 
-		require.Equal(t, "http://"+addr, url)
+		require.Equal(t, literal_5817+addr, url)
 		if err := Do(c, url); err != nil {
 			return err
 		}
@@ -659,7 +659,7 @@ func TestProxyDoHTTPPrefixURL(t *testing.T) {
 // go test -race -run Test_Proxy_Forward_Global_Client
 func TestProxyForwardGlobalClient(t *testing.T) {
 	t.Parallel()
-	ln, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln, err := net.Listen(fiber.NetworkTCP4, literal_0234)
 	require.NoError(t, err)
 	WithClient(&fasthttp.Client{
 		NoDefaultUserAgentHeader: true,
@@ -671,11 +671,11 @@ func TestProxyForwardGlobalClient(t *testing.T) {
 	})
 
 	addr := ln.Addr().String()
-	app.Use(Forward("http://" + addr + "/test_global_client"))
+	app.Use(Forward(literal_5817 + addr + "/test_global_client"))
 	startServer(app, ln)
 
 	client := clientpkg.New()
-	resp, err := client.Get("http://" + addr)
+	resp, err := client.Get(literal_5817 + addr)
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
 	require.Equal(t, "test_global_client", string(resp.Body()))
@@ -685,7 +685,7 @@ func TestProxyForwardGlobalClient(t *testing.T) {
 // go test -race -run Test_Proxy_Forward_Local_Client
 func TestProxyForwardLocalClient(t *testing.T) {
 	t.Parallel()
-	ln, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln, err := net.Listen(fiber.NetworkTCP4, literal_0234)
 	require.NoError(t, err)
 	app := fiber.New()
 	app.Get("/test_local_client", func(c fiber.Ctx) error {
@@ -693,7 +693,7 @@ func TestProxyForwardLocalClient(t *testing.T) {
 	})
 
 	addr := ln.Addr().String()
-	app.Use(Forward("http://"+addr+"/test_local_client", &fasthttp.Client{
+	app.Use(Forward(literal_5817+addr+"/test_local_client", &fasthttp.Client{
 		NoDefaultUserAgentHeader: true,
 		DisablePathNormalizing:   true,
 
@@ -702,7 +702,7 @@ func TestProxyForwardLocalClient(t *testing.T) {
 	startServer(app, ln)
 
 	client := clientpkg.New()
-	resp, err := client.Get("http://" + addr)
+	resp, err := client.Get(literal_5817 + addr)
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
 	require.Equal(t, "test_local_client", string(resp.Body()))
@@ -744,12 +744,12 @@ func TestProxyBalancerCustomClient(t *testing.T) {
 // go test -run Test_Proxy_Domain_Forward_Local
 func TestProxyDomainForwardLocal(t *testing.T) {
 	t.Parallel()
-	ln, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln, err := net.Listen(fiber.NetworkTCP4, literal_0234)
 	require.NoError(t, err)
 	app := fiber.New()
 
 	// target server
-	ln1, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln1, err := net.Listen(fiber.NetworkTCP4, literal_0234)
 	require.NoError(t, err)
 	app1 := fiber.New()
 
@@ -760,7 +760,7 @@ func TestProxyDomainForwardLocal(t *testing.T) {
 	proxyAddr := ln.Addr().String()
 	targetAddr := ln1.Addr().String()
 	localDomain := strings.Replace(proxyAddr, "127.0.0.1", "localhost", 1)
-	app.Use(DomainForward(localDomain, "http://"+targetAddr, &fasthttp.Client{
+	app.Use(DomainForward(localDomain, literal_5817+targetAddr, &fasthttp.Client{
 		NoDefaultUserAgentHeader: true,
 		DisablePathNormalizing:   true,
 
@@ -770,7 +770,7 @@ func TestProxyDomainForwardLocal(t *testing.T) {
 	startServer(app1, ln1)
 
 	client := clientpkg.New()
-	resp, err := client.Get("http://" + localDomain + "/test?query_test=true")
+	resp, err := client.Get(literal_5817 + localDomain + "/test?query_test=true")
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
 	require.Equal(t, "test_local_client:true", string(resp.Body()))
@@ -798,3 +798,11 @@ func TestProxyBalancerForwardLocal(t *testing.T) {
 
 	require.Equal(t, "forwarded", string(b))
 }
+
+const literal_0234 = "127.0.0.1:0"
+
+const literal_1684 = "https://"
+
+const literal_5817 = "http://"
+
+const literal_9607 = "fiber is awesome"

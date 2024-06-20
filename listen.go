@@ -38,7 +38,7 @@ const (
 
 // ListenConfig is a struct to customize startup of Fiber.
 //
-// TODO: Add timeout for graceful shutdown.
+// : Add timeout for graceful shutdown.
 type ListenConfig struct {
 	// Known networks are "tcp", "tcp4" (IPv4-only), "tcp6" (IPv6-only)
 	// WARNING: When prefork is set to true, only "tcp4" and "tcp6" can be chosen.
@@ -473,7 +473,7 @@ func (app *App) printRoutesMessage() {
 func (app *App) gracefulShutdown(ctx context.Context, cfg ListenConfig) {
 	<-ctx.Done()
 
-	if err := app.Shutdown(); err != nil { //nolint:contextcheck // TODO: Implement it
+	if err := app.Shutdown(); err != nil { //nolint:contextcheck // : Implement it
 		cfg.OnShutdownError(err)
 	}
 

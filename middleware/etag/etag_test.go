@@ -77,15 +77,15 @@ func TestETagNoBody(t *testing.T) {
 // go test -run Test_ETag_NewEtag
 func TestETagNewEtag(t *testing.T) {
 	t.Parallel()
-	t.Run("without HeaderIfNoneMatch", func(t *testing.T) {
+	t.Run(literal_4859, func(t *testing.T) {
 		t.Parallel()
 		testETagNewEtag(t, false, false)
 	})
-	t.Run("with HeaderIfNoneMatch and not matched", func(t *testing.T) {
+	t.Run(literal_5967, func(t *testing.T) {
 		t.Parallel()
 		testETagNewEtag(t, true, false)
 	})
-	t.Run("with HeaderIfNoneMatch and matched", func(t *testing.T) {
+	t.Run(literal_0962, func(t *testing.T) {
 		t.Parallel()
 		testETagNewEtag(t, true, true)
 	})
@@ -99,7 +99,7 @@ func testETagNewEtag(t *testing.T, headerIfNoneMatch, matched bool) { //nolint:r
 	app.Use(New())
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4806)
 	})
 
 	req := httptest.NewRequest(fiber.MethodGet, "/", nil)
@@ -131,15 +131,15 @@ func testETagNewEtag(t *testing.T, headerIfNoneMatch, matched bool) { //nolint:r
 // go test -run Test_ETag_WeakEtag
 func TestETagWeakEtag(t *testing.T) {
 	t.Parallel()
-	t.Run("without HeaderIfNoneMatch", func(t *testing.T) {
+	t.Run(literal_4859, func(t *testing.T) {
 		t.Parallel()
 		testETagWeakEtag(t, false, false)
 	})
-	t.Run("with HeaderIfNoneMatch and not matched", func(t *testing.T) {
+	t.Run(literal_5967, func(t *testing.T) {
 		t.Parallel()
 		testETagWeakEtag(t, true, false)
 	})
-	t.Run("with HeaderIfNoneMatch and matched", func(t *testing.T) {
+	t.Run(literal_0962, func(t *testing.T) {
 		t.Parallel()
 		testETagWeakEtag(t, true, true)
 	})
@@ -153,7 +153,7 @@ func testETagWeakEtag(t *testing.T, headerIfNoneMatch, matched bool) { //nolint:
 	app.Use(New(Config{Weak: true}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4806)
 	})
 
 	req := httptest.NewRequest(fiber.MethodGet, "/", nil)
@@ -185,15 +185,15 @@ func testETagWeakEtag(t *testing.T, headerIfNoneMatch, matched bool) { //nolint:
 // go test -run Test_ETag_CustomEtag
 func TestETagCustomEtag(t *testing.T) {
 	t.Parallel()
-	t.Run("without HeaderIfNoneMatch", func(t *testing.T) {
+	t.Run(literal_4859, func(t *testing.T) {
 		t.Parallel()
 		testETagCustomEtag(t, false, false)
 	})
-	t.Run("with HeaderIfNoneMatch and not matched", func(t *testing.T) {
+	t.Run(literal_5967, func(t *testing.T) {
 		t.Parallel()
 		testETagCustomEtag(t, true, false)
 	})
-	t.Run("with HeaderIfNoneMatch and matched", func(t *testing.T) {
+	t.Run(literal_0962, func(t *testing.T) {
 		t.Parallel()
 		testETagCustomEtag(t, true, true)
 	})
@@ -211,7 +211,7 @@ func testETagCustomEtag(t *testing.T, headerIfNoneMatch, matched bool) { //nolin
 		if bytes.Equal(c.Request().Header.Peek(fiber.HeaderIfNoneMatch), []byte(`"custom"`)) {
 			return c.SendStatus(fiber.StatusNotModified)
 		}
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4806)
 	})
 
 	req := httptest.NewRequest(fiber.MethodGet, "/", nil)
@@ -252,7 +252,7 @@ func TestETagCustomEtagPut(t *testing.T) {
 		if !bytes.Equal(c.Request().Header.Peek(fiber.HeaderIfMatch), []byte(`"custom"`)) {
 			return c.SendStatus(fiber.StatusPreconditionFailed)
 		}
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4806)
 	})
 
 	req := httptest.NewRequest(fiber.MethodPut, "/", nil)
@@ -269,7 +269,7 @@ func Benchmark_Etag(b *testing.B) {
 	app.Use(New())
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString(literal_4806)
 	})
 
 	h := app.Handler()
@@ -288,3 +288,11 @@ func Benchmark_Etag(b *testing.B) {
 	require.Equal(b, 200, fctx.Response.Header.StatusCode())
 	require.Equal(b, `"13-1831710635"`, string(fctx.Response.Header.Peek(fiber.HeaderETag)))
 }
+
+const literal_4859 = "without HeaderIfNoneMatch"
+
+const literal_5967 = "with HeaderIfNoneMatch and not matched"
+
+const literal_0962 = "with HeaderIfNoneMatch and matched"
+
+const literal_4806 = "Hello, World!"

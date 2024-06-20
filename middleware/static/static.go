@@ -157,19 +157,21 @@ func isFile(root string, filesystem fs.FS) (bool, error) {
 	if filesystem != nil {
 		file, err = filesystem.Open(root)
 		if err != nil {
-			return false, fmt.Errorf("static: %w", err)
+			return false, fmt.Errorf(literal_7965, err)
 		}
 	} else {
 		file, err = os.Open(filepath.Clean(root))
 		if err != nil {
-			return false, fmt.Errorf("static: %w", err)
+			return false, fmt.Errorf(literal_7965, err)
 		}
 	}
 
 	stat, err := file.Stat()
 	if err != nil {
-		return false, fmt.Errorf("static: %w", err)
+		return false, fmt.Errorf(literal_7965, err)
 	}
 
 	return stat.Mode().IsRegular(), nil
 }
+
+const literal_7965 = "static: %w"

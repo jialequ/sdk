@@ -40,20 +40,20 @@ func TestRouteMatchSameLength(t *testing.T) {
 	})
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/:param", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, ":param", app.getString(body))
 
 	// with param
 	resp, err = app.Test(httptest.NewRequest(MethodGet, "/test", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err = io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "test", app.getString(body))
 }
 
@@ -67,20 +67,20 @@ func TestRouteMatchStar(t *testing.T) {
 	})
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/*", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "*", app.getString(body))
 
 	// with param
 	resp, err = app.Test(httptest.NewRequest(MethodGet, "/test", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err = io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "test", app.getString(body))
 
 	// without parameter
@@ -115,11 +115,11 @@ func TestRouteMatchRoot(t *testing.T) {
 	})
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "root", app.getString(body))
 }
 
@@ -135,20 +135,20 @@ func TestRouteMatchParser(t *testing.T) {
 		return c.SendString(c.Params("*"))
 	})
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/foo/bar", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "bar", app.getString(body))
 
 	// with star
 	resp, err = app.Test(httptest.NewRequest(MethodGet, "/Foobar/test", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err = io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "test", app.getString(body))
 }
 
@@ -162,20 +162,20 @@ func TestRouteMatchMiddleware(t *testing.T) {
 	})
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/foo/*", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "*", app.getString(body))
 
 	// with param
 	resp, err = app.Test(httptest.NewRequest(MethodGet, "/foo/bar/fasel", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err = io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "bar/fasel", app.getString(body))
 }
 
@@ -184,27 +184,27 @@ func TestRouteMatchUnescapedPath(t *testing.T) {
 
 	app := New(Config{UnescapePath: true})
 
-	app.Use("/créer", func(c Ctx) error {
+	app.Use(literal_0493, func(c Ctx) error {
 		return c.SendString("test")
 	})
 
-	resp, err := app.Test(httptest.NewRequest(MethodGet, "/cr%C3%A9er", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
+	resp, err := app.Test(httptest.NewRequest(MethodGet, literal_2379, nil))
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, StatusOK, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "test", app.getString(body))
 	// without special chars
-	resp, err = app.Test(httptest.NewRequest(MethodGet, "/créer", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
+	resp, err = app.Test(httptest.NewRequest(MethodGet, literal_0493, nil))
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, StatusOK, resp.StatusCode, literal_6917)
 
 	// check deactivated behavior
 	app.config.UnescapePath = false
-	resp, err = app.Test(httptest.NewRequest(MethodGet, "/cr%C3%A9er", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, StatusNotFound, resp.StatusCode, "Status code")
+	resp, err = app.Test(httptest.NewRequest(MethodGet, literal_2379, nil))
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, StatusNotFound, resp.StatusCode, literal_6917)
 }
 
 func TestRouteMatchWithEscapeChar(t *testing.T) {
@@ -227,29 +227,29 @@ func TestRouteMatchWithEscapeChar(t *testing.T) {
 
 	// check static route
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/v1/some/resource/name:customVerb", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, StatusOK, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "static", app.getString(body))
 
 	// check group route
 	resp, err = app.Test(httptest.NewRequest(MethodGet, "/v2/:firstVerb/:customVerb", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, StatusOK, resp.StatusCode, literal_6917)
 
 	body, err = io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "group", app.getString(body))
 
 	// check param route
 	resp, err = app.Test(httptest.NewRequest(MethodGet, "/v3/awesome/name:customVerb", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, StatusOK, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, StatusOK, resp.StatusCode, literal_6917)
 
 	body, err = io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "awesome", app.getString(body))
 }
 
@@ -263,11 +263,11 @@ func TestRouteMatchMiddlewareHasPrefix(t *testing.T) {
 	})
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/foo/bar", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "middleware", app.getString(body))
 }
 
@@ -281,11 +281,11 @@ func TestRouteMatchMiddlewareRoot(t *testing.T) {
 	})
 
 	resp, err := app.Test(httptest.NewRequest(MethodGet, "/everything", nil))
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3769)
+	require.Equal(t, 200, resp.StatusCode, literal_6917)
 
 	body, err := io.ReadAll(resp.Body)
-	require.NoError(t, err, "app.Test(req)")
+	require.NoError(t, err, literal_3769)
 	require.Equal(t, "middleware", app.getString(body))
 }
 
@@ -435,7 +435,7 @@ func Benchmark_Router_Handler(b *testing.B) {
 	c := &fasthttp.RequestCtx{}
 
 	c.Request.Header.SetMethod("DELETE")
-	c.URI().SetPath("/user/keys/1337")
+	c.URI().SetPath(literal_4567)
 
 	b.ResetTimer()
 
@@ -455,7 +455,7 @@ func Benchmark_Router_Handler_Strict_Case(b *testing.B) {
 	c := &fasthttp.RequestCtx{}
 
 	c.Request.Header.SetMethod("DELETE")
-	c.URI().SetPath("/user/keys/1337")
+	c.URI().SetPath(literal_4567)
 
 	b.ResetTimer()
 
@@ -526,7 +526,7 @@ func Benchmark_Router_Next(b *testing.B) {
 	request := &fasthttp.RequestCtx{}
 
 	request.Request.Header.SetMethod("DELETE")
-	request.URI().SetPath("/user/keys/1337")
+	request.URI().SetPath(literal_4567)
 	var res bool
 	var err error
 
@@ -547,16 +547,16 @@ func Benchmark_Route_Match(b *testing.B) {
 	var match bool
 	var params [maxParams]string
 
-	parsed := parseRoute("/user/keys/:id")
+	parsed := parseRoute(literal_1783)
 	route := &Route{
 		use:         false,
 		root:        false,
 		star:        false,
 		routeParser: parsed,
 		Params:      parsed.params,
-		path:        "/user/keys/:id",
+		path:        literal_1783,
 
-		Path:   "/user/keys/:id",
+		Path:   literal_1783,
 		Method: "DELETE",
 	}
 	route.Handlers = append(route.Handlers, func(_ Ctx) error {
@@ -564,7 +564,7 @@ func Benchmark_Route_Match(b *testing.B) {
 	})
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		match = route.match("/user/keys/1337", "/user/keys/1337", &params)
+		match = route.match(literal_4567, literal_4567, &params)
 	}
 
 	require.True(b, match)
@@ -583,9 +583,9 @@ func Benchmark_Route_Match_Star(b *testing.B) {
 		star:        true,
 		routeParser: parsed,
 		Params:      parsed.params,
-		path:        "/user/keys/bla",
+		path:        literal_9127,
 
-		Path:   "/user/keys/bla",
+		Path:   literal_9127,
 		Method: "DELETE",
 	}
 	route.Handlers = append(route.Handlers, func(_ Ctx) error {
@@ -594,7 +594,7 @@ func Benchmark_Route_Match_Star(b *testing.B) {
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		match = route.match("/user/keys/bla", "/user/keys/bla", &params)
+		match = route.match(literal_9127, literal_9127, &params)
 	}
 
 	require.True(b, match)
@@ -642,7 +642,7 @@ func Benchmark_Router_Handler_CaseSensitive(b *testing.B) {
 	c := &fasthttp.RequestCtx{}
 
 	c.Request.Header.SetMethod("DELETE")
-	c.URI().SetPath("/user/keys/1337")
+	c.URI().SetPath(literal_4567)
 
 	b.ResetTimer()
 
@@ -656,7 +656,7 @@ func Benchmark_Router_Handler_Unescape(b *testing.B) {
 	app := New()
 	app.config.UnescapePath = true
 	registerDummyRoutes(app)
-	app.Delete("/créer", func(_ Ctx) error {
+	app.Delete(literal_0493, func(_ Ctx) error {
 		return nil
 	})
 
@@ -665,12 +665,12 @@ func Benchmark_Router_Handler_Unescape(b *testing.B) {
 	c := &fasthttp.RequestCtx{}
 
 	c.Request.Header.SetMethod(MethodDelete)
-	c.URI().SetPath("/cr%C3%A9er")
+	c.URI().SetPath(literal_2379)
 
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		c.URI().SetPath("/cr%C3%A9er")
+		c.URI().SetPath(literal_2379)
 		appHandler(c)
 	}
 }
@@ -685,7 +685,7 @@ func Benchmark_Router_Handler_StrictRouting(b *testing.B) {
 	c := &fasthttp.RequestCtx{}
 
 	c.Request.Header.SetMethod("DELETE")
-	c.URI().SetPath("/user/keys/1337")
+	c.URI().SetPath(literal_4567)
 
 	b.ResetTimer()
 
@@ -731,3 +731,17 @@ type routeJSON struct {
 	TestRoutes []testRoute `json:"test_routes"`
 	GithubAPI  []testRoute `json:"github_api"`
 }
+
+const literal_3769 = "app.Test(req)"
+
+const literal_6917 = "Status code"
+
+const literal_0493 = "/créer"
+
+const literal_2379 = "/cr%C3%A9er"
+
+const literal_4567 = "/user/keys/1337"
+
+const literal_1783 = "/user/keys/:id"
+
+const literal_9127 = "/user/keys/bla"

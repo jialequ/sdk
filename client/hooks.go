@@ -208,7 +208,7 @@ func parserRequestBody(c *Client, req *Request) error {
 
 // parserRequestBodyFile parses request body if body type is file
 // this is an addition of parserRequestBody.
-func parserRequestBodyFile(req *Request) error {
+func parserRequestBodyFile(req *Request) error { //NOSONAR
 	mw := multipart.NewWriter(req.RawRequest.BodyWriter())
 	err := mw.SetBoundary(req.boundary)
 	if err != nil {

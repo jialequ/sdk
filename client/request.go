@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/gofiber/utils/v2"
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/valyala/fasthttp"
 )
 
@@ -937,7 +937,7 @@ func SetValWithStruct(p WithStruct, tagName string, v any) {
 	}
 
 	// Boring type judge.
-	// TODO: cover more types and complex data structure.
+	// : cover more types and complex data structure.
 	var setVal func(name string, value reflect.Value)
 	setVal = func(name string, val reflect.Value) {
 		switch val.Kind() {

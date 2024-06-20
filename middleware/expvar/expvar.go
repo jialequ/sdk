@@ -21,14 +21,16 @@ func New(config ...Config) fiber.Handler {
 
 		path := c.Path()
 		// We are only interested in /debug/vars routes
-		if len(path) < 11 || !strings.HasPrefix(path, "/debug/vars") {
+		if len(path) < 11 || !strings.HasPrefix(path, literal_6902) {
 			return c.Next()
 		}
-		if path == "/debug/vars" {
+		if path == literal_6902 {
 			expvarhandler.ExpvarHandler(c.Context())
 			return nil
 		}
 
-		return c.Redirect().To("/debug/vars")
+		return c.Redirect().To(literal_6902)
 	}
 }
+
+const literal_6902 = "/debug/vars"

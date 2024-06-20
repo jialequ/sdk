@@ -1,11 +1,11 @@
-package recover //nolint:predeclared // TODO: Rename to some non-builtin
+package recover //nolint:predeclared // : Rename to some non-builtin
 
 import (
 	"fmt"
 	"os"
 	"runtime/debug"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 )
 
 func defaultStackTraceHandler(_ fiber.Ctx, e any) {

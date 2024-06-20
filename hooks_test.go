@@ -85,12 +85,12 @@ func TestHookOnNameError(t *testing.T) {
 	app := New()
 	defer func() {
 		if err := recover(); err != nil {
-			require.Equal(t, "unknown error", fmt.Sprintf("%v", err))
+			require.Equal(t, literal_0714, fmt.Sprintf("%v", err))
 		}
 	}()
 
 	app.Hooks().OnName(func(_ Route) error {
-		return errors.New("unknown error")
+		return errors.New(literal_0714)
 	})
 
 	app.Get("/", testSimpleHandler).Name("index")
@@ -169,12 +169,12 @@ func TestHookOnGroupNameError(t *testing.T) {
 	app := New()
 	defer func() {
 		if err := recover(); err != nil {
-			require.Equal(t, "unknown error", fmt.Sprintf("%v", err))
+			require.Equal(t, literal_0714, fmt.Sprintf("%v", err))
 		}
 	}()
 
 	app.Hooks().OnGroupName(func(_ Group) error {
-		return errors.New("unknown error")
+		return errors.New(literal_0714)
 	})
 
 	grp := app.Group("/x").Name("x.")
@@ -282,3 +282,5 @@ func TestHookOnMount(t *testing.T) {
 
 	app.Use("/sub", subApp)
 }
+
+const literal_0714 = "unknown error"

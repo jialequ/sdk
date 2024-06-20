@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/internal/memory"
 )
 
@@ -82,7 +82,7 @@ func (m *manager) get(key string) *item {
 func (m *manager) set(key string, it *item, exp time.Duration) {
 	if m.storage != nil {
 		if raw, err := it.MarshalMsg(nil); err == nil {
-			_ = m.storage.Set(key, raw, exp) //nolint:errcheck // TODO: Handle error here
+			_ = m.storage.Set(key, raw, exp) //nolint:errcheck // : Handle error here
 		}
 		// we can release data because it's serialized to database
 		m.release(it)

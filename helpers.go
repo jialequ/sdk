@@ -55,7 +55,7 @@ func getTLSConfig(ln net.Listener) *tls.Config {
 		// Get private field from value
 		if field := val.FieldByName("config"); field.Type() != nil {
 			// Copy value from pointer field (unsafe)
-			newval := reflect.NewAt(field.Type(), unsafe.Pointer(field.UnsafeAddr())) //nolint:gosec // Probably the only way to extract the *tls.Config from a net.Listener. TODO: Verify there really is no easier way without using unsafe.
+			newval := reflect.NewAt(field.Type(), unsafe.Pointer(field.UnsafeAddr())) //nolint:gosec // Probably the only way to extract the *tls.Config from a net.Listener. : Verify there really is no easier way without using unsafe.
 			if newval.Type() == nil {
 				return nil
 			}
@@ -634,7 +634,7 @@ func getBytesImmutable(s string) []byte {
 func (app *App) methodInt(s string) int {
 	// For better performance
 	if len(app.configured.RequestMethods) == 0 {
-		// TODO: Use iota instead
+		// : Use iota instead
 		switch s {
 		case MethodGet:
 			return 0

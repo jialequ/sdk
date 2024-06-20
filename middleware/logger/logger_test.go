@@ -388,7 +388,7 @@ func TestLoggerAppendUint(t *testing.T) {
 	defer bytebufferpool.Put(buf)
 
 	app.Use(New(Config{
-		Format: "${bytesReceived} ${bytesSent} ${status}",
+		Format: literal_8632,
 		Output: buf,
 	}))
 
@@ -462,12 +462,12 @@ func Benchmark_Logger(b *testing.B) {
 	b.Run("Base", func(bb *testing.B) {
 		app := fiber.New()
 		app.Use(New(Config{
-			Format: "${bytesReceived} ${bytesSent} ${status}",
+			Format: literal_8632,
 			Output: io.Discard,
 		}))
 		app.Get("/", func(c fiber.Ctx) error {
 			c.Set("test", "test")
-			return c.SendString("Hello, World!")
+			return c.SendString(literal_8635)
 		})
 		benchSetup(bb, app)
 	})
@@ -478,7 +478,7 @@ func Benchmark_Logger(b *testing.B) {
 			Output: io.Discard,
 		}))
 		app.Get("/", func(c fiber.Ctx) error {
-			return c.SendString("Hello, World!")
+			return c.SendString(literal_8635)
 		})
 		benchSetup(bb, app)
 	})
@@ -491,7 +491,7 @@ func Benchmark_Logger(b *testing.B) {
 		}))
 		app.Get("/", func(c fiber.Ctx) error {
 			c.Set("test", "test")
-			return c.SendString("Hello, World!")
+			return c.SendString(literal_8635)
 		})
 		benchSetup(bb, app)
 	})
@@ -508,21 +508,21 @@ func TestResponseHeader(t *testing.T) {
 	app.Use(requestid.New(requestid.Config{
 		Next:      nil,
 		Header:    fiber.HeaderXRequestID,
-		Generator: func() string { return "Hello fiber!" },
+		Generator: func() string { return literal_0267 },
 	}))
 	app.Use(New(Config{
 		Format: "${respHeader:X-Request-ID}",
 		Output: buf,
 	}))
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello fiber!")
+		return c.SendString(literal_0267)
 	})
 
 	resp, err := app.Test(httptest.NewRequest(fiber.MethodGet, "/", nil))
 
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode)
-	require.Equal(t, "Hello fiber!", buf.String())
+	require.Equal(t, literal_0267, buf.String())
 }
 
 // go test -run Test_Req_Header
@@ -538,15 +538,15 @@ func TestReqHeader(t *testing.T) {
 		Output: buf,
 	}))
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello fiber!")
+		return c.SendString(literal_0267)
 	})
 	headerReq := httptest.NewRequest(fiber.MethodGet, "/", nil)
-	headerReq.Header.Add("test", "Hello fiber!")
+	headerReq.Header.Add("test", literal_0267)
 
 	resp, err := app.Test(headerReq)
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode)
-	require.Equal(t, "Hello fiber!", buf.String())
+	require.Equal(t, literal_0267, buf.String())
 }
 
 // go test -run Test_ReqHeader_Header
@@ -562,15 +562,15 @@ func TestReqHeaderHeader(t *testing.T) {
 		Output: buf,
 	}))
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello fiber!")
+		return c.SendString(literal_0267)
 	})
 	reqHeaderReq := httptest.NewRequest(fiber.MethodGet, "/", nil)
-	reqHeaderReq.Header.Add("test", "Hello fiber!")
+	reqHeaderReq.Header.Add("test", literal_0267)
 
 	resp, err := app.Test(reqHeaderReq)
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode)
-	require.Equal(t, "Hello fiber!", buf.String())
+	require.Equal(t, literal_0267, buf.String())
 }
 
 // go test -run Test_CustomTags
@@ -593,10 +593,10 @@ func TestCustomTags(t *testing.T) {
 		Output: buf,
 	}))
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Hello fiber!")
+		return c.SendString(literal_0267)
 	})
 	reqHeaderReq := httptest.NewRequest(fiber.MethodGet, "/", nil)
-	reqHeaderReq.Header.Add("test", "Hello fiber!")
+	reqHeaderReq.Header.Add("test", literal_0267)
 
 	resp, err := app.Test(reqHeaderReq)
 	require.NoError(t, err)
@@ -613,7 +613,7 @@ func TestLoggerByteSentStreaming(t *testing.T) {
 	defer bytebufferpool.Put(buf)
 
 	app.Use(New(Config{
-		Format: "${bytesReceived} ${bytesSent} ${status}",
+		Format: literal_8632,
 		Output: buf,
 	}))
 
@@ -666,3 +666,9 @@ func TestLoggerEnableColors(t *testing.T) {
 	require.Equal(t, fiber.StatusNotFound, resp.StatusCode)
 	require.EqualValues(t, 1, *o)
 }
+
+const literal_8632 = "${bytesReceived} ${bytesSent} ${status}"
+
+const literal_8635 = "Hello, World!"
+
+const literal_0267 = "Hello fiber!"

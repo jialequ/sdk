@@ -144,7 +144,7 @@ func TestClientMarshal(t *testing.T) {
 	t.Run("set json marshal error", func(t *testing.T) {
 		t.Parallel()
 
-		emptyErr := errors.New("empty json")
+		emptyErr := errors.New(literal_2348)
 		client := New().
 			SetJSONMarshal(func(_ any) ([]byte, error) {
 				return nil, emptyErr
@@ -159,22 +159,22 @@ func TestClientMarshal(t *testing.T) {
 		t.Parallel()
 		client := New().
 			SetJSONUnmarshal(func(_ []byte, _ any) error {
-				return errors.New("empty json")
+				return errors.New(literal_2348)
 			})
 
 		err := client.JSONUnmarshal()(nil, nil)
-		require.Equal(t, errors.New("empty json"), err)
+		require.Equal(t, errors.New(literal_2348), err)
 	})
 
 	t.Run("set json unmarshal error", func(t *testing.T) {
 		t.Parallel()
 		client := New().
 			SetJSONUnmarshal(func(_ []byte, _ any) error {
-				return errors.New("empty json")
+				return errors.New(literal_2348)
 			})
 
 		err := client.JSONUnmarshal()(nil, nil)
-		require.Equal(t, errors.New("empty json"), err)
+		require.Equal(t, errors.New(literal_2348), err)
 	})
 
 	t.Run("set xml marshal", func(t *testing.T) {
@@ -193,43 +193,43 @@ func TestClientMarshal(t *testing.T) {
 		t.Parallel()
 		client := New().
 			SetXMLMarshal(func(_ any) ([]byte, error) {
-				return nil, errors.New("empty xml")
+				return nil, errors.New(literal_4281)
 			})
 
 		val, err := client.XMLMarshal()(nil)
 		require.Nil(t, val)
-		require.Equal(t, errors.New("empty xml"), err)
+		require.Equal(t, errors.New(literal_4281), err)
 	})
 
 	t.Run("set xml unmarshal", func(t *testing.T) {
 		t.Parallel()
 		client := New().
 			SetXMLUnmarshal(func(_ []byte, _ any) error {
-				return errors.New("empty xml")
+				return errors.New(literal_4281)
 			})
 
 		err := client.XMLUnmarshal()(nil, nil)
-		require.Equal(t, errors.New("empty xml"), err)
+		require.Equal(t, errors.New(literal_4281), err)
 	})
 
 	t.Run("set xml unmarshal error", func(t *testing.T) {
 		t.Parallel()
 		client := New().
 			SetXMLUnmarshal(func(_ []byte, _ any) error {
-				return errors.New("empty xml")
+				return errors.New(literal_4281)
 			})
 
 		err := client.XMLUnmarshal()(nil, nil)
-		require.Equal(t, errors.New("empty xml"), err)
+		require.Equal(t, errors.New(literal_4281), err)
 	})
 }
 
 func TestClientSetBaseURL(t *testing.T) {
 	t.Parallel()
 
-	client := New().SetBaseURL("http://example.com")
+	client := New().SetBaseURL(literal_1276)
 
-	require.Equal(t, "http://example.com", client.BaseURL())
+	require.Equal(t, literal_1276, client.BaseURL())
 }
 
 func TestClientInvalidURL(t *testing.T) {
@@ -277,7 +277,7 @@ func TestClientConcurrencyRequests(t *testing.T) {
 			wg.Add(1)
 			go func(m string) {
 				defer wg.Done()
-				resp, err := client.Custom("http://example.com", m)
+				resp, err := client.Custom(literal_1276, m)
 				assert.NoError(t, err)
 				assert.Equal(t, "example.com "+m, utils.UnsafeString(resp.RawResponse.Body()))
 			}(method)
@@ -547,7 +547,7 @@ func TestOptions(t *testing.T) {
 	setupApp := func() (*fiber.App, string) {
 		app, addr := startTestServerWithPort(t, func(app *fiber.App) {
 			app.Options("/", func(c fiber.Ctx) error {
-				c.Set(fiber.HeaderAllow, "GET, POST, PUT, DELETE, PATCH")
+				c.Set(fiber.HeaderAllow, literal_4902)
 				return c.Status(fiber.StatusNoContent).SendString("")
 			})
 		})
@@ -567,7 +567,7 @@ func TestOptions(t *testing.T) {
 			resp, err := Options("http://" + addr)
 
 			require.NoError(t, err)
-			require.Equal(t, "GET, POST, PUT, DELETE, PATCH", resp.Header(fiber.HeaderAllow))
+			require.Equal(t, literal_4902, resp.Header(fiber.HeaderAllow))
 			require.Equal(t, fiber.StatusNoContent, resp.StatusCode())
 			require.Equal(t, "", resp.String())
 		}
@@ -585,7 +585,7 @@ func TestOptions(t *testing.T) {
 			resp, err := New().Options("http://" + addr)
 
 			require.NoError(t, err)
-			require.Equal(t, "GET, POST, PUT, DELETE, PATCH", resp.Header(fiber.HeaderAllow))
+			require.Equal(t, literal_4902, resp.Header(fiber.HeaderAllow))
 			require.Equal(t, fiber.StatusNoContent, resp.StatusCode())
 			require.Equal(t, "", resp.String())
 		}
@@ -893,8 +893,8 @@ func TestClientCookieJar(t *testing.T) {
 	jar := AcquireCookieJar()
 	defer ReleaseCookieJar(jar)
 
-	jar.SetKeyValue("example.com", "k1", "v1")
-	jar.SetKeyValue("example.com", "k2", "v2")
+	jar.SetKeyValue(literal_7392, "k1", "v1")
+	jar.SetKeyValue(literal_7392, "k2", "v2")
 	jar.SetKeyValue("example", "k3", "v3")
 
 	wrapAgent := func(c *Client) {
@@ -920,8 +920,8 @@ func TestClientCookieJarResponse(t *testing.T) {
 		jar := AcquireCookieJar()
 		defer ReleaseCookieJar(jar)
 
-		jar.SetKeyValue("example.com", "k1", "v1")
-		jar.SetKeyValue("example.com", "k2", "v2")
+		jar.SetKeyValue(literal_7392, "k1", "v1")
+		jar.SetKeyValue(literal_7392, "k2", "v2")
 		jar.SetKeyValue("example", "k3", "v3")
 
 		wrapAgent := func(c *Client) {
@@ -929,7 +929,7 @@ func TestClientCookieJarResponse(t *testing.T) {
 		}
 		testClient(t, handler, wrapAgent, "v1v2")
 
-		require.Len(t, jar.getCookiesByHost("example.com"), 3)
+		require.Len(t, jar.getCookiesByHost(literal_7392), 3)
 	})
 
 	t.Run("with expiration", func(t *testing.T) {
@@ -947,8 +947,8 @@ func TestClientCookieJarResponse(t *testing.T) {
 		jar := AcquireCookieJar()
 		defer ReleaseCookieJar(jar)
 
-		jar.SetKeyValue("example.com", "k1", "v1")
-		jar.SetKeyValue("example.com", "k2", "v2")
+		jar.SetKeyValue(literal_7392, "k1", "v1")
+		jar.SetKeyValue(literal_7392, "k2", "v2")
 		jar.SetKeyValue("example", "k3", "v3")
 
 		wrapAgent := func(c *Client) {
@@ -956,7 +956,7 @@ func TestClientCookieJarResponse(t *testing.T) {
 		}
 		testClient(t, handler, wrapAgent, "v1v2")
 
-		require.Len(t, jar.getCookiesByHost("example.com"), 2)
+		require.Len(t, jar.getCookiesByHost(literal_7392), 2)
 	})
 
 	t.Run("override cookie value", func(t *testing.T) {
@@ -973,15 +973,15 @@ func TestClientCookieJarResponse(t *testing.T) {
 		jar := AcquireCookieJar()
 		defer ReleaseCookieJar(jar)
 
-		jar.SetKeyValue("example.com", "k1", "v1")
-		jar.SetKeyValue("example.com", "k2", "v2")
+		jar.SetKeyValue(literal_7392, "k1", "v1")
+		jar.SetKeyValue(literal_7392, "k2", "v2")
 
 		wrapAgent := func(c *Client) {
 			c.SetCookieJar(jar)
 		}
 		testClient(t, handler, wrapAgent, "v1v2")
 
-		for _, cookie := range jar.getCookiesByHost("example.com") {
+		for _, cookie := range jar.getCookiesByHost(literal_7392) {
 			if string(cookie.Key()) == "k1" {
 				require.Equal(t, "v2", string(cookie.Value()))
 			}
@@ -997,14 +997,14 @@ func TestClientCookieJarResponse(t *testing.T) {
 		jar := AcquireCookieJar()
 		defer ReleaseCookieJar(jar)
 
-		jar.SetKeyValue("example.com", "k1", "v1")
+		jar.SetKeyValue(literal_7392, "k1", "v1")
 
 		wrapAgent := func(c *Client) {
 			c.SetCookieJar(jar)
 		}
 		testClient(t, handler, wrapAgent, "v1")
 
-		require.Len(t, jar.getCookiesByHost("example.com"), 1)
+		require.Len(t, jar.getCookiesByHost(literal_7392), 1)
 		require.Empty(t, jar.getCookiesByHost("example"))
 	})
 }
@@ -1248,7 +1248,7 @@ func TestClientTLS(t *testing.T) {
 	serverTLSConf, clientTLSConf, err := tlstest.GetTLSConfigs()
 	require.NoError(t, err)
 
-	ln, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln, err := net.Listen(fiber.NetworkTCP4, literal_8307)
 	require.NoError(t, err)
 
 	ln = tls.NewListener(ln, serverTLSConf)
@@ -1266,7 +1266,7 @@ func TestClientTLS(t *testing.T) {
 	time.Sleep(1 * time.Second)
 
 	client := New()
-	resp, err := client.SetTLSConfig(clientTLSConf).Get("https://" + ln.Addr().String())
+	resp, err := client.SetTLSConfig(clientTLSConf).Get(literal_6087 + ln.Addr().String())
 
 	require.NoError(t, err)
 	require.Equal(t, clientTLSConf, client.TLSConfig())
@@ -1282,7 +1282,7 @@ func TestClientTLSError(t *testing.T) {
 	serverTLSConf.MinVersion = tls.VersionTLS13
 	require.NoError(t, err)
 
-	ln, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln, err := net.Listen(fiber.NetworkTCP4, literal_8307)
 	require.NoError(t, err)
 
 	ln = tls.NewListener(ln, serverTLSConf)
@@ -1300,7 +1300,7 @@ func TestClientTLSError(t *testing.T) {
 	time.Sleep(1 * time.Second)
 
 	client := New()
-	resp, err := client.SetTLSConfig(clientTLSConf).Get("https://" + ln.Addr().String())
+	resp, err := client.SetTLSConfig(clientTLSConf).Get(literal_6087 + ln.Addr().String())
 
 	require.Error(t, err)
 	require.Equal(t, clientTLSConf, client.TLSConfig())
@@ -1313,7 +1313,7 @@ func TestClientTLSEmptyTLSConfig(t *testing.T) {
 	serverTLSConf, clientTLSConf, err := tlstest.GetTLSConfigs()
 	require.NoError(t, err)
 
-	ln, err := net.Listen(fiber.NetworkTCP4, "127.0.0.1:0")
+	ln, err := net.Listen(fiber.NetworkTCP4, literal_8307)
 	require.NoError(t, err)
 
 	ln = tls.NewListener(ln, serverTLSConf)
@@ -1331,7 +1331,7 @@ func TestClientTLSEmptyTLSConfig(t *testing.T) {
 	time.Sleep(1 * time.Second)
 
 	client := New()
-	resp, err := client.Get("https://" + ln.Addr().String())
+	resp, err := client.Get(literal_6087 + ln.Addr().String())
 
 	require.Error(t, err)
 	require.NotEqual(t, clientTLSConf, client.TLSConfig())
@@ -1389,7 +1389,7 @@ func TestReplace(t *testing.T) {
 	go start()
 
 	C().SetDial(dial)
-	resp, err := Get("http://example.com")
+	resp, err := Get(literal_1276)
 
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -1397,7 +1397,7 @@ func TestReplace(t *testing.T) {
 
 	r := New().SetDial(dial).SetHeader("k1", "v1")
 	clean := Replace(r)
-	resp, err = Get("http://example.com")
+	resp, err = Get(literal_1276)
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
 	require.Equal(t, "v1", resp.String())
@@ -1405,7 +1405,7 @@ func TestReplace(t *testing.T) {
 	clean()
 
 	C().SetDial(dial)
-	resp, err = Get("http://example.com")
+	resp, err = Get(literal_1276)
 
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusOK, resp.StatusCode())
@@ -1539,7 +1539,7 @@ func TestClientSetProxyURL(t *testing.T) {
 
 	app, dial, start := createHelperServer(t)
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("hello world")
+		return c.SendString(literal_5310)
 	})
 
 	go start()
@@ -1601,7 +1601,7 @@ func TestClientSetRetryConfig(t *testing.T) {
 func Benchmark_Client_Request(b *testing.B) {
 	app, dial, start := createHelperServer(b)
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("hello world")
+		return c.SendString(literal_5310)
 	})
 
 	go start()
@@ -1614,7 +1614,7 @@ func Benchmark_Client_Request(b *testing.B) {
 	var err error
 	var resp *Response
 	for i := 0; i < b.N; i++ {
-		resp, err = client.Get("http://example.com")
+		resp, err = client.Get(literal_1276)
 		resp.Close()
 	}
 	require.NoError(b, err)
@@ -1623,7 +1623,7 @@ func Benchmark_Client_Request(b *testing.B) {
 func Benchmark_Client_Request_Parallel(b *testing.B) {
 	app, dial, start := createHelperServer(b)
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("hello world")
+		return c.SendString(literal_5310)
 	})
 
 	go start()
@@ -1637,9 +1637,25 @@ func Benchmark_Client_Request_Parallel(b *testing.B) {
 		var err error
 		var resp *Response
 		for pb.Next() {
-			resp, err = client.Get("http://example.com")
+			resp, err = client.Get(literal_1276)
 			resp.Close()
 		}
 		require.NoError(b, err)
 	})
 }
+
+const literal_2348 = "empty json"
+
+const literal_4281 = "empty xml"
+
+const literal_1276 = "http://example.com"
+
+const literal_4902 = "GET, POST, PUT, DELETE, PATCH"
+
+const literal_7392 = "example.com"
+
+const literal_8307 = "127.0.0.1:0"
+
+const literal_6087 = "https://"
+
+const literal_5310 = "hello world"

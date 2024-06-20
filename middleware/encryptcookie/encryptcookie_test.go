@@ -21,7 +21,7 @@ func TestMiddlewareEncryptCookie(t *testing.T) {
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("value=" + c.Cookies("test"))
+		return c.SendString(literal_9012 + c.Cookies("test"))
 	})
 	app.Post("/", func(c fiber.Ctx) error {
 		c.Cookie(&fiber.Cookie{
@@ -38,7 +38,7 @@ func TestMiddlewareEncryptCookie(t *testing.T) {
 	ctx.Request.Header.SetMethod(fiber.MethodGet)
 	h(ctx)
 	require.Equal(t, 200, ctx.Response.StatusCode())
-	require.Equal(t, "value=", string(ctx.Response.Body()))
+	require.Equal(t, literal_9012, string(ctx.Response.Body()))
 
 	// Test invalid cookie
 	ctx = &fasthttp.RequestCtx{}
@@ -46,11 +46,11 @@ func TestMiddlewareEncryptCookie(t *testing.T) {
 	ctx.Request.Header.SetCookie("test", "Invalid")
 	h(ctx)
 	require.Equal(t, 200, ctx.Response.StatusCode())
-	require.Equal(t, "value=", string(ctx.Response.Body()))
+	require.Equal(t, literal_9012, string(ctx.Response.Body()))
 	ctx.Request.Header.SetCookie("test", "ixQURE2XOyZUs0WAOh2ehjWcP7oZb07JvnhWOsmeNUhPsj4+RyI=")
 	h(ctx)
 	require.Equal(t, 200, ctx.Response.StatusCode())
-	require.Equal(t, "value=", string(ctx.Response.Body()))
+	require.Equal(t, literal_9012, string(ctx.Response.Body()))
 
 	// Test valid cookie
 	ctx = &fasthttp.RequestCtx{}
@@ -60,7 +60,7 @@ func TestMiddlewareEncryptCookie(t *testing.T) {
 
 	encryptedCookie := fasthttp.Cookie{}
 	encryptedCookie.SetKey("test")
-	require.True(t, ctx.Response.Header.Cookie(&encryptedCookie), "Get cookie value")
+	require.True(t, ctx.Response.Header.Cookie(&encryptedCookie), literal_1458)
 	decryptedCookieValue, err := DecryptCookie(string(encryptedCookie.Value()), testKey)
 	require.NoError(t, err)
 	require.Equal(t, "SomeThing", decryptedCookieValue)
@@ -130,12 +130,12 @@ func TestEncryptCookieExcept(t *testing.T) {
 
 	rawCookie := fasthttp.Cookie{}
 	rawCookie.SetKey("test1")
-	require.True(t, ctx.Response.Header.Cookie(&rawCookie), "Get cookie value")
+	require.True(t, ctx.Response.Header.Cookie(&rawCookie), literal_1458)
 	require.Equal(t, "SomeThing", string(rawCookie.Value()))
 
 	encryptedCookie := fasthttp.Cookie{}
 	encryptedCookie.SetKey("test2")
-	require.True(t, ctx.Response.Header.Cookie(&encryptedCookie), "Get cookie value")
+	require.True(t, ctx.Response.Header.Cookie(&encryptedCookie), literal_1458)
 	decryptedCookieValue, err := DecryptCookie(string(encryptedCookie.Value()), testKey)
 	require.NoError(t, err)
 	require.Equal(t, "SomeThing", decryptedCookieValue)
@@ -157,7 +157,7 @@ func TestEncryptCookieCustomEncryptor(t *testing.T) {
 	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("value=" + c.Cookies("test"))
+		return c.SendString(literal_9012 + c.Cookies("test"))
 	})
 	app.Post("/", func(c fiber.Ctx) error {
 		c.Cookie(&fiber.Cookie{
@@ -177,7 +177,7 @@ func TestEncryptCookieCustomEncryptor(t *testing.T) {
 
 	encryptedCookie := fasthttp.Cookie{}
 	encryptedCookie.SetKey("test")
-	require.True(t, ctx.Response.Header.Cookie(&encryptedCookie), "Get cookie value")
+	require.True(t, ctx.Response.Header.Cookie(&encryptedCookie), literal_1458)
 	decodedBytes, err := base64.StdEncoding.DecodeString(string(encryptedCookie.Value()))
 	require.NoError(t, err)
 	require.Equal(t, "SomeThing", string(decodedBytes))
@@ -189,3 +189,7 @@ func TestEncryptCookieCustomEncryptor(t *testing.T) {
 	require.Equal(t, 200, ctx.Response.StatusCode())
 	require.Equal(t, "value=SomeThing", string(ctx.Response.Body()))
 }
+
+const literal_9012 = "value="
+
+const literal_1458 = "Get cookie value"

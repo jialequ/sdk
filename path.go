@@ -41,7 +41,7 @@ type routeSegment struct {
 	HasOptionalSlash bool          // segment has the possibility of an optional slash
 	Constraints      []*Constraint // Constraint type if segment is a parameter, if not it will be set to noConstraint by default
 	Length           int           // length of the parameter for segment, when its 0 then the length is undetermined
-	// future TODO: add support for optional groups "/abc(/def)?"
+	// future : add support for optional groups "/abc(/def)?"
 }
 
 // different special routing signs
@@ -661,7 +661,7 @@ func getParamConstraintType(constraintPart string) TypeConstraint {
 	}
 }
 
-//nolint:errcheck // TODO: Properly check _all_ errors in here, log them & immediately return
+//nolint:errcheck // : Properly check _all_ errors in here, log them & immediately return
 func (c *Constraint) CheckConstraint(param string) bool {
 	var err error
 	var num int

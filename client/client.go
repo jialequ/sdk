@@ -186,7 +186,7 @@ func (c *Client) SetRootCertificate(path string) *Client {
 	cleanPath := filepath.Clean(path)
 	file, err := os.Open(cleanPath)
 	if err != nil {
-		c.logger.Panicf("client: %v", err)
+		c.logger.Panicf(literal_0826, err)
 	}
 	defer func() {
 		if err := file.Close(); err != nil {
@@ -196,7 +196,7 @@ func (c *Client) SetRootCertificate(path string) *Client {
 
 	pem, err := io.ReadAll(file)
 	if err != nil {
-		c.logger.Panicf("client: %v", err)
+		c.logger.Panicf(literal_0826, err)
 	}
 
 	config := c.TLSConfig()
@@ -205,7 +205,7 @@ func (c *Client) SetRootCertificate(path string) *Client {
 	}
 
 	if !config.RootCAs.AppendCertsFromPEM(pem) {
-		c.logger.Panicf("client: %v", ErrFailedToAppendCert)
+		c.logger.Panicf(literal_0826, ErrFailedToAppendCert)
 	}
 
 	return c
@@ -220,7 +220,7 @@ func (c *Client) SetRootCertificateFromString(pem string) *Client {
 	}
 
 	if !config.RootCAs.AppendCertsFromPEM([]byte(pem)) {
-		c.logger.Panicf("client: %v", ErrFailedToAppendCert)
+		c.logger.Panicf(literal_0826, ErrFailedToAppendCert)
 	}
 
 	return c
@@ -773,3 +773,5 @@ func Options(url string, cfg ...Config) (*Response, error) {
 func Patch(url string, cfg ...Config) (*Response, error) {
 	return C().Patch(url, cfg...)
 }
+
+const literal_0826 = "client: %v"

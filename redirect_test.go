@@ -28,17 +28,17 @@ func TestRedirectTo(t *testing.T) {
 	require.Equal(t, 302, c.Response().StatusCode())
 	require.Equal(t, "http://default.com", string(c.Response().Header.Peek(HeaderLocation)))
 
-	err = c.Redirect().Status(301).To("http://example.com")
+	err = c.Redirect().Status(301).To(literal_2138)
 	require.NoError(t, err)
 	require.Equal(t, 301, c.Response().StatusCode())
-	require.Equal(t, "http://example.com", string(c.Response().Header.Peek(HeaderLocation)))
+	require.Equal(t, literal_2138, string(c.Response().Header.Peek(HeaderLocation)))
 }
 
 // go test -run Test_Redirect_Route_WithParams
 func TestRedirectRouteWithParams(t *testing.T) {
 	t.Parallel()
 	app := New()
-	app.Get("/user/:name", func(c Ctx) error {
+	app.Get(literal_0789, func(c Ctx) error {
 		return c.JSON(c.Params("name"))
 	}).Name("user")
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
@@ -50,14 +50,14 @@ func TestRedirectRouteWithParams(t *testing.T) {
 	})
 	require.NoError(t, err)
 	require.Equal(t, 302, c.Response().StatusCode())
-	require.Equal(t, "/user/fiber", string(c.Response().Header.Peek(HeaderLocation)))
+	require.Equal(t, literal_3925, string(c.Response().Header.Peek(HeaderLocation)))
 }
 
 // go test -run Test_Redirect_Route_WithParams_WithQueries
 func TestRedirectRouteWithParamsWithQueries(t *testing.T) {
 	t.Parallel()
 	app := New()
-	app.Get("/user/:name", func(c Ctx) error {
+	app.Get(literal_0789, func(c Ctx) error {
 		return c.JSON(c.Params("name"))
 	}).Name("user")
 	c := app.AcquireCtx(&fasthttp.RequestCtx{})
@@ -73,7 +73,7 @@ func TestRedirectRouteWithParamsWithQueries(t *testing.T) {
 	// analysis of query parameters with url parsing, since a map pass is always randomly ordered
 	location, err := url.Parse(string(c.Response().Header.Peek(HeaderLocation)))
 	require.NoError(t, err, "url.Parse(location)")
-	require.Equal(t, "/user/fiber", location.Path)
+	require.Equal(t, literal_3925, location.Path)
 	require.Equal(t, url.Values{"data[0][name]": []string{"john"}, "data[0][age]": []string{"10"}, "test": []string{"doe"}}, location.Query())
 }
 
@@ -93,7 +93,7 @@ func TestRedirectRouteWithOptionalParams(t *testing.T) {
 	})
 	require.NoError(t, err)
 	require.Equal(t, 302, c.Response().StatusCode())
-	require.Equal(t, "/user/fiber", string(c.Response().Header.Peek(HeaderLocation)))
+	require.Equal(t, literal_3925, string(c.Response().Header.Peek(HeaderLocation)))
 }
 
 // go test -run Test_Redirect_Route_WithOptionalParamsWithoutValue
@@ -189,7 +189,7 @@ func TestRedirectRouteWithFlashMessages(t *testing.T) {
 	require.True(t, equal)
 
 	c.Redirect().setFlash()
-	require.Equal(t, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(t, literal_6401, c.GetRespHeader(HeaderSetCookie))
 }
 
 // go test -run Test_Redirect_Route_WithOldInput
@@ -217,7 +217,7 @@ func TestRedirectRouteWithOldInput(t *testing.T) {
 	require.Contains(t, c.GetRespHeader(HeaderSetCookie), ",old_input_data_name:tom")
 
 	c.Redirect().setFlash()
-	require.Equal(t, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(t, literal_6401, c.GetRespHeader(HeaderSetCookie))
 }
 
 // go test -run Test_Redirect_setFlash
@@ -231,11 +231,11 @@ func TestRedirectsetFlash(t *testing.T) {
 
 	c := app.AcquireCtx(&fasthttp.RequestCtx{}).(*DefaultCtx) //nolint:errcheck, forcetypeassert // not needed
 
-	c.Request().Header.Set(HeaderCookie, "fiber_flash=success:1,message:test,old_input_data_name:tom,old_input_data_id:1")
+	c.Request().Header.Set(HeaderCookie, literal_6352)
 
 	c.Redirect().setFlash()
 
-	require.Equal(t, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(t, literal_6401, c.GetRespHeader(HeaderSetCookie))
 
 	require.Equal(t, "1", c.Redirect().Message("success"))
 	require.Equal(t, "test", c.Redirect().Message("message"))
@@ -322,7 +322,7 @@ func TestRedirectRequest(t *testing.T) {
 			},
 		}
 		req, resp := fasthttp.AcquireRequest(), fasthttp.AcquireResponse()
-		req.SetRequestURI("http://example.com" + tc.URL)
+		req.SetRequestURI(literal_2138 + tc.URL)
 		req.Header.SetCookie(FlashCookieName, tc.CookieValue)
 		err := client.DoRedirects(req, resp, 1)
 
@@ -335,7 +335,7 @@ func TestRedirectRequest(t *testing.T) {
 // go test -v -run=^$ -bench=Benchmark_Redirect_Route -benchmem -count=4
 func Benchmark_Redirect_Route(b *testing.B) {
 	app := New()
-	app.Get("/user/:name", func(c Ctx) error {
+	app.Get(literal_0789, func(c Ctx) error {
 		return c.JSON(c.Params("name"))
 	}).Name("user")
 
@@ -356,13 +356,13 @@ func Benchmark_Redirect_Route(b *testing.B) {
 
 	require.NoError(b, err)
 	require.Equal(b, 302, c.Response().StatusCode())
-	require.Equal(b, "/user/fiber", string(c.Response().Header.Peek(HeaderLocation)))
+	require.Equal(b, literal_3925, string(c.Response().Header.Peek(HeaderLocation)))
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_Route_WithQueries -benchmem -count=4
 func Benchmark_Redirect_Route_WithQueries(b *testing.B) {
 	app := New()
-	app.Get("/user/:name", func(c Ctx) error {
+	app.Get(literal_0789, func(c Ctx) error {
 		return c.JSON(c.Params("name"))
 	}).Name("user")
 
@@ -387,7 +387,7 @@ func Benchmark_Redirect_Route_WithQueries(b *testing.B) {
 	// analysis of query parameters with url parsing, since a map pass is always randomly ordered
 	location, err := url.Parse(string(c.Response().Header.Peek(HeaderLocation)))
 	require.NoError(b, err, "url.Parse(location)")
-	require.Equal(b, "/user/fiber", location.Path)
+	require.Equal(b, literal_3925, location.Path)
 	require.Equal(b, url.Values{"a": []string{"a"}, "b": []string{"b"}}, location.Query())
 }
 
@@ -417,7 +417,7 @@ func Benchmark_Redirect_Route_WithFlashMessages(b *testing.B) {
 	require.True(b, equal)
 
 	c.Redirect().setFlash()
-	require.Equal(b, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(b, literal_6401, c.GetRespHeader(HeaderSetCookie))
 }
 
 // go test -v -run=^$ -bench=Benchmark_Redirect_setFlash -benchmem -count=4
@@ -429,7 +429,7 @@ func Benchmark_Redirect_setFlash(b *testing.B) {
 
 	c := app.AcquireCtx(&fasthttp.RequestCtx{}).(*DefaultCtx) //nolint:errcheck, forcetypeassert // not needed
 
-	c.Request().Header.Set(HeaderCookie, "fiber_flash=success:1,message:test,old_input_data_name:tom,old_input_data_id:1")
+	c.Request().Header.Set(HeaderCookie, literal_6352)
 
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -438,7 +438,7 @@ func Benchmark_Redirect_setFlash(b *testing.B) {
 		c.Redirect().setFlash()
 	}
 
-	require.Equal(b, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(b, literal_6401, c.GetRespHeader(HeaderSetCookie))
 
 	require.Equal(b, "1", c.Redirect().Message("success"))
 	require.Equal(b, "test", c.Redirect().Message("message"))
@@ -458,7 +458,7 @@ func Benchmark_Redirect_Messages(b *testing.B) {
 
 	c := app.AcquireCtx(&fasthttp.RequestCtx{}).(*DefaultCtx) //nolint:errcheck, forcetypeassert // not needed
 
-	c.Request().Header.Set(HeaderCookie, "fiber_flash=success:1,message:test,old_input_data_name:tom,old_input_data_id:1")
+	c.Request().Header.Set(HeaderCookie, literal_6352)
 	c.Redirect().setFlash()
 
 	var msgs map[string]string
@@ -470,7 +470,7 @@ func Benchmark_Redirect_Messages(b *testing.B) {
 		msgs = c.Redirect().Messages()
 	}
 
-	require.Equal(b, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(b, literal_6401, c.GetRespHeader(HeaderSetCookie))
 	require.Equal(b, map[string]string{"success": "1", "message": "test"}, msgs)
 }
 
@@ -483,7 +483,7 @@ func Benchmark_Redirect_OldInputs(b *testing.B) {
 
 	c := app.AcquireCtx(&fasthttp.RequestCtx{}).(*DefaultCtx) //nolint:errcheck, forcetypeassert // not needed
 
-	c.Request().Header.Set(HeaderCookie, "fiber_flash=success:1,message:test,old_input_data_name:tom,old_input_data_id:1")
+	c.Request().Header.Set(HeaderCookie, literal_6352)
 	c.Redirect().setFlash()
 
 	var oldInputs map[string]string
@@ -495,7 +495,7 @@ func Benchmark_Redirect_OldInputs(b *testing.B) {
 		oldInputs = c.Redirect().OldInputs()
 	}
 
-	require.Equal(b, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(b, literal_6401, c.GetRespHeader(HeaderSetCookie))
 	require.Equal(b, map[string]string{"id": "1", "name": "tom"}, oldInputs)
 }
 
@@ -508,7 +508,7 @@ func Benchmark_Redirect_Message(b *testing.B) {
 
 	c := app.AcquireCtx(&fasthttp.RequestCtx{}).(*DefaultCtx) //nolint:errcheck, forcetypeassert // not needed
 
-	c.Request().Header.Set(HeaderCookie, "fiber_flash=success:1,message:test,old_input_data_name:tom,old_input_data_id:1")
+	c.Request().Header.Set(HeaderCookie, literal_6352)
 	c.Redirect().setFlash()
 
 	var msg string
@@ -520,7 +520,7 @@ func Benchmark_Redirect_Message(b *testing.B) {
 		msg = c.Redirect().Message("message")
 	}
 
-	require.Equal(b, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(b, literal_6401, c.GetRespHeader(HeaderSetCookie))
 	require.Equal(b, "test", msg)
 }
 
@@ -533,7 +533,7 @@ func Benchmark_Redirect_OldInput(b *testing.B) {
 
 	c := app.AcquireCtx(&fasthttp.RequestCtx{}).(*DefaultCtx) //nolint:errcheck, forcetypeassert // not needed
 
-	c.Request().Header.Set(HeaderCookie, "fiber_flash=success:1,message:test,old_input_data_name:tom,old_input_data_id:1")
+	c.Request().Header.Set(HeaderCookie, literal_6352)
 	c.Redirect().setFlash()
 
 	var input string
@@ -545,6 +545,16 @@ func Benchmark_Redirect_OldInput(b *testing.B) {
 		input = c.Redirect().OldInput("name")
 	}
 
-	require.Equal(b, "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT", c.GetRespHeader(HeaderSetCookie))
+	require.Equal(b, literal_6401, c.GetRespHeader(HeaderSetCookie))
 	require.Equal(b, "tom", input)
 }
+
+const literal_2138 = "http://example.com"
+
+const literal_0789 = "/user/:name"
+
+const literal_3925 = "/user/fiber"
+
+const literal_6401 = "fiber_flash=; expires=Tue, 10 Nov 2009 23:00:00 GMT"
+
+const literal_6352 = "fiber_flash=success:1,message:test,old_input_data_name:tom,old_input_data_id:1"

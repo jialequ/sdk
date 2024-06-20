@@ -36,11 +36,11 @@ func TestCompressGzip(t *testing.T) {
 	})
 
 	req := httptest.NewRequest(fiber.MethodGet, "/", nil)
-	req.Header.Set("Accept-Encoding", "gzip")
+	req.Header.Set(literal_2763, "gzip")
 
 	resp, err := app.Test(req)
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3581)
+	require.Equal(t, 200, resp.StatusCode, literal_5148)
 	require.Equal(t, "gzip", resp.Header.Get(fiber.HeaderContentEncoding))
 
 	// Validate that the file size has shrunk
@@ -67,11 +67,11 @@ func TestCompressDifferentLevel(t *testing.T) {
 			})
 
 			req := httptest.NewRequest(fiber.MethodGet, "/", nil)
-			req.Header.Set("Accept-Encoding", "gzip")
+			req.Header.Set(literal_2763, "gzip")
 
 			resp, err := app.Test(req)
-			require.NoError(t, err, "app.Test(req)")
-			require.Equal(t, 200, resp.StatusCode, "Status code")
+			require.NoError(t, err, literal_3581)
+			require.Equal(t, 200, resp.StatusCode, literal_5148)
 			require.Equal(t, "gzip", resp.Header.Get(fiber.HeaderContentEncoding))
 
 			// Validate that the file size has shrunk
@@ -93,11 +93,11 @@ func TestCompressDeflate(t *testing.T) {
 	})
 
 	req := httptest.NewRequest(fiber.MethodGet, "/", nil)
-	req.Header.Set("Accept-Encoding", "deflate")
+	req.Header.Set(literal_2763, "deflate")
 
 	resp, err := app.Test(req)
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3581)
+	require.Equal(t, 200, resp.StatusCode, literal_5148)
 	require.Equal(t, "deflate", resp.Header.Get(fiber.HeaderContentEncoding))
 
 	// Validate that the file size has shrunk
@@ -117,11 +117,11 @@ func TestCompressBrotli(t *testing.T) {
 	})
 
 	req := httptest.NewRequest(fiber.MethodGet, "/", nil)
-	req.Header.Set("Accept-Encoding", "br")
+	req.Header.Set(literal_2763, "br")
 
 	resp, err := app.Test(req, 10*time.Second)
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3581)
+	require.Equal(t, 200, resp.StatusCode, literal_5148)
 	require.Equal(t, "br", resp.Header.Get(fiber.HeaderContentEncoding))
 
 	// Validate that the file size has shrunk
@@ -141,11 +141,11 @@ func TestCompressDisabled(t *testing.T) {
 	})
 
 	req := httptest.NewRequest(fiber.MethodGet, "/", nil)
-	req.Header.Set("Accept-Encoding", "br")
+	req.Header.Set(literal_2763, "br")
 
 	resp, err := app.Test(req)
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 200, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3581)
+	require.Equal(t, 200, resp.StatusCode, literal_5148)
 	require.Equal(t, "", resp.Header.Get(fiber.HeaderContentEncoding))
 
 	// Validate the file size is not shrunk
@@ -165,11 +165,11 @@ func TestCompressNextError(t *testing.T) {
 	})
 
 	req := httptest.NewRequest(fiber.MethodGet, "/", nil)
-	req.Header.Set("Accept-Encoding", "gzip")
+	req.Header.Set(literal_2763, "gzip")
 
 	resp, err := app.Test(req)
-	require.NoError(t, err, "app.Test(req)")
-	require.Equal(t, 500, resp.StatusCode, "Status code")
+	require.NoError(t, err, literal_3581)
+	require.Equal(t, 500, resp.StatusCode, literal_5148)
 	require.Equal(t, "", resp.Header.Get(fiber.HeaderContentEncoding))
 
 	body, err := io.ReadAll(resp.Body)
@@ -191,3 +191,9 @@ func TestCompressNext(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, fiber.StatusNotFound, resp.StatusCode)
 }
+
+const literal_2763 = "Accept-Encoding"
+
+const literal_3581 = "app.Test(req)"
+
+const literal_5148 = "Status code"

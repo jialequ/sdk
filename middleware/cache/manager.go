@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/jialequ/sdk/internal/memory"
 )
 
@@ -93,9 +93,9 @@ func (m *manager) get(key string) *item {
 func (m *manager) getRaw(key string) []byte {
 	var raw []byte
 	if m.storage != nil {
-		raw, _ = m.storage.Get(key) //nolint:errcheck // TODO: Handle error here
+		raw, _ = m.storage.Get(key) //nolint:errcheck // : Handle error here
 	} else {
-		raw, _ = m.memory.Get(key).([]byte) //nolint:errcheck // TODO: Handle error here
+		raw, _ = m.memory.Get(key).([]byte) //nolint:errcheck // : Handle error here
 	}
 	return raw
 }
@@ -104,7 +104,7 @@ func (m *manager) getRaw(key string) []byte {
 func (m *manager) set(key string, it *item, exp time.Duration) {
 	if m.storage != nil {
 		if raw, err := it.MarshalMsg(nil); err == nil {
-			_ = m.storage.Set(key, raw, exp) //nolint:errcheck // TODO: Handle error here
+			_ = m.storage.Set(key, raw, exp) //nolint:errcheck // : Handle error here
 		}
 		// we can release data because it's serialized to database
 		m.release(it)
@@ -116,7 +116,7 @@ func (m *manager) set(key string, it *item, exp time.Duration) {
 // set data to storage or memory
 func (m *manager) setRaw(key string, raw []byte, exp time.Duration) {
 	if m.storage != nil {
-		_ = m.storage.Set(key, raw, exp) //nolint:errcheck // TODO: Handle error here
+		_ = m.storage.Set(key, raw, exp) //nolint:errcheck // : Handle error here
 	} else {
 		m.memory.Set(key, raw, exp)
 	}
@@ -125,7 +125,7 @@ func (m *manager) setRaw(key string, raw []byte, exp time.Duration) {
 // delete data from storage or memory
 func (m *manager) del(key string) {
 	if m.storage != nil {
-		_ = m.storage.Delete(key) //nolint:errcheck // TODO: Handle error here
+		_ = m.storage.Delete(key) //nolint:errcheck // : Handle error here
 	} else {
 		m.memory.Delete(key)
 	}
