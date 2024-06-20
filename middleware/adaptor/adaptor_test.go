@@ -12,7 +12,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/jialequ/sdk"
+	fiber "github.com/jialequ/sdk"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/valyala/fasthttp"
@@ -27,7 +27,7 @@ func TestHTTPHandler(t *testing.T) {
 	expectedBody := "body 123 foo bar baz"
 	expectedContentLength := len(expectedBody)
 	expectedHost := literal_7459
-	expectedRemoteAddr := "1.2.3.4:6789"
+	expectedRemoteAddr := "127.0.0.1:6789"
 	expectedHeader := map[string]string{
 		"Foo-Bar":         "baz",
 		"Abc":             "defg",
@@ -224,9 +224,9 @@ func testFiberToHandlerFunc(t *testing.T, checkDefaultPort bool, app ...*fiber.A
 	expectedBody := "body 123 foo bar baz"
 	expectedContentLength := len(expectedBody)
 	expectedHost := literal_7459
-	expectedRemoteAddr := "1.2.3.4:6789"
+	expectedRemoteAddr := "127.0.0.1:6789"
 	if checkDefaultPort {
-		expectedRemoteAddr = "1.2.3.4:80"
+		expectedRemoteAddr = "127.0.0.1:80"
 	}
 	expectedHeader := map[string]string{
 		"Foo-Bar":         "baz",
@@ -280,7 +280,7 @@ func testFiberToHandlerFunc(t *testing.T, checkDefaultPort bool, app ...*fiber.A
 	r.Host = expectedHost
 	r.RemoteAddr = expectedRemoteAddr
 	if checkDefaultPort {
-		r.RemoteAddr = "1.2.3.4"
+		r.RemoteAddr = "127.0.0.1"
 	}
 
 	hdr := make(http.Header)

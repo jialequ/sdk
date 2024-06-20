@@ -31,13 +31,11 @@ func (z *item) UnmarshalMsg(bts []byte) (o []byte, err error) {
 			err = msgp.WrapError(err)
 			return
 		}
-		switch msgp.UnsafeString(field) {
-		default:
-			bts, err = msgp.Skip(bts)
-			if err != nil {
-				err = msgp.WrapError(err)
-				return
-			}
+		msgp.UnsafeString(field)
+		bts, err = msgp.Skip(bts)
+		if err != nil {
+			err = msgp.WrapError(err)
+			return
 		}
 	}
 	o = bts

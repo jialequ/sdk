@@ -1510,13 +1510,13 @@ const literal_3751 = "_csrf="
 
 const literal_4390 = "example.com"
 
-const literal_7053 = "10.0.1.42:8080"
+const literal_7053 = "127.0.0.1:8080"
 
 const literal_6891 = "domain-1.com"
 
 const literal_1538 = "a.b.c.domain-1.com"
 
-const literal_4105 = "10.0.1.42:8443"
+const literal_4105 = "127.0.0.1:8443"
 
 const literal_6739 = "https://example.com"
 
